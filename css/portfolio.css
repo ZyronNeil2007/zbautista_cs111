@@ -186,7 +186,7 @@ body {
     color: var(--text);
 }
 
-/* about me: full-width scenic bnhschool background with right-aligned bento grid */
+/* about me: full-width scenic bnhschool background with one right-aligned panel */
 .pf-about-section {
     position: relative;
     width: 100vw;
@@ -236,53 +236,45 @@ body {
     text-align: right;
 }
 
-/* Bento Grid */
-.pf-bento-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
-}
-
-.pf-bento-item {
-    position: relative;
-    padding: 22px 24px;
-    border-radius: 22px;
+/* About panel: a single panel, content flows top to bottom */
+.pf-about-panel {
+    padding: clamp(24px, 3vw, 36px);
+    border-radius: 26px;
     background: rgba(30, 5, 12, 0.62);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid rgba(255, 255, 255, 0.24);
     box-shadow: 0 16px 36px rgba(0, 0, 0, 0.42);
-    display: flex;
-    flex-direction: column;
 }
 
-.pf-bento-badge {
-    align-self: flex-start;
-    display: inline-block;
-    padding: 3px 10px;
-    margin-bottom: 12px;
-    border-radius: 999px;
-    background: rgba(246, 231, 193, 0.18);
-    border: 1px solid rgba(246, 231, 193, 0.35);
-    font-family: var(--f-mono);
-    font-size: .7rem;
+.pf-about-panel h4 {
+    margin-bottom: 10px;
+    font-size: .8rem;
     font-weight: 700;
+    letter-spacing: .14em;
     text-transform: uppercase;
-    letter-spacing: .08em;
     color: var(--yellow);
 }
 
-.pf-bento-bio {
-    grid-column: span 2;
+.pf-about-bio p {
+    font-size: .98rem;
+    line-height: 1.85;
+    color: var(--text);
 }
 
-.pf-bento-bio p {
-    font-size: .95rem;
-    line-height: 1.8;
+.pf-about-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 26px;
+    padding-top: 26px;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-.pf-bento-arsenal {
-    grid-column: span 2;
+.pf-about-skills {
+    margin-top: 26px;
+    padding-top: 26px;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .pf-do {
@@ -344,7 +336,7 @@ body {
     color: var(--cream);
 }
 
-/* skills inside bento arsenal */
+/* skills inside the about panel */
 .pf-skills {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -772,13 +764,8 @@ body {
         margin: 0 auto;
     }
 
-    .pf-bento-grid {
+    .pf-about-row {
         grid-template-columns: 1fr;
-    }
-
-    .pf-bento-bio,
-    .pf-bento-arsenal {
-        grid-column: span 1;
     }
 
     .pf-skills {

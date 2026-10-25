@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111 — Personal Memories Website
 
-**Version:** 2.0.0  
+**Version:** 2.1.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -47,6 +47,10 @@ The website serves as a digital memory vault featuring:
 - Dark crimson backdrop gradient (`#180308` to `#3a0912`) accented with frosted glass containers (`backdrop-filter: blur(12px)`).
 - Fluid typography using Google Fonts: *Lilita One*, *Poppins*, and *Space Mono*.
 
+### 🌄 6. Scenic Portfolio
+- Full-width portfolio hero and About section use custom rice-field and school backgrounds.
+- The responsive About panel presents the biography, interests, activities, and technical skills in one cohesive layout.
+
 ---
 
 ## 📁 Repository Structure
@@ -78,7 +82,7 @@ zbautista_cs111/
 │   └── lightbox.js              # Fullscreen image viewer modal with keyboard & touch support
 │
 ├── img/                         # Optimized image, audio, and video assets
-│   ├── backgrounds/             # Hero background artwork (neil_bg.jpg)
+│   ├── backgrounds/             # Portfolio backgrounds (neil_bg.jpg, ME_LANSCAPE_AT_RICEFIELD.png, bnhschool.png)
 │   ├── childhood_memories/      # Early memories photograph assets
 │   ├── family_relatives/        # Family gatherings & tribute photos
 │   ├── icons/                   # Letter and UI iconography
@@ -142,6 +146,19 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.1.0] — 2026-10-25
+#### Added
+- Custom rice-field and school background artwork for the portfolio hero and About section.
+- GitHub Pages custom domain configuration for `neilcs11.com`.
+
+#### Changed
+- Reworked the About Me bento grid into a single responsive panel, grouping the biography, activities, interests, and skills.
+- Refined the portfolio hero layout and copy.
+- Updated project documentation and version information.
+
+#### Breaking Changes
+- None.
 
 ### [v2.0.0] — 2026-10-25
 #### Added
