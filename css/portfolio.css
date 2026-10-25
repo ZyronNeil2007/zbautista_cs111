@@ -33,17 +33,48 @@
     padding: 24px 26px;
 }
 
-/* hero */
+/* hero with ricefield background */
 .pf-hero {
-    text-align: center;
-    padding: 20px 0 70px;
+    position: relative;
+    border-radius: 32px;
+    padding: clamp(40px, 6vw, 70px) clamp(24px, 5vw, 60px);
+    margin: 20px 0 70px;
+    background-color: #2b0b14;
+    background-image:
+        linear-gradient(to right, rgba(20, 2, 8, 0.2) 0%, rgba(20, 2, 8, 0.5) 45%, rgba(20, 2, 8, 0.88) 72%, rgba(20, 2, 8, 0.94) 100%),
+        linear-gradient(to bottom, rgba(20, 2, 8, 0.15) 0%, transparent 60%, rgba(20, 2, 8, 0.7) 100%),
+        url("../img/backgrounds/ME_LANSCAPE_AT_RICEFIELD.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left center;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: 480px;
+}
+
+.pf-hero-content {
+    max-width: 540px;
+    text-align: right;
+    position: relative;
+    z-index: 2;
+    padding: 16px;
+    border-radius: 20px;
+    background: rgba(35, 6, 14, 0.38);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
 }
 
 .pf-kicker {
     display: inline-block;
     padding: 6px 18px;
     border-radius: 999px;
-    background: var(--glass);
+    background: rgba(255, 255, 255, 0.18);
     border: 1px solid var(--glass-border);
     font-family: var(--f-mono);
     font-style: italic;
@@ -53,16 +84,16 @@
 }
 
 .pf-name {
-    margin: 18px 0 10px;
+    margin: 16px 0 10px;
     font-family: var(--f-display);
     font-weight: 400;
-    font-size: clamp(2.6rem, 8vw, 6.5rem);
-    line-height: .95;
+    font-size: clamp(2.4rem, 6.5vw, 5.2rem);
+    line-height: .98;
     text-transform: uppercase;
     color: var(--cream);
     -webkit-text-stroke: 2px var(--cream-dark);
     paint-order: stroke fill;
-    text-shadow: 4px 4px 0 var(--cream-dark), 8px 10px 20px rgba(0, 0, 0, .35);
+    text-shadow: 3px 3px 0 var(--cream-dark), 0 8px 24px rgba(0, 0, 0, .6);
 }
 
 .pf-role {
@@ -70,14 +101,36 @@
     font-style: italic;
     font-size: clamp(.9rem, 2vw, 1.15rem);
     color: var(--peach);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .7);
 }
 
 .pf-lead {
-    max-width: 640px;
-    margin: 22px auto 0;
+    margin: 18px 0 0 auto;
     font-size: 1.02rem;
     line-height: 1.8;
-    color: var(--text);
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, .85);
+}
+
+@media (max-width: 768px) {
+    .pf-hero {
+        background-position: 25% center;
+        background-image:
+            linear-gradient(to top, rgba(20, 2, 8, 0.95) 0%, rgba(20, 2, 8, 0.75) 50%, rgba(20, 2, 8, 0.25) 100%),
+            url("../img/backgrounds/ME_LANSCAPE_AT_RICEFIELD.png");
+        align-items: flex-end;
+        justify-content: center;
+        min-height: 520px;
+        padding: 30px 20px;
+    }
+    .pf-hero-content {
+        max-width: 100%;
+        text-align: center;
+        background: rgba(35, 6, 14, 0.65);
+    }
+    .pf-lead {
+        margin: 16px auto 0;
+    }
 }
 
 /* section titles */
