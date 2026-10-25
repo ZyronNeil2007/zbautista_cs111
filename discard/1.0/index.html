@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Personal Memories Website by Zyron Neil A. Bautista — CS111 Introduction to Computing">
+    <title>My Personal Memories — Zyron Neil A. Bautista | CS111</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="landing.css">
+</head>
+
+<body>
+
+    <div class="stage">
+
+        <!-- Top bar -->
+        <nav class="topbar rise">
+            <a href="index.html" class="logo" aria-label="My Memories">ZB</a>
+            <a href="index.html" class="pill active">Home</a>
+            <label class="search glass" style="border-radius:999px;">
+                <span aria-hidden="true">Q</span>
+                <input type="search" id="folder-search" placeholder="search..." autocomplete="off">
+            </label>
+            <div class="topnav">
+                <a href="#folders">Folders</a>
+                <a href="https://github.com/ZyronNeil2007/zbautista_cs111" target="_blank"
+                    rel="noopener noreferrer">GitHub</a>
+                <a href="https://personal-portfolio-ten-sage-56.vercel.app/" target="_blank"
+                    rel="noopener noreferrer">Portfolio</a>
+            </div>
+        </nav>
+
+        <!-- Left column: profile + quick folders -->
+        <aside class="left-col">
+            <div class="profile-card glass rise d1">
+                <div class="avatar"><img src="neil_bg.jpg" alt="Zyron Neil A. Bautista">
+                </div>
+                <div class="profile-info">
+                    <span class="color-label">Color Code</span>
+                    <div class="swatches" aria-hidden="true">
+                        <span class="swatch" style="background:#f4c7a5"></span>
+                        <span class="swatch" style="background:#f2e24f"></span>
+                        <span class="swatch" style="background:#c9343f"></span>
+                    </div>
+                </div>
+            </div>
+
+            <a href="family_relatives.html" class="mini-card glass rise d2">
+                <img src="icon/o.png" alt="">
+                <div>
+                    <h3>My Family &amp; Relatives</h3>
+                    <p>Cherished bonds with the people who support me...</p>
+                </div>
+                <span class="plus">+</span>
+            </a>
+            <a href="childhood_memories.html" class="mini-card glass rise d3">
+                <img src="icon/r.png" alt="">
+                <div>
+                    <h3>Childhood Memories</h3>
+                    <p>Moments from my early years and playful adventures...</p>
+                </div>
+                <span class="plus">+</span>
+            </a>
+        </aside>
+
+        <!-- Big title -->
+        <header class="hero-title-wrap">
+            <p class="hero-tag rise d1"><b>My Personal Memories</b> · CS111 — Introduction to Computing</p>
+            <h1 class="hero-title rise d2">Zyron Neil<br>A. Bautista</h1>
+        </header>
+
+        <!-- Right small cards -->
+        <aside class="info-col">
+            <div class="info-card glass rise d2">
+                <div class="thumb">CS111<span class="heart" aria-hidden="true">♡</span></div>
+                <h4>THE COURSE</h4>
+                <p>Introduction to Computing — Personal Memories Project, 2026.</p>
+            </div>
+            <div class="info-card glass rise d3">
+                <h4>FIND ME ONLINE</h4>
+                <div class="cta-row">
+                    <a href="https://github.com/ZyronNeil2007/zbautista_cs111" target="_blank" rel="noopener noreferrer"
+                        class="btn" id="btn-github-repo">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                        </svg>
+                        GitHub Repository
+                    </a>
+                    <a href="https://personal-portfolio-ten-sage-56.vercel.app/" target="_blank"
+                        rel="noopener noreferrer" class="btn" id="btn-portfolio">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                        My Portfolio
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Description panel -->
+        <section class="desc-panel glass rise d3">
+            <p>
+                <b>Welcome to my digital memory vault.</b> Here, I have compiled different chapters and highlights of
+                my life — from cherished childhood experiences, moments with loved ones and friends, to my personal
+                favorites in food, cinema, and music, plus a little humor to brighten your day.
+            </p>
+            <p class="hint">Click on any folder below to explore its contents.</p>
+        </section>
+
+        <!-- Bottom-right quick thumbnails -->
+        <div class="thumbs">
+            <a href="my_friends.html" class="thumb-btn glass rise d2" title="My Friends"><img src="icon/y.png"
+                    alt="My Friends"></a>
+            <a href="my_favorite_food.html" class="thumb-btn glass rise d3" title="My Favorite Food"><img
+                    src="icon/b.png" alt="My Favorite Food"></a>
+            <a href="my_song.html" class="thumb-btn glass rise d4" title="My Song"><img src="icon/v.png"
+                    alt="My Song"></a>
+            <span class="credit">By Zyron Neil A. Bautista</span>
+        </div>
+    </div>
+
+    <!-- All folders -->
+    <main class="folders-section" id="folders">
+        <h2>Memory Folders</h2>
+        <ul class="folder-grid" id="folder-grid">
+            <li class="folder-card glass" data-name="childhood memories">
+                <a href="childhood_memories.html">
+                    <img src="icon/r.png" alt="Childhood Memories Folder Icon">
+                    <h3>Childhood Memories</h3>
+                    <p>Relive moments from my early years, growing up, and playful adventures.</p>
+                </a>
+            </li>
+            <li class="folder-card glass" data-name="my family relatives">
+                <a href="family_relatives.html">
+                    <img src="icon/o.png" alt="My Family &amp; Relatives Folder Icon">
+                    <h3>My Family &amp; Relatives</h3>
+                    <p>Cherished memories and bonds with the people who support me unconditionally.</p>
+                </a>
+            </li>
+            <li class="folder-card glass" data-name="my friends">
+                <a href="my_friends.html">
+                    <img src="icon/y.png" alt="My Friends Folder Icon">
+                    <h3>My Friends</h3>
+                    <p>Unforgettable moments, laughter, and adventures shared with great friends.</p>
+                </a>
+            </li>
+            <li class="folder-card glass" data-name="me my love">
+                <a href="me_and_my_love.html">
+                    <img src="icon/g.png" alt="Me &amp; My Love Folder Icon">
+                    <h3>Me &amp; My Love</h3>
+                    <p>Heartfelt snapshots and meaningful milestones with someone special.</p>
+                </a>
+            </li>
+            <li class="folder-card glass" data-name="my favorite food">
+                <a href="my_favorite_food.html">
+                    <img src="icon/b.png" alt="My Favorite Food Folder Icon">
+                    <h3>My Favorite Food</h3>
+                    <p>Delicious dishes that I love, complete with ingredient lists and recipes.</p>
+                </a>
+            </li>
+            <li class="folder-card glass" data-name="my favorite movie">
+                <a href="my_favorite_movie.html">
+                    <img src="icon/i.png" alt="My Favorite Movie Folder Icon">
+                    <h3>My Favorite Movie</h3>
+                    <p>Film information, synopsis, cast details, and featured clip.</p>
+                </a>
+            </li>
+            <li class="folder-card glass" data-name="my song">
+                <a href="my_song.html">
+                    <img src="icon/v.png" alt="My Song Folder Icon">
+                    <h3>My Song</h3>
+                    <p>A featured track that resonates with me, song reflections, and audio player.</p>
+                </a>
+            </li>
+            <li class="folder-card glass" data-name="joke time">
+                <a href="joke_time.html">
+                    <img src="icon/basta.png" alt="Joke Time Folder Icon">
+                    <h3>Joke Time</h3>
+                    <p>A collection of clean and funny jokes to bring a smile to your face.</p>
+                </a>
+            </li>
+        </ul>
+        <p class="no-results" id="no-results">No folders match your search.</p>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Zyron Neil A. Bautista | CS111 — Introduction to Computing Personal Memories Project</p>
+    </footer>
+
+    <script>
+        // Search filters the folder list
+        (function () {
+            var input = document.getElementById('folder-search');
+            var cards = document.querySelectorAll('#folder-grid .folder-card');
+            var empty = document.getElementById('no-results');
+            input.addEventListener('input', function () {
+                var q = input.value.trim().toLowerCase(), shown = 0;
+                cards.forEach(function (c) {
+                    var match = !q || c.dataset.name.indexOf(q) !== -1;
+                    c.classList.toggle('hidden', !match);
+                    if (match) shown++;
+                });
+                empty.style.display = shown ? 'none' : 'block';
+                if (q) document.getElementById('folders').scrollIntoView({ behavior: 'smooth' });
+            });
+        })();
+    </script>
+    <script src="lightbox.js"></script>
+</body>
+
+</html>

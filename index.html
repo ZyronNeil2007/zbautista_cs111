@@ -9,145 +9,682 @@
     <title>My Personal Memories — Zyron Neil A. Bautista | CS111</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/portfolio.css">
+    <script>document.documentElement.classList.add("js")</script>
 </head>
 
 <body>
 
-    <!-- Background Decorative Orbs -->
-    <div class="floating-orbs" aria-hidden="true">
-        <div class="orb orb-1"></div>
-        <div class="orb orb-2"></div>
-        <div class="orb orb-3"></div>
+    <div class="stage">
+
+        <!-- Top bar -->
+        <nav class="topbar rise">
+            <a href="index.html" class="logo" aria-label="My Memories">ZB</a>
+            <a href="index.html" class="pill active">Home</a>
+            <label class="search glass" style="border-radius:999px;">
+                <span aria-hidden="true">Q</span>
+                <input type="search" id="folder-search" placeholder="search..." autocomplete="off">
+            </label>
+            <div class="topnav">
+                <a href="#folders">Folders</a>
+                <a href="#portfolio">About</a>
+                <a href="https://github.com/ZyronNeil2007/zbautista_cs111" target="_blank"
+                    rel="noopener noreferrer">GitHub</a>
+                <a href="https://personal-portfolio-ten-sage-56.vercel.app/" target="_blank"
+                    rel="noopener noreferrer">Portfolio</a>
+            </div>
+        </nav>
+
+        <!-- Left column: profile + quick folders -->
+        <aside class="left-col">
+            <div class="profile-card glass rise d1">
+                <div class="avatar"><img src="img/backgrounds/neil_bg.jpg" alt="Zyron Neil A. Bautista">
+                </div>
+                <div class="profile-info">
+                    <span class="color-label">Color Code</span>
+                    <div class="swatches" aria-hidden="true">
+                        <span class="swatch" style="background:#f4c7a5"></span>
+                        <span class="swatch" style="background:#f2e24f"></span>
+                        <span class="swatch" style="background:#c9343f"></span>
+                    </div>
+                </div>
+            </div>
+
+            <a href="pages/family_relatives.html" class="mini-card glass rise d2">
+                <span class="mini-folder" style="--mf:#ff9f43;--mf2:#ffd166" aria-hidden="true"></span>
+                <div>
+                    <h3>My Family &amp; Relatives</h3>
+                    <p>Cherished bonds with the people who support me...</p>
+                </div>
+                <span class="plus">+</span>
+            </a>
+            <a href="pages/childhood_memories.html" class="mini-card glass rise d3">
+                <span class="mini-folder" style="--mf:#ff6b6b;--mf2:#ffb3a7" aria-hidden="true"></span>
+                <div>
+                    <h3>Childhood Memories</h3>
+                    <p>Moments from my early years and playful adventures...</p>
+                </div>
+                <span class="plus">+</span>
+            </a>
+        </aside>
+
+        <!-- Big title -->
+        <header class="hero-title-wrap">
+            <p class="hero-tag rise d1"><b>My Personal Memories</b> · CS111 — Introduction to Computing</p>
+            <h1 class="hero-title rise d2">Zyron Neil<br>A. Bautista</h1>
+        </header>
+
+        <!-- Right small cards -->
+        <aside class="info-col">
+            <div class="info-card glass rise d2">
+                <div class="thumb">CS111<span class="heart" aria-hidden="true">♡</span></div>
+                <h4>THE COURSE</h4>
+                <p>Introduction to Computing — Personal Memories Project, 2026.</p>
+            </div>
+            <div class="info-card glass rise d3">
+                <h4>FIND ME ONLINE</h4>
+                <div class="cta-row">
+                    <a href="https://github.com/ZyronNeil2007/zbautista_cs111" target="_blank" rel="noopener noreferrer"
+                        class="btn" id="btn-github-repo">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+                        </svg>
+                        GitHub Repository
+                    </a>
+                    <a href="https://personal-portfolio-ten-sage-56.vercel.app/" target="_blank"
+                        rel="noopener noreferrer" class="btn" id="btn-portfolio">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="2" y1="12" x2="22" y2="12"></line>
+                            <path
+                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
+                            </path>
+                        </svg>
+                        My Portfolio
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Description panel -->
+        <section class="desc-panel glass rise d3">
+            <p>
+                <b>Welcome to my digital memory vault.</b> Here, I have compiled different chapters and highlights of
+                my life — from cherished childhood experiences, moments with loved ones and friends, to my personal
+                favorites in food, cinema, and music, plus a little humor to brighten your day.
+            </p>
+            <p class="hint">Click on any folder below to explore its contents.</p>
+        </section>
+
+        <!-- Bottom-right quick thumbnails -->
+        <div class="thumbs">
+            <a href="pages/my_friends.html" class="thumb-btn glass rise d2" title="My Friends"><span class="mini-folder lg"
+                    style="--mf:#f2e24f;--mf2:#fff3a0" aria-hidden="true"></span></a>
+            <a href="pages/my_favorite_food.html" class="thumb-btn glass rise d3" title="My Favorite Food"><span
+                    class="mini-folder lg" style="--mf:#6c8cff;--mf2:#b6c6ff" aria-hidden="true"></span></a>
+            <a href="pages/my_song.html" class="thumb-btn glass rise d4" title="My Song"><span class="mini-folder lg"
+                    style="--mf:#b15cff;--mf2:#dcb6ff" aria-hidden="true"></span></a>
+            <span class="credit">By Zyron Neil A. Bautista</span>
+        </div>
     </div>
 
-    <!-- Navbar -->
-    <nav class="site-nav">
-        <div class="nav-inner">
-            <a href="index.html" class="nav-brand">
-                My Memories
-            </a>
-            <span class="hero-course-badge"> CS111</span>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <header class="hero-section">
-        <div class="hero-mesh" aria-hidden="true"></div>
-        <div class="hero-glow" aria-hidden="true"></div>
-        <div class="hero-content">
-            <h1 class="hero-title animate-in animate-in-delay-1">My Personal Memories</h1>
-            <p class="hero-subtitle animate-in animate-in-delay-2">Zyron Neil A. Bautista</p>
-            <p class="hero-description animate-in animate-in-delay-4">
-                Welcome to my digital memory vault. Here, I have compiled different chapters and highlights of my life —
-                from cherished childhood experiences, moments with loved ones and friends, to my personal favorites in
-                food,
-                cinema, and music, plus a little humor to brighten your day.
-            </p>
-            <p class="hero-instruction animate-in animate-in-delay-5">Click on any folder below to explore its contents.
-            </p>
-            <div class="hero-actions animate-in animate-in-delay-5">
-                <a href="https://github.com/ZyronNeil2007/zbautista_cs111" target="_blank" rel="noopener noreferrer"
-                    class="btn-hero btn-hero-primary" id="btn-github-repo">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
-                    </svg>
-                    <span>GitHub Repository</span>
-                </a>
-                <a href="https://personal-portfolio-ten-sage-56.vercel.app/" target="_blank" rel="noopener noreferrer"
-                    class="btn-hero btn-hero-secondary" id="btn-portfolio">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="2" y1="12" x2="22" y2="12"></line>
-                        <path
-                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                        </path>
-                    </svg>
-                    <span>My Portfolio</span>
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="page-container">
-        <h2 class="section-title animate-in animate-in-delay-5">Memory Folders</h2>
-
-        <ul class="folder-grid">
-            <li class="folder-card animate-in animate-in-delay-1">
-                <a href="childhood_memories.html">
-                    <img src="icon/r.png" alt="Childhood Memories Folder Icon" class="folder-card-icon">
-                    <h3 class="folder-card-title">Childhood Memories</h3>
-                    <p class="folder-card-desc">Relive moments from my early years, growing up, and playful adventures.
-                    </p>
+    <!-- All folders -->
+    <main class="folders-section" id="folders">
+        <h2>Memory Folders</h2>
+        <p class="fx-hint">Hover a folder, then scroll to flip through its pages. Click to open it.</p>
+        <ul class="fx-grid" id="folder-grid">
+            <li class="fx-card" data-key="childhood" data-name="childhood memories" data-href="pages/childhood_memories.html">
+                <div class="fx-scene" tabindex="0" role="link"
+                    aria-label="Childhood Memories — flip through pages, press Enter to open">
+                    <div class="fx-back"></div>
+                    <div class="fx-stack"></div>
+                    <div class="fx-front">
+                        <span class="fx-count">0</span>
+                        <span class="fx-unit"></span>
+                        <span class="fx-pos"></span>
+                        <button type="button" class="fx-nav fx-up" aria-label="Previous page"
+                            tabindex="-1">&#9650;</button>
+                        <button type="button" class="fx-nav fx-down" aria-label="Next page"
+                            tabindex="-1">&#9660;</button>
+                    </div>
+                    <span class="fx-status" aria-live="polite"></span>
+                </div>
+                <a class="fx-label" href="pages/childhood_memories.html">
+                    <h3>Childhood Memories</h3>
+                    <p>Relive moments from my early years, growing up, and playful adventures.</p>
                 </a>
             </li>
-            <li class="folder-card animate-in animate-in-delay-2">
-                <a href="family_relatives.html">
-                    <img src="icon/o.png" alt="My Family &amp; Relatives Folder Icon" class="folder-card-icon">
-                    <h3 class="folder-card-title">My Family &amp; Relatives</h3>
-                    <p class="folder-card-desc">Cherished memories and bonds with the people who support me
-                        unconditionally.</p>
+            <li class="fx-card" data-key="family" data-name="my family relatives" data-href="pages/family_relatives.html">
+                <div class="fx-scene" tabindex="0" role="link"
+                    aria-label="My Family &amp; Relatives — flip through pages, press Enter to open">
+                    <div class="fx-back"></div>
+                    <div class="fx-stack"></div>
+                    <div class="fx-front">
+                        <span class="fx-count">0</span>
+                        <span class="fx-unit"></span>
+                        <span class="fx-pos"></span>
+                        <button type="button" class="fx-nav fx-up" aria-label="Previous page"
+                            tabindex="-1">&#9650;</button>
+                        <button type="button" class="fx-nav fx-down" aria-label="Next page"
+                            tabindex="-1">&#9660;</button>
+                    </div>
+                    <span class="fx-status" aria-live="polite"></span>
+                </div>
+                <a class="fx-label" href="pages/family_relatives.html">
+                    <h3>My Family &amp; Relatives</h3>
+                    <p>Cherished memories and bonds with the people who support me unconditionally.</p>
                 </a>
             </li>
-            <li class="folder-card animate-in animate-in-delay-3">
-                <a href="my_friends.html">
-                    <img src="icon/y.png" alt="My Friends Folder Icon" class="folder-card-icon">
-                    <h3 class="folder-card-title">My Friends</h3>
-                    <p class="folder-card-desc">Unforgettable moments, laughter, and adventures shared with great
-                        friends.</p>
+            <li class="fx-card" data-key="friends" data-name="my friends" data-href="pages/my_friends.html">
+                <div class="fx-scene" tabindex="0" role="link"
+                    aria-label="My Friends — flip through pages, press Enter to open">
+                    <div class="fx-back"></div>
+                    <div class="fx-stack"></div>
+                    <div class="fx-front">
+                        <span class="fx-count">0</span>
+                        <span class="fx-unit"></span>
+                        <span class="fx-pos"></span>
+                        <button type="button" class="fx-nav fx-up" aria-label="Previous page"
+                            tabindex="-1">&#9650;</button>
+                        <button type="button" class="fx-nav fx-down" aria-label="Next page"
+                            tabindex="-1">&#9660;</button>
+                    </div>
+                    <span class="fx-status" aria-live="polite"></span>
+                </div>
+                <a class="fx-label" href="pages/my_friends.html">
+                    <h3>My Friends</h3>
+                    <p>Unforgettable moments, laughter, and adventures shared with great friends.</p>
                 </a>
             </li>
-            <li class="folder-card animate-in animate-in-delay-4">
-                <a href="me_and_my_love.html">
-                    <img src="icon/g.png" alt="Me &amp; My Love Folder Icon" class="folder-card-icon">
-                    <h3 class="folder-card-title">Me &amp; My Love</h3>
-                    <p class="folder-card-desc">Heartfelt snapshots and meaningful milestones with someone special.</p>
+            <li class="fx-card" data-key="love" data-name="me my love" data-href="pages/me_and_my_love.html">
+                <div class="fx-scene" tabindex="0" role="link"
+                    aria-label="Me &amp; My Love — flip through pages, press Enter to open">
+                    <div class="fx-back"></div>
+                    <div class="fx-stack"></div>
+                    <div class="fx-front">
+                        <span class="fx-count">0</span>
+                        <span class="fx-unit"></span>
+                        <span class="fx-pos"></span>
+                        <button type="button" class="fx-nav fx-up" aria-label="Previous page"
+                            tabindex="-1">&#9650;</button>
+                        <button type="button" class="fx-nav fx-down" aria-label="Next page"
+                            tabindex="-1">&#9660;</button>
+                    </div>
+                    <span class="fx-status" aria-live="polite"></span>
+                </div>
+                <a class="fx-label" href="pages/me_and_my_love.html">
+                    <h3>Me &amp; My Love</h3>
+                    <p>Heartfelt snapshots and meaningful milestones with someone special.</p>
                 </a>
             </li>
-            <li class="folder-card animate-in animate-in-delay-5">
-                <a href="my_favorite_food.html">
-                    <img src="icon/b.png" alt="My Favorite Food Folder Icon" class="folder-card-icon">
-                    <h3 class="folder-card-title">My Favorite Food</h3>
-                    <p class="folder-card-desc">Delicious dishes that I love, complete with ingredient lists and
-                        recipes.</p>
+            <li class="fx-card" data-key="food" data-name="my favorite food" data-href="pages/my_favorite_food.html">
+                <div class="fx-scene" tabindex="0" role="link"
+                    aria-label="My Favorite Food — flip through pages, press Enter to open">
+                    <div class="fx-back"></div>
+                    <div class="fx-stack"></div>
+                    <div class="fx-front">
+                        <span class="fx-count">0</span>
+                        <span class="fx-unit"></span>
+                        <span class="fx-pos"></span>
+                        <button type="button" class="fx-nav fx-up" aria-label="Previous page"
+                            tabindex="-1">&#9650;</button>
+                        <button type="button" class="fx-nav fx-down" aria-label="Next page"
+                            tabindex="-1">&#9660;</button>
+                    </div>
+                    <span class="fx-status" aria-live="polite"></span>
+                </div>
+                <a class="fx-label" href="pages/my_favorite_food.html">
+                    <h3>My Favorite Food</h3>
+                    <p>Delicious dishes that I love, complete with ingredient lists and recipes.</p>
                 </a>
             </li>
-            <li class="folder-card animate-in animate-in-delay-6">
-                <a href="my_favorite_movie.html">
-                    <img src="icon/i.png" alt="My Favorite Movie Folder Icon" class="folder-card-icon">
-                    <h3 class="folder-card-title">My Favorite Movie</h3>
-                    <p class="folder-card-desc">Film information, synopsis, cast details, and featured clip.</p>
+            <li class="fx-card" data-key="movie" data-name="my favorite movie" data-href="pages/my_favorite_movie.html">
+                <div class="fx-scene" tabindex="0" role="link"
+                    aria-label="My Favorite Movie — flip through pages, press Enter to open">
+                    <div class="fx-back"></div>
+                    <div class="fx-stack"></div>
+                    <div class="fx-front">
+                        <span class="fx-count">0</span>
+                        <span class="fx-unit"></span>
+                        <span class="fx-pos"></span>
+                        <button type="button" class="fx-nav fx-up" aria-label="Previous page"
+                            tabindex="-1">&#9650;</button>
+                        <button type="button" class="fx-nav fx-down" aria-label="Next page"
+                            tabindex="-1">&#9660;</button>
+                    </div>
+                    <span class="fx-status" aria-live="polite"></span>
+                </div>
+                <a class="fx-label" href="pages/my_favorite_movie.html">
+                    <h3>My Favorite Movie</h3>
+                    <p>Film information, synopsis, cast details, and featured clip.</p>
                 </a>
             </li>
-            <li class="folder-card animate-in animate-in-delay-7">
-                <a href="my_song.html">
-                    <img src="icon/v.png" alt="My Song Folder Icon" class="folder-card-icon">
-                    <h3 class="folder-card-title">My Song</h3>
-                    <p class="folder-card-desc">A featured track that resonates with me, song reflections, and audio
-                        player.</p>
+            <li class="fx-card" data-key="song" data-name="my song" data-href="pages/my_song.html">
+                <div class="fx-scene" tabindex="0" role="link"
+                    aria-label="My Song — flip through pages, press Enter to open">
+                    <div class="fx-back"></div>
+                    <div class="fx-stack"></div>
+                    <div class="fx-front">
+                        <span class="fx-count">0</span>
+                        <span class="fx-unit"></span>
+                        <span class="fx-pos"></span>
+                        <button type="button" class="fx-nav fx-up" aria-label="Previous page"
+                            tabindex="-1">&#9650;</button>
+                        <button type="button" class="fx-nav fx-down" aria-label="Next page"
+                            tabindex="-1">&#9660;</button>
+                    </div>
+                    <span class="fx-status" aria-live="polite"></span>
+                </div>
+                <a class="fx-label" href="pages/my_song.html">
+                    <h3>My Song</h3>
+                    <p>A featured track that resonates with me, song reflections, and audio player.</p>
                 </a>
             </li>
-            <li class="folder-card animate-in animate-in-delay-8">
-                <a href="joke_time.html">
-                    <img src="icon/basta.png" alt="Joke Time Folder Icon" class="folder-card-icon">
-                    <h3 class="folder-card-title">Joke Time</h3>
-                    <p class="folder-card-desc">A collection of clean and funny jokes to bring a smile to your face.</p>
+            <li class="fx-card" data-key="joke" data-name="joke time" data-href="pages/joke_time.html">
+                <div class="fx-scene" tabindex="0" role="link"
+                    aria-label="Joke Time — flip through pages, press Enter to open">
+                    <div class="fx-back"></div>
+                    <div class="fx-stack"></div>
+                    <div class="fx-front">
+                        <span class="fx-count">0</span>
+                        <span class="fx-unit"></span>
+                        <span class="fx-pos"></span>
+                        <button type="button" class="fx-nav fx-up" aria-label="Previous page"
+                            tabindex="-1">&#9650;</button>
+                        <button type="button" class="fx-nav fx-down" aria-label="Next page"
+                            tabindex="-1">&#9660;</button>
+                    </div>
+                    <span class="fx-status" aria-live="polite"></span>
+                </div>
+                <a class="fx-label" href="pages/joke_time.html">
+                    <h3>Joke Time</h3>
+                    <p>A collection of clean and funny jokes to bring a smile to your face.</p>
                 </a>
             </li>
         </ul>
+        <p class="no-results" id="no-results">No folders match your search.</p>
     </main>
 
-    <!-- Footer -->
+    <!-- ═════════ PORTFOLIO ═════════ -->
+    <section class="pf" id="portfolio">
+
+        <!-- Hero -->
+        <header class="pf-hero pf-reveal">
+            <p class="pf-kicker">Portfolio</p>
+            <h2 class="pf-name">Zyron Neil<br>Bautista</h2>
+            <p class="pf-role">CS Student &amp; Creative Developer</p>
+            <p class="pf-lead">Zyron Neil Bautista specializes in building functional systems that are visually engaging
+                and user-friendly. His philosophy: technology should not only work well but also feel good to use.</p>
+        </header>
+
+        <!-- About -->
+        <div class="pf-block" id="about">
+            <h3 class="pf-title pf-reveal">About Me</h3>
+
+            <div class="pf-about">
+                <article class="glass pf-card pf-reveal">
+                    <h4>Who I Am</h4>
+                    <p>A passionate tech enthusiast pursuing a degree in Computer Science. He enjoys turning ideas into
+                        real, working systems &mdash; whether it's a quiz application, a functional website, or a
+                        creative layout. Outside coding, he values creativity, aesthetics, and storytelling. His
+                        ultimate goal is to become a software engineer and continue creating systems that make an
+                        impact.</p>
+                </article>
+
+                <article class="glass pf-card pf-reveal">
+                    <h4>What I Do</h4>
+                    <ul class="pf-do">
+                        <li><b>01</b> Develop web systems</li>
+                        <li><b>02</b> Create visual layouts</li>
+                        <li><b>03</b> Solve logic problems</li>
+                    </ul>
+                    <h4 class="pf-sub">Behind the Code</h4>
+                    <ul class="pf-chips">
+                        <li>Loves coffee &amp; chill coding</li>
+                        <li>Plays Minecraft</li>
+                        <li>Enjoys movies, anime &amp; BL</li>
+                        <li>Detail-oriented</li>
+                    </ul>
+                </article>
+            </div>
+
+            <h4 class="pf-sub2 pf-reveal">Technical Arsenal</h4>
+            <div class="pf-skills">
+                <article class="glass pf-card pf-reveal">
+                    <h5>Programming</h5>
+                    <div class="pf-skill"><span>Java</span><em>75%</em><i style="--v:75%"></i></div>
+                    <div class="pf-skill"><span>Python</span><em>80%</em><i style="--v:80%"></i></div>
+                    <div class="pf-skill"><span>C++</span><em>65%</em><i style="--v:65%"></i></div>
+                </article>
+                <article class="glass pf-card pf-reveal">
+                    <h5>Web Development</h5>
+                    <div class="pf-skill"><span>HTML</span><em>80%</em><i style="--v:80%"></i></div>
+                    <div class="pf-skill"><span>CSS</span><em>85%</em><i style="--v:85%"></i></div>
+                    <div class="pf-skill"><span>JavaScript</span><em>75%</em><i style="--v:75%"></i></div>
+                </article>
+                <article class="glass pf-card pf-reveal">
+                    <h5>Tools</h5>
+                    <div class="pf-skill"><span>phpMyAdmin</span><em>70%</em><i style="--v:70%"></i></div>
+                    <div class="pf-skill"><span>VS Code</span><em>90%</em><i style="--v:90%"></i></div>
+                </article>
+                <article class="glass pf-card pf-reveal">
+                    <h5>Design</h5>
+                    <div class="pf-skill"><span>Layouting</span><em>85%</em><i style="--v:85%"></i></div>
+                    <div class="pf-skill"><span>Pubmats</span><em>80%</em><i style="--v:80%"></i></div>
+                    <div class="pf-skill"><span>UI Design</span><em>75%</em><i style="--v:75%"></i></div>
+                </article>
+            </div>
+        </div>
+
+        <!-- Journey -->
+        <div class="pf-block" id="journey">
+            <h3 class="pf-title pf-reveal">My Journey</h3>
+            <p class="pf-quote pf-reveal">&ldquo;From Passion to Profession&rdquo; &mdash; Every skill started as
+                curiosity. Here's the road that brought Neil here.</p>
+
+            <div class="pf-dna" id="dna">
+                <div class="pf-helix" aria-hidden="true"><canvas></canvas></div>
+                <ol class="pf-dna-list">
+                    <li class="pf-reveal" data-year="2026">
+                        <span class="pf-year">2026 &ndash; Present</span>
+                        <article class="glass pf-card">
+                            <h4>Dream in Progress</h4>
+                            <p>Now, as a Computer Science student, Neil is finally pursuing what he truly loves. Working
+                                with Python and data mining, along with Java (OOP) and web development using HTML and
+                                CSS.
+                                Everything he's learned &mdash; from creativity to coding &mdash; is coming together.
+                                Becoming a software engineer, web developer, and app developer is no longer just a
+                                dream.
+                            </p>
+                            <ul class="pf-tags">
+                                <li>Python</li>
+                                <li>Java OOP</li>
+                                <li>Web Dev</li>
+                                <li>Data Mining</li>
+                            </ul>
+                        </article>
+                    </li>
+                    <li class="pf-reveal" data-year="2025">
+                        <span class="pf-year">2025</span>
+                        <article class="glass pf-card">
+                            <h4>Expanding Technical Skills</h4>
+                            <p>Explored Computer Engineering concepts and worked with C++, deepening his understanding
+                                of
+                                programming logic and systems. This phase challenged him academically (especially
+                                Calculus
+                                1) but helped build discipline and problem-solving skills.</p>
+                            <ul class="pf-tags">
+                                <li>C++</li>
+                                <li>Computer Engineering</li>
+                                <li>Problem Solving</li>
+                            </ul>
+                        </article>
+                    </li>
+                    <li class="pf-reveal" data-year="2024">
+                        <span class="pf-year">2024</span>
+                        <article class="glass pf-card">
+                            <h4>Real-World Developer Era</h4>
+                            <p>Went deeper into .NET Programming NC III, working with HTML, CSS, JavaScript, GitHub, and
+                                databases. Developed multiple web-based systems that were actually implemented at
+                                Barucboc
+                                National High School, gaining real-world experience in building applications used by
+                                actual
+                                users.</p>
+                            <ul class="pf-tags">
+                                <li>.NET NC III</li>
+                                <li>JavaScript</li>
+                                <li>GitHub</li>
+                                <li>Databases</li>
+                            </ul>
+                        </article>
+                    </li>
+                    <li class="pf-reveal" data-year="2023">
+                        <span class="pf-year">2023</span>
+                        <article class="glass pf-card">
+                            <h4>Peak Creativity &amp; Programming Breakthrough</h4>
+                            <p>Prime editing era on TikTok with strong audience engagement. Simultaneously, during
+                                Senior
+                                High School, he took Java Programming NC II and developed multiple systems &mdash;
+                                realizing
+                                how much he enjoys coding. Also introduced to HTML &amp; CSS, instantly loving how it
+                                combined programming with design. Started self-studying and taking development more
+                                seriously.</p>
+                            <ul class="pf-tags">
+                                <li>Java NC II</li>
+                                <li>HTML &amp; CSS</li>
+                                <li>TikTok Creator</li>
+                            </ul>
+                        </article>
+                    </li>
+                    <li class="pf-reveal" data-year="2022">
+                        <span class="pf-year">2022</span>
+                        <article class="glass pf-card">
+                            <h4>Creative Growth</h4>
+                            <p>Editing skills improved and developed abilities as a layout artist, creating posters and
+                                pubmats. Began to understand how design communicates ideas effectively.</p>
+                            <ul class="pf-tags">
+                                <li>Layout Artist</li>
+                                <li>Pubmats</li>
+                                <li>Visual Design</li>
+                            </ul>
+                        </article>
+                    </li>
+                    <li class="pf-reveal" data-year="2020">
+                        <span class="pf-year">2020 &ndash; 2021</span>
+                        <article class="glass pf-card">
+                            <h4>Creative Exploration</h4>
+                            <p>Started creating anime edits using CapCut and Alight Motion, exploring storytelling
+                                through
+                                visuals, music, and timing. This is where the foundation in creativity was built.</p>
+                            <ul class="pf-tags">
+                                <li>CapCut</li>
+                                <li>Alight Motion</li>
+                                <li>Storytelling</li>
+                            </ul>
+                        </article>
+                    </li>
+                    <li class="pf-reveal" data-year="2019">
+                        <span class="pf-year">2019</span>
+                        <article class="glass pf-card">
+                            <h4>The Spark &mdash; Where It All Began</h4>
+                            <p>Programming journey started with Minecraft. Running servers, configuring plugins, and
+                                customizing gameplay sparked curiosity about how code works behind the scenes. This was
+                                the
+                                beginning of everything.</p>
+                            <ul class="pf-tags">
+                                <li>Minecraft Servers</li>
+                                <li>Plugins</li>
+                                <li>Curiosity</li>
+                            </ul>
+                        </article>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Selected Work -->
+        <div class="pf-block" id="work">
+            <h3 class="pf-title pf-reveal">Selected Work</h3>
+            <div class="pf-work">
+                <article class="glass pf-card pf-proj pf-reveal">
+                    <span class="pf-num">01</span>
+                    <span class="pf-cat">Web Dev &middot; Logic</span>
+                    <h4>BNHS Online Quiz Website</h4>
+                    <p>A comprehensive system featuring admin and student portals, complete with quiz management,
+                        results tracking, and a built-in feedback system.</p>
+                    <ul class="pf-tags">
+                        <li>Web Dev</li>
+                        <li>phpMyAdmin</li>
+                        <li>Logic Design</li>
+                    </ul>
+                </article>
+                <article class="glass pf-card pf-proj pf-reveal">
+                    <span class="pf-num">02</span>
+                    <span class="pf-cat">Web Dev &middot; Layout &amp; UI</span>
+                    <h4>School Platform</h4>
+                    <p>Designed and developed a fully functional school website tailored for seamless user experience
+                        and accessibility.</p>
+                    <ul class="pf-tags">
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>JS</li>
+                        <li>UI/UX</li>
+                    </ul>
+                </article>
+                <article class="glass pf-card pf-proj pf-reveal">
+                    <span class="pf-num">03</span>
+                    <span class="pf-cat">Business &middot; Layout &amp; UI</span>
+                    <h4>Nephricarn Business</h4>
+                    <p>A food business concept offering burgers and guava juice, designed to appeal to students with
+                        affordable pricing, branding strategy, and product positioning.</p>
+                    <ul class="pf-tags">
+                        <li>#Business</li>
+                        <li>#Entrepreneurship</li>
+                        <li>#FoodService</li>
+                        <li>#Marketing</li>
+                    </ul>
+                </article>
+                <article class="glass pf-card pf-proj pf-reveal">
+                    <span class="pf-num">04</span>
+                    <span class="pf-cat">Research</span>
+                    <h4>BNHS Study: Online Quiz Research</h4>
+                    <p>A research study titled &ldquo;Effectiveness of Online Quiz Website to Grade 11 Students&rdquo;.
+                        Evaluated how an online quiz system impacts student learning, accessibility, and performance
+                        using structured data collection and analysis.</p>
+                    <ul class="pf-tags">
+                        <li>#Research</li>
+                        <li>#Academic</li>
+                        <li>#DataAnalysis</li>
+                        <li>#Education</li>
+                    </ul>
+                </article>
+                <article class="glass pf-card pf-proj pf-reveal">
+                    <span class="pf-num">05</span>
+                    <span class="pf-cat">Layout &amp; UI</span>
+                    <h4>Layout &amp; Design Portfolio</h4>
+                    <p>A collection of creative works including posters, logos, and publication layouts. Experienced in
+                        visual hierarchy, typography, and branding through school publications and competitions.</p>
+                    <ul class="pf-tags">
+                        <li>#GraphicDesign</li>
+                        <li>#LayoutArtist</li>
+                        <li>#Branding</li>
+                        <li>#Creative</li>
+                    </ul>
+                </article>
+                <article class="glass pf-card pf-proj pf-reveal">
+                    <span class="pf-num">06</span>
+                    <span class="pf-cat">Presentation</span>
+                    <h4>Research &amp; Business Presentations</h4>
+                    <p>Designed and developed structured presentations for research defense and business proposals,
+                        focusing on clarity, visual appeal, and effective communication of ideas.</p>
+                    <ul class="pf-tags">
+                        <li>#Presentation</li>
+                        <li>#VisualDesign</li>
+                        <li>#Communication</li>
+                        <li>#Academic</li>
+                    </ul>
+                </article>
+            </div>
+        </div>
+
+        <!-- Visual Design Gallery -->
+        <div class="pf-block" id="gallery">
+            <h3 class="pf-title pf-reveal">Visual Design Gallery</h3>
+            <p class="pf-quote pf-reveal">A curated set of design works showcased on the portfolio website.</p>
+            <div class="pf-gallery">
+                <figure class="glass pf-shot pf-reveal"><img src="image/quiz.png" alt="Quiz design" loading="lazy">
+                    <figcaption>quiz.png</figcaption>
+                </figure>
+                <figure class="glass pf-shot pf-reveal"><img src="image/NOT_FINAL.jpg" alt="NOT FINAL design"
+                        loading="lazy">
+                    <figcaption>NOT_FINAL.jpg</figcaption>
+                </figure>
+                <figure class="glass pf-shot pf-reveal"><img src="image/get_ready.jpg" alt="Get Ready design"
+                        loading="lazy">
+                    <figcaption>get_ready.jpg</figcaption>
+                </figure>
+                <figure class="glass pf-shot pf-reveal"><img src="image/me_booth.jpg" alt="Me booth design"
+                        loading="lazy">
+                    <figcaption>me_booth.jpg</figcaption>
+                </figure>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="pf-block" id="contact">
+            <div class="glass pf-contact pf-reveal">
+                <h3 class="pf-title">Let's build something great.</h3>
+                <p>Always open to learning new things, collaborating, and building projects that make an impact.</p>
+                <a class="pf-mail" href="mailto:zyronneilbautista10@gmail.com">zyronneilbautista10@gmail.com</a>
+                <ul class="pf-social">
+                    <li><a href="https://www.facebook.com/share/18ZFsaeo4S/" target="_blank"
+                            rel="noopener noreferrer">Facebook</a></li>
+                    <li><a href="https://www.instagram.com/zyronnei10/" target="_blank"
+                            rel="noopener noreferrer">Instagram</a></li>
+                    <li><a href="https://www.tiktok.com/@zyron_neil" target="_blank"
+                            rel="noopener noreferrer">TikTok</a></li>
+                    <li><a href="https://github.com/ZyronNeil2007" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
     <footer class="site-footer">
+        <p>Designed &amp; Developed by Zyron Neil Bautista</p>
         <p>&copy; 2026 Zyron Neil A. Bautista | CS111 — Introduction to Computing Personal Memories Project</p>
     </footer>
 
-    <script src="lightbox.js"></script>
+    <script>
+            // Search filters the folder list
+            (function () {
+                var input = document.getElementById('folder-search');
+                var cards = document.querySelectorAll('#folder-grid .fx-card');
+                var empty = document.getElementById('no-results');
+                input.addEventListener('input', function () {
+                    var q = input.value.trim().toLowerCase(), shown = 0;
+                    cards.forEach(function (c) {
+                        var match = !q || c.dataset.name.indexOf(q) !== -1;
+                        c.classList.toggle('hidden', !match);
+                        if (match) shown++;
+                    });
+                    empty.style.display = shown ? 'none' : 'block';
+                    if (q) document.getElementById('folders').scrollIntoView({ behavior: 'smooth' });
+                });
+            })();
+    </script>
+    <script>
+        // Portfolio: reveal on scroll + tidy placeholder for missing gallery images
+        (function () {
+            var items = document.querySelectorAll('.pf-reveal');
+            if ('IntersectionObserver' in window) {
+                var io = new IntersectionObserver(function (es) {
+                    es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+                }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+                items.forEach(function (i) { io.observe(i); });
+            } else { items.forEach(function (i) { i.classList.add('in'); }); }
+            document.querySelectorAll('.pf-shot img').forEach(function (img) {
+                function swap() {
+                    if (!img.parentNode) return;
+                    var ph = document.createElement('div');
+                    ph.className = 'pf-ph';
+                    ph.textContent = img.alt;
+                    img.replaceWith(ph);
+                }
+                img.addEventListener('error', swap);
+                if (img.complete && img.naturalWidth === 0) swap();   // already failed before this ran
+            });
+        })();
+    </script>
+    <script src="js/dna.js"></script>
+    <script src="js/folders.js"></script>
+    <script src="js/lightbox.js"></script>
 </body>
 
 </html>

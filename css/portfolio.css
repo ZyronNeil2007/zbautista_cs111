@@ -1,0 +1,629 @@
+/* ═════════ PORTFOLIO (below Memory Folders) ═════════ */
+.pf {
+    position: relative;
+    z-index: 5;
+    overflow-x: clip;
+    /* slide-in cards never cause sideways scroll (clip keeps sticky working) */
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 70px clamp(20px, 3vw, 48px) 40px;
+}
+
+.pf::before {
+    content: "";
+    display: block;
+    height: 1px;
+    margin-bottom: 70px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .35), transparent);
+}
+
+/* scroll reveal (JS adds .in; without JS everything stays visible) */
+.js .pf-reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity .7s ease, transform .7s cubic-bezier(.2, .8, .2, 1);
+}
+
+.js .pf-reveal.in {
+    opacity: 1;
+    transform: none;
+}
+
+.pf-card {
+    padding: 24px 26px;
+}
+
+/* hero */
+.pf-hero {
+    text-align: center;
+    padding: 20px 0 70px;
+}
+
+.pf-kicker {
+    display: inline-block;
+    padding: 6px 18px;
+    border-radius: 999px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    font-family: var(--f-mono);
+    font-style: italic;
+    font-size: .8rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.pf-name {
+    margin: 18px 0 10px;
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(2.6rem, 8vw, 6.5rem);
+    line-height: .95;
+    text-transform: uppercase;
+    color: var(--cream);
+    -webkit-text-stroke: 2px var(--cream-dark);
+    paint-order: stroke fill;
+    text-shadow: 4px 4px 0 var(--cream-dark), 8px 10px 20px rgba(0, 0, 0, .35);
+}
+
+.pf-role {
+    font-family: var(--f-mono);
+    font-style: italic;
+    font-size: clamp(.9rem, 2vw, 1.15rem);
+    color: var(--peach);
+}
+
+.pf-lead {
+    max-width: 640px;
+    margin: 22px auto 0;
+    font-size: 1.02rem;
+    line-height: 1.8;
+    color: var(--text);
+}
+
+/* section titles */
+.pf-block {
+    margin-top: 80px;
+}
+
+.pf-title {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--cream);
+    text-shadow: 4px 4px 0 var(--cream-dark);
+    margin-bottom: 22px;
+}
+
+.pf-quote {
+    max-width: 640px;
+    margin: -8px 0 30px;
+    font-family: var(--f-mono);
+    font-style: italic;
+    font-size: .9rem;
+    line-height: 1.7;
+    color: var(--text-soft);
+}
+
+.pf-sub2 {
+    margin: 38px 0 14px;
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 1.6rem;
+    color: var(--cream);
+    text-shadow: 3px 3px 0 var(--cream-dark);
+}
+
+.pf-card h4 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--cream);
+}
+
+.pf-card p {
+    font-size: .92rem;
+    line-height: 1.75;
+    color: var(--text);
+}
+
+/* about */
+.pf-about {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 22px;
+    align-items: start;
+}
+
+.pf-do {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.pf-do li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .1);
+    font-size: .92rem;
+    font-weight: 500;
+}
+
+.pf-do b {
+    font-family: var(--f-display);
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: var(--yellow);
+}
+
+.pf-sub {
+    margin-top: 20px;
+}
+
+.pf-chips,
+.pf-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pf-chips {
+    margin-top: 6px;
+}
+
+.pf-chips li,
+.pf-tags li {
+    padding: 5px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, .1);
+    font-size: .76rem;
+    font-weight: 600;
+    color: var(--cream);
+}
+
+.pf-tags {
+    margin-top: 14px;
+}
+
+/* skills */
+.pf-skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.pf-skills h5 {
+    margin-bottom: 14px;
+    font-size: .78rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--peach);
+}
+
+.pf-skill {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    margin-bottom: 12px;
+    font-size: .88rem;
+    font-weight: 600;
+}
+
+.pf-skill em {
+    font-style: normal;
+    font-family: var(--f-mono);
+    font-size: .78rem;
+    color: var(--text-soft);
+}
+
+.pf-skill::before,
+.pf-skill i {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 7px;
+    border-radius: 999px;
+}
+
+.pf-skill::before {
+    width: 100%;
+    background: rgba(0, 0, 0, .28);
+}
+
+.pf-skill i {
+    width: 0;
+    background: linear-gradient(90deg, var(--yellow), var(--peach));
+    transition: width 1.2s cubic-bezier(.2, .8, .2, 1) .2s;
+}
+
+.pf-reveal.in .pf-skill i,
+.no-js .pf-skill i {
+    width: var(--v);
+}
+
+/* DNA timeline — helix is centered + sticky, rotates with scroll; years slide in from alternating sides */
+.pf-dna {
+    position: relative;
+}
+
+.pf-helix {
+    position: sticky;
+    top: 0;
+    z-index: 0;
+    width: 260px;
+    height: 100vh;
+    margin: 0 auto -100vh;
+    /* takes no space, stays pinned while the list scrolls */
+    pointer-events: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 84%, transparent 100%);
+}
+
+.pf-helix canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.pf-dna-list {
+    list-style: none;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    padding: 18vh 0 22vh;
+}
+
+.pf-dna-list>li {
+    position: relative;
+    width: calc(50% - 140px);
+}
+
+.pf-dna-list>li:nth-child(even) {
+    margin-left: auto;
+}
+
+/* connector from card to the helix axis */
+.pf-dna-list>li::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 140px;
+    height: 3px;
+    border-radius: 3px;
+}
+
+.pf-dna-list>li:nth-child(odd)::after {
+    left: 100%;
+    background: linear-gradient(90deg, rgba(246, 231, 193, .15), var(--cream));
+}
+
+.pf-dna-list>li:nth-child(even)::after {
+    right: 100%;
+    background: linear-gradient(270deg, rgba(246, 231, 193, .15), var(--cream));
+}
+
+.pf-dna-list>li:nth-child(odd) .pf-year {
+    margin-left: 0;
+}
+
+.pf-year {
+    display: inline-block;
+    margin-bottom: 8px;
+    padding: 4px 16px;
+    border-radius: 999px;
+    background: var(--cream);
+    color: var(--cream-dark);
+    font-family: var(--f-display);
+    font-size: 1rem;
+    letter-spacing: .03em;
+}
+
+
+/* card states: the one nearest the middle of the screen is "active" */
+.pf-dna-list>li .pf-card {
+    transition: opacity .5s ease, filter .5s ease, transform .5s cubic-bezier(.2, .8, .2, 1), box-shadow .5s ease, border-color .5s ease, background .28s;
+}
+
+.pf-dna-list>li.in:not(.is-active) .pf-card {
+    opacity: .66;
+    filter: saturate(.8);
+}
+
+.pf-dna-list>li.is-active .pf-card {
+    transform: scale(1.025);
+    border-color: rgba(246, 231, 193, .85);
+    background: rgba(255, 255, 255, .2);
+    box-shadow: 0 0 0 1px rgba(246, 231, 193, .35), 0 0 46px rgba(242, 226, 79, .22), 0 18px 40px rgba(0, 0, 0, .35);
+}
+
+.pf-dna-list>li.is-active .pf-year {
+    background: var(--yellow);
+}
+
+.pf-year {
+    transition: background .4s, transform .4s;
+}
+
+.pf-dna-list>li.is-active .pf-year {
+    transform: translateY(-2px);
+}
+
+.pf-dna-list>li::after {
+    transition: opacity .5s;
+}
+
+.pf-dna-list>li.in:not(.is-active)::after {
+    opacity: .4;
+}
+
+/* giant ghost year on the empty side, opposite the card */
+.pf-dna-list>li::before {
+    content: attr(data-year);
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    font-family: var(--f-display);
+    font-size: clamp(3.4rem, 8vw, 7.5rem);
+    line-height: 1;
+    letter-spacing: .02em;
+    color: rgba(246, 231, 193, .05);
+    -webkit-text-stroke: 2px rgba(246, 231, 193, .28);
+    transform: translateY(-50%);
+    transition: color .5s, -webkit-text-stroke-color .5s, text-shadow .5s;
+    pointer-events: none;
+}
+
+.pf-dna-list>li:nth-child(odd)::before {
+    left: calc(100% + 280px);
+    text-align: left;
+}
+
+.pf-dna-list>li:nth-child(even)::before {
+    right: calc(100% + 280px);
+    text-align: right;
+}
+
+.pf-dna-list>li.is-active::before {
+    color: rgba(242, 226, 79, .14);
+    -webkit-text-stroke-color: rgba(242, 226, 79, .85);
+    text-shadow: 0 0 40px rgba(242, 226, 79, .35);
+}
+
+/* slide in from the side each card lives on */
+.js .pf-dna-list>li.pf-reveal {
+    transform: translateX(-60px);
+}
+
+.js .pf-dna-list>li.pf-reveal:nth-child(even) {
+    transform: translateX(60px);
+}
+
+.js .pf-dna-list>li.pf-reveal.in {
+    transform: none;
+}
+
+@media (max-width: 820px) {
+    .pf-dna-list>li::before {
+        display: none;
+    }
+
+    .pf-helix {
+        width: 64px;
+        margin: 0 0 -100vh;
+    }
+
+    .pf-dna-list>li,
+    .pf-dna-list>li:nth-child(even) {
+        width: calc(100% - 88px);
+        margin-left: 88px;
+    }
+
+    .pf-dna-list>li:nth-child(odd)::after,
+    .pf-dna-list>li:nth-child(even)::after {
+        left: -24px;
+        right: auto;
+        width: 24px;
+        background: linear-gradient(90deg, var(--cream), rgba(246, 231, 193, .15));
+    }
+
+    .js .pf-dna-list>li.pf-reveal,
+    .js .pf-dna-list>li.pf-reveal:nth-child(even) {
+        transform: translateY(26px);
+    }
+
+    .js .pf-dna-list>li.pf-reveal.in {
+        transform: none;
+    }
+}
+
+/* projects */
+.pf-work {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 22px;
+}
+
+.pf-proj {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: transform .28s, background .28s;
+}
+
+.pf-proj:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, .22);
+}
+
+.pf-proj .pf-tags {
+    margin-top: auto;
+    padding-top: 14px;
+}
+
+.pf-num {
+    position: absolute;
+    top: 14px;
+    right: 20px;
+    font-family: var(--f-display);
+    font-size: 2.4rem;
+    line-height: 1;
+    color: rgba(255, 255, 255, .22);
+}
+
+.pf-cat {
+    align-self: flex-start;
+    margin-bottom: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: var(--cream);
+    color: var(--cream-dark);
+    font-size: .68rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+/* gallery */
+.pf-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.pf-shot {
+    margin: 0;
+    overflow: hidden;
+    padding: 10px;
+    transition: transform .28s;
+}
+
+.pf-shot:hover {
+    transform: translateY(-6px) rotate(-.6deg);
+}
+
+.pf-shot img,
+.pf-shot .pf-ph {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    border-radius: 16px;
+}
+
+.pf-ph {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #8e2434, #5c1020);
+    font-family: var(--f-display);
+    font-size: 1.1rem;
+    color: var(--cream);
+}
+
+.pf-shot figcaption {
+    padding: 10px 6px 2px;
+    font-family: var(--f-mono);
+    font-style: italic;
+    font-size: .74rem;
+    color: var(--text-soft);
+}
+
+/* contact */
+.pf-contact {
+    text-align: center;
+    padding: 50px 24px;
+}
+
+.pf-contact .pf-title {
+    margin-bottom: 12px;
+}
+
+.pf-contact p {
+    max-width: 520px;
+    margin: 0 auto 22px;
+    line-height: 1.7;
+    color: var(--text);
+}
+
+.pf-mail {
+    display: inline-block;
+    padding: 12px 26px;
+    border-radius: 999px;
+    background: var(--cream);
+    color: var(--cream-dark);
+    font-weight: 700;
+    font-size: .95rem;
+    word-break: break-all;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.pf-mail:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 22px rgba(0, 0, 0, .35);
+}
+
+.pf-social {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 26px;
+}
+
+.pf-social a {
+    display: block;
+    padding: 9px 20px;
+    border-radius: 999px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, .12);
+    font-size: .85rem;
+    font-weight: 600;
+    transition: background .2s, transform .2s;
+}
+
+.pf-social a:hover {
+    background: rgba(255, 255, 255, .3);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+    .pf-about {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 820px) {
+    .pf {
+        padding-top: 50px;
+    }
+
+    .pf-block {
+        margin-top: 60px;
+    }
+
+    .pf-work {
+        grid-template-columns: 1fr;
+    }
+
+    .pf-card {
+        padding: 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .js .pf-reveal {
+        opacity: 1;
+        transform: none;
+    }
+
+    .pf-skill i {
+        width: var(--v);
+    }
+}
