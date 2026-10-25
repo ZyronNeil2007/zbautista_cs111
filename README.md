@@ -21,6 +21,34 @@ The website serves as a digital memory vault featuring:
 
 ---
 
+## ✨ Key Features
+
+### 📂 1. Interactive 3D Memory Folders (`js/folders.js`)
+- **Fanning Divider Tabs:** Mouse hover or focus expands folder tab dividers styled with curated warm gradient pairs.
+- **Dynamic Page Flipping:** Use the mouse scroll wheel, on-screen `▲` / `▼` navigation buttons, or keyboard arrow keys (`ArrowUp`/`ArrowDown`/`ArrowLeft`/`ArrowRight`) to cycle through memory photos inside each folder.
+- **Live Search Filtering:** Real-time filter box in the top navigation bar to quickly search memory folders by keyword with smooth scrolling to matching results.
+- **Touch-Device Friendly:** Optimized pointer events with single-tap preview and tap-outside dismiss for touch displays.
+
+### 🧬 2. Canvas DNA Double Helix Timeline (`js/dna.js`)
+- **Scroll-Synchronized Rotation:** Custom canvas rendering simulates a rotating double helix pinned beside the timeline cards in *"My Journey"*.
+- **Biological Color-Coding:** Strands and rungs alternate matching real A–T and G–C base pair combinations.
+- **Scroll Inertia & Drifting Motes:** Smooth easing with floating particle motes and reduced-motion query detection.
+
+### 🔍 3. Fullscreen Lightbox Modal (`js/lightbox.js`)
+- **High-Resolution Inspection:** Click any photo in the galleries across all memory pages to open it in a modal overlay.
+- **Automatic Caption Extraction:** Captures text from parent `<figure>` `<figcaption>` elements or image `alt` attributes.
+- **Keyboard & Click Dismiss:** Close via `ESC` key, backdrop click, or close button with ARIA modal accessibility standards.
+
+### 🎬 4. Native Multimedia Players
+- **Video Trailers (MP4):** Integrated `<video controls preload="metadata">` for movie trailers with responsive aspect ratios.
+- **Audio Players (MP3):** Integrated `<audio controls preload="metadata">` for music playback on the song gallery page.
+
+### 🎨 5. Glassmorphic UI & Design System (`css/`)
+- Dark crimson backdrop gradient (`#180308` to `#3a0912`) accented with frosted glass containers (`backdrop-filter: blur(12px)`).
+- Fluid typography using Google Fonts: *Lilita One*, *Poppins*, and *Space Mono*.
+
+---
+
 ## 📁 Repository Structure
 
 ```text
@@ -110,6 +138,39 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
    # Optional: Using Node.js npx serve
    npx serve .
    ```
+
+---
+
+## 📝 Changelog
+
+### [v2.0.0] — 2026-10-25
+#### Added
+- **Modular Folder Hierarchy:** Structured repository into dedicated folders (`pages/`, `css/`, `js/`, and `img/`).
+- **Interactive 3D Folders (`js/folders.js`):** Interactive folder stacks featuring multi-page scroll-wheeling and dynamic photo previews.
+- **Canvas DNA Double Helix (`js/dna.js`):** Real-time canvas animation responding to scroll position with inertia and drifting particles.
+- **Universal Image Lightbox (`js/lightbox.js`):** Modal image viewer with keyboard navigation (`ESC`) and backdrop click-away support.
+- **Integrated Multimedia:** Native MP3 playback for songs and MP4 video trailers for favorite movies.
+- **Real-time Folder Search:** Instant filter input on the homepage header.
+
+#### Changed
+- Relocated all secondary HTML files into `pages/`.
+- Consolidated styles into `css/landing.css`, `css/portfolio.css`, and `css/style.css`.
+- Grouped asset files into `img/<category>/`.
+- Preserved archived initial pure-HTML drafts in `discard/1.0/`.
+
+#### Fixed
+- Fixed all relative link paths across all pages for stylesheets, scripts, images, audio, and video tags.
+- Fixed CSS background `url()` path in `landing.css`.
+- Fixed HTML entity escaping in media player source links.
+
+---
+
+### [v1.0.0] — 2026-10-18
+#### Added
+- Initial project release for CS111 (Introduction to Computing).
+- Semantic HTML structure across 8 memory categories.
+- Homepage (`index.html`) linking to dedicated memory pages.
+- Native `<audio>` and `<video>` tags and image galleries.
 
 ---
 
