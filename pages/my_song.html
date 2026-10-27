@@ -7,12 +7,31 @@
     <title>My Songs — Zyron Neil A. Bautista | CS111</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/my_song.css?v=7">
+    <style>
+        /* safety net: full-screen player stays hidden unless the stylesheet opens it */
+        .nf {
+            display: flex;
+            visibility: hidden;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            transform: translateY(100%);
+        }
+
+        .nf.open {
+            visibility: visible;
+            transform: none;
+        }
+    </style>
 </head>
 
-<body>
+<body class="song-page">
     <div class="floating-orbs" aria-hidden="true">
         <div class="orb orb-1"></div>
         <div class="orb orb-2"></div>
@@ -26,159 +45,202 @@
         </div>
     </nav>
 
-    <header class="hero-section">
-        <div class="hero-mesh" aria-hidden="true"></div>
-        <div class="hero-glow" aria-hidden="true"></div>
-        <div class="hero-content">
-            <h1 class="hero-title animate-in animate-in-delay-1">My Songs</h1>
-            <p class="hero-subtitle animate-in animate-in-delay-2">Zyron Neil A. Bautista</p>
+    <!-- ═════════ HERO (cover + title, like a Spotify playlist header) ═════════ -->
+    <header class="sp-hero">
+        <div class="sp-hero-inner">
+            <img id="heroCover" class="sp-hero-cover" src="../img/my_song/mistery_of_love.jpg" alt="Current song cover">
+            <div class="sp-hero-text">
+                <span class="sp-kicker">Public Playlist</span>
+                <h1 class="sp-title">My Songs</h1>
+                <p class="sp-desc">
+                    Music has a special way of providing comfort, healing, and soundtracking the most meaningful
+                    seasons of our lives. Here are five songs that hold deep personal meaning.
+                </p>
+                <p class="sp-meta">
+                    <strong>Zyron Neil A. Bautista</strong> &bull; 5 songs
+                </p>
+            </div>
         </div>
     </header>
 
-    <main class="content-section">
-        <section class="glass-panel animate-in">
-            <h2 class="section-title">Introduction</h2>
-            <p class="content-intro">
-                Music has a special way of providing comfort, healing, and soundtracking the most meaningful seasons
-                of our lives. Whether through poetic acoustic melodies, dreamy indie pop, or emotional vocals,
-                here are five of my favorite songs that hold deep personal meaning.
-            </p>
+    <main class="sp-main">
+        <!-- Action bar -->
+        <div class="sp-actions">
+            <button class="sp-play-big" id="playAll" aria-label="Play">
+                <svg class="icon-play" viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                </svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+                    <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+                </svg>
+            </button>
+            <button class="sp-icon-btn" id="shuffleBtn" aria-label="Shuffle" aria-pressed="false" title="Shuffle">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
+                </svg>
+            </button>
+            <span class="sp-badge">Favorites</span>
+        </div>
+
+        <!-- Track list -->
+        <section class="sp-tracklist" aria-label="Track list">
+            <h2 class="sp-section-title">Track List</h2>
+
+            <div class="sp-row sp-head" aria-hidden="true">
+                <span class="c-num">#</span>
+                <span class="c-title">Title</span>
+                <span class="c-album">Album</span>
+                <span class="c-genre">Genre</span>
+                <span class="c-time">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M12 7v5l3 2" />
+                    </svg>
+                </span>
+            </div>
+
+            <ol class="sp-list" id="trackList">
+                <li class="sp-row track" tabindex="0" role="button" data-src="../img/my_song/Mystery of Love.mp3"
+                    data-cover="../img/my_song/mistery_of_love.jpg" data-title="Mystery of Love"
+                    data-artist="Sufjan Stevens">
+                    <span class="c-num"><span class="num">1</span><span class="eq"
+                            aria-hidden="true"><i></i><i></i><i></i></span></span>
+                    <span class="c-title">
+                        <img src="../img/my_song/mistery_of_love.jpg" alt="Mystery of Love artwork" loading="lazy">
+                        <span class="t-text"><span class="t-name">Mystery of Love</span><span class="t-artist">Sufjan
+                                Stevens</span></span>
+                    </span>
+                    <span class="c-album">Call Me by Your Name (OST)</span>
+                    <span class="c-genre">Indie Folk / Acoustic</span>
+                    <span class="c-time">--:--</span>
+                </li>
+
+                <li class="sp-row track" tabindex="0" role="button" data-src="../img/my_song/BLUE.mp3"
+                    data-cover="../img/my_song/blue by billie eilish song poster.jpg" data-title="BLUE"
+                    data-artist="Billie Eilish">
+                    <span class="c-num"><span class="num">2</span><span class="eq"
+                            aria-hidden="true"><i></i><i></i><i></i></span></span>
+                    <span class="c-title">
+                        <img src="../img/my_song/blue by billie eilish song poster.jpg" alt="BLUE artwork"
+                            loading="lazy">
+                        <span class="t-text"><span class="t-name">BLUE</span><span class="t-artist">Billie
+                                Eilish</span></span>
+                    </span>
+                    <span class="c-album">HIT ME HARD AND SOFT</span>
+                    <span class="c-genre">Alternative Pop / Art Pop</span>
+                    <span class="c-time">--:--</span>
+                </li>
+
+                <li class="sp-row track" tabindex="0" role="button"
+                    data-src="../img/my_song/we can't be friends (wait for your love).mp3"
+                    data-cover="../img/my_song/we cant be friend poster.jpg"
+                    data-title="we can't be friends (wait for your love)" data-artist="Ariana Grande">
+                    <span class="c-num"><span class="num">3</span><span class="eq"
+                            aria-hidden="true"><i></i><i></i><i></i></span></span>
+                    <span class="c-title">
+                        <img src="../img/my_song/we cant be friend poster.jpg" alt="we can't be friends artwork"
+                            loading="lazy">
+                        <span class="t-text"><span class="t-name">we can't be friends (wait for your love)</span><span
+                                class="t-artist">Ariana Grande</span></span>
+                    </span>
+                    <span class="c-album">eternal sunshine</span>
+                    <span class="c-genre">Synth-pop / Dance-pop</span>
+                    <span class="c-time">--:--</span>
+                </li>
+
+                <li class="sp-row track" tabindex="0" role="button" data-src="../img/my_song/Sailor Song.mp3"
+                    data-cover="../img/my_song/sailor song poster.jpg" data-title="Sailor Song"
+                    data-artist="Gigi Perez">
+                    <span class="c-num"><span class="num">4</span><span class="eq"
+                            aria-hidden="true"><i></i><i></i><i></i></span></span>
+                    <span class="c-title">
+                        <img src="../img/my_song/sailor song poster.jpg" alt="Sailor Song artwork" loading="lazy">
+                        <span class="t-text"><span class="t-name">Sailor Song</span><span class="t-artist">Gigi
+                                Perez</span></span>
+                    </span>
+                    <span class="c-album">Sailor Song (2024)</span>
+                    <span class="c-genre">Indie Folk / Acoustic</span>
+                    <span class="c-time">--:--</span>
+                </li>
+
+                <li class="sp-row track" tabindex="0" role="button" data-src="../img/my_song/Earrings.mp3"
+                    data-cover="../img/my_song/earrings song poster.jpg" data-title="Earrings" data-artist="Single">
+                    <span class="c-num"><span class="num">5</span><span class="eq"
+                            aria-hidden="true"><i></i><i></i><i></i></span></span>
+                    <span class="c-title">
+                        <img src="../img/my_song/earrings song poster.jpg" alt="Earrings artwork" loading="lazy">
+                        <span class="t-text"><span class="t-name">Earrings</span><span
+                                class="t-artist">Single</span></span>
+                    </span>
+                    <span class="c-album">Earrings</span>
+                    <span class="c-genre">Indie / Alternative</span>
+                    <span class="c-time">--:--</span>
+                </li>
+            </ol>
         </section>
 
-        <hr>
+        <!-- About panel: updates with the selected song -->
+        <!-- Data source for the full-screen player. Hidden on the page: the text is only shown in full screen. -->
+        <section class="sp-about glass-panel" hidden>
+            <h2 class="sp-section-title">Why I Love It &amp; Song Meaning</h2>
 
-        <article class="song-card animate-in">
-            <h2>1. Mystery of Love - Sufjan Stevens</h2>
-            <figure>
-                <img src="../img/my_song/mistery_of_love.jpg" alt="Mystery of Love single artwork featuring Elio and Oliver">
-                <figcaption><strong>Single Artwork:</strong> "Mystery of Love" by Sufjan Stevens</figcaption>
-            </figure>
-            <h3>Song Details</h3>
-            <ul>
-                <li><strong>Title:</strong> Mystery of Love</li>
-                <li><strong>Artist:</strong> Sufjan Stevens</li>
-                <li><strong>Soundtrack:</strong> <em>Call Me by Your Name (Original Motion Picture Soundtrack)</em>
-                    (2017)</li>
-                <li><strong>Genre:</strong> Indie Folk / Acoustic</li>
-            </ul>
-            <h3>Why I Love It &amp; Song Meaning</h3>
-            <p>Sufjan Stevens' delicate fingerpicking and ethereal, whispered vocals capture the delicate beauty,
-                wonder, and vulnerability of falling in love for the very first time. It explores how love can feel both
-                sacred and fleeting—like an unraveling ancient mystery that changes you forever.</p>
-            <h3>Listen to Song</h3>
-            <div class="media-player-wrapper">
-                <audio controls preload="metadata">
-                    <source src="../img/my_song/Mystery of Love.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+            <div class="about" data-for="0">
+                <h3>Mystery of Love &mdash; Sufjan Stevens</h3>
+                <ul class="about-list">
+                    <li><strong>Soundtrack:</strong> <em>Call Me by Your Name (Original Motion Picture Soundtrack)</em>
+                        (2017)</li>
+                    <li><strong>Genre:</strong> Indie Folk / Acoustic</li>
+                </ul>
+                <p>Sufjan Stevens' delicate fingerpicking and ethereal, whispered vocals capture the delicate beauty,
+                    wonder, and vulnerability of falling in love for the very first time. It explores how love can feel
+                    both sacred and fleeting&mdash;like an unraveling ancient mystery that changes you forever.</p>
             </div>
-        </article>
 
-        <article class="song-card animate-in">
-            <h2>2. BLUE - Billie Eilish</h2>
-            <figure>
-                <img src="../img/my_song/blue by billie eilish song poster.jpg"
-                    alt="BLUE by Billie Eilish album artwork poster">
-                <figcaption><strong>Song Poster:</strong> "BLUE" by Billie Eilish (HIT ME HARD AND SOFT)</figcaption>
-            </figure>
-            <h3>Song Details</h3>
-            <ul>
-                <li><strong>Title:</strong> BLUE</li>
-                <li><strong>Artist:</strong> Billie Eilish</li>
-                <li><strong>Album:</strong> <em>HIT ME HARD AND SOFT</em> (2024)</li>
-                <li><strong>Genre:</strong> Alternative Pop / Art Pop</li>
-            </ul>
-            <h3>Why I Love It &amp; Song Meaning</h3>
-            <p>A masterpiece of atmospheric sound design and raw emotional vulnerability. The song moves from
-                melancholic reflection into an orchestral, haunting second half, dealing with emotional coldness,
-                lingering nostalgia, and trying to let go of someone who couldn't be saved.</p>
-            <h3>Listen to Song</h3>
-            <div class="media-player-wrapper">
-                <audio controls preload="metadata">
-                    <source src="../img/my_song/BLUE.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+            <div class="about" data-for="1" hidden>
+                <h3>BLUE &mdash; Billie Eilish</h3>
+                <ul class="about-list">
+                    <li><strong>Album:</strong> <em>HIT ME HARD AND SOFT</em> (2024)</li>
+                    <li><strong>Genre:</strong> Alternative Pop / Art Pop</li>
+                </ul>
+                <p>A masterpiece of atmospheric sound design and raw emotional vulnerability. The song moves from
+                    melancholic reflection into an orchestral, haunting second half, dealing with emotional coldness,
+                    lingering nostalgia, and trying to let go of someone who couldn't be saved.</p>
             </div>
-        </article>
 
-        <article class="song-card animate-in">
-            <h2>3. we can't be friends (wait for your love) - Ariana Grande</h2>
-            <figure>
-                <img src="../img/my_song/we cant be friend poster.jpg"
-                    alt="we can't be friends single poster featuring Ariana Grande">
-                <figcaption><strong>Song Poster:</strong> "we can't be friends (wait for your love)" by Ariana Grande
-                </figcaption>
-            </figure>
-            <h3>Song Details</h3>
-            <ul>
-                <li><strong>Title:</strong> we can't be friends (wait for your love)</li>
-                <li><strong>Artist:</strong> Ariana Grande</li>
-                <li><strong>Album:</strong> <em>eternal sunshine</em> (2024)</li>
-                <li><strong>Genre:</strong> Synth-pop / Dance-pop</li>
-            </ul>
-            <h3>Why I Love It &amp; Song Meaning</h3>
-            <p>Infused with pulsating synth-pop grooves reminiscent of Robyn, this track captures the bittersweet
-                realization that two people must part ways even when love remains. It explores the heartbreak of waiting
-                for love in another lifetime while preserving self-respect in the present.</p>
-            <h3>Listen to Song</h3>
-            <div class="media-player-wrapper">
-                <audio controls preload="metadata">
-                    <source src="../img/my_song/we can't be friends (wait for your love).mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+            <div class="about" data-for="2" hidden>
+                <h3>we can't be friends (wait for your love) &mdash; Ariana Grande</h3>
+                <ul class="about-list">
+                    <li><strong>Album:</strong> <em>eternal sunshine</em> (2024)</li>
+                    <li><strong>Genre:</strong> Synth-pop / Dance-pop</li>
+                </ul>
+                <p>Infused with pulsating synth-pop grooves reminiscent of Robyn, this track captures the bittersweet
+                    realization that two people must part ways even when love remains. It explores the heartbreak of
+                    waiting for love in another lifetime while preserving self-respect in the present.</p>
             </div>
-        </article>
 
-        <article class="song-card animate-in">
-            <h2>4. Sailor Song - Gigi Perez</h2>
-            <figure>
-                <img src="../img/my_song/sailor song poster.jpg" alt="Sailor Song single artwork poster">
-                <figcaption><strong>Song Poster:</strong> "Sailor Song" by Gigi Perez</figcaption>
-            </figure>
-            <h3>Song Details</h3>
-            <ul>
-                <li><strong>Title:</strong> Sailor Song</li>
-                <li><strong>Artist:</strong> Gigi Perez</li>
-                <li><strong>Release Year:</strong> 2024</li>
-                <li><strong>Genre:</strong> Indie Folk / Acoustic</li>
-            </ul>
-            <h3>Why I Love It &amp; Song Meaning</h3>
-            <p>An acoustic indie-folk ballad driven by raw, passionate vocal delivery and evocative nautical imagery. It
-                expresses devotion and unconditional dedication to someone through stormy tides and personal struggles.
-            </p>
-            <h3>Listen to Song</h3>
-            <div class="media-player-wrapper">
-                <audio controls preload="metadata">
-                    <source src="../img/my_song/Sailor Song.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+            <div class="about" data-for="3" hidden>
+                <h3>Sailor Song &mdash; Gigi Perez</h3>
+                <ul class="about-list">
+                    <li><strong>Release Year:</strong> 2024</li>
+                    <li><strong>Genre:</strong> Indie Folk / Acoustic</li>
+                </ul>
+                <p>An acoustic indie-folk ballad driven by raw, passionate vocal delivery and evocative nautical
+                    imagery. It expresses devotion and unconditional dedication to someone through stormy tides and
+                    personal struggles.</p>
             </div>
-        </article>
 
-        <article class="song-card animate-in">
-            <h2>5. Earrings</h2>
-            <figure>
-                <img src="../img/my_song/earrings song poster.jpg" alt="Earrings song artwork poster">
-                <figcaption><strong>Song Poster:</strong> "Earrings" single poster</figcaption>
-            </figure>
-            <h3>Song Details</h3>
-            <ul>
-                <li><strong>Title:</strong> Earrings</li>
-                <li><strong>Theme:</strong> Nostalgia, Keepsakes, and Gentle Memories</li>
-                <li><strong>Genre:</strong> Indie / Alternative</li>
-            </ul>
-            <h3>Why I Love It &amp; Song Meaning</h3>
-            <p>A soothing and contemplative song about small physical keepsakes that hold huge emotional value. Like a
-                piece of jewelry left behind, small objects often become timeless tokens of people, conversations, and
-                moments we hold dear.</p>
-            <h3>Listen to Song</h3>
-            <div class="media-player-wrapper">
-                <audio controls preload="metadata">
-                    <source src="../img/my_song/Earrings.mp3" type="audio/mpeg">
-                    Your browser does not support the audio element.
-                </audio>
+            <div class="about" data-for="4" hidden>
+                <h3>Earrings</h3>
+                <ul class="about-list">
+                    <li><strong>Theme:</strong> Nostalgia, Keepsakes, and Gentle Memories</li>
+                    <li><strong>Genre:</strong> Indie / Alternative</li>
+                </ul>
+                <p>A soothing and contemplative song about small physical keepsakes that hold huge emotional value.
+                    Like a piece of jewelry left behind, small objects often become timeless tokens of people,
+                    conversations, and moments we hold dear.</p>
             </div>
-        </article>
+        </section>
     </main>
 
     <footer class="site-footer">
@@ -186,7 +248,197 @@
         <p>&copy; 2026 Zyron Neil A. Bautista | CS111 — Introduction to Computing Personal Memories Project</p>
     </footer>
 
-    <script src="../js/lightbox.js"></script>
+    <!-- ═════════ NOW PLAYING BAR ═════════ -->
+    <div class="np-bar" id="npBar" aria-label="Now playing">
+        <div class="np-progress-mobile"><span id="npProgressMobile"></span></div>
+
+        <div class="np-info">
+            <img id="npCover" src="../img/my_song/mistery_of_love.jpg" alt="">
+            <div class="np-text">
+                <span class="np-title" id="npTitle">Pick a song</span>
+                <span class="np-artist" id="npArtist">Tap any track to play</span>
+            </div>
+            <span class="np-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#111" stroke-width="3.5"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12.5l4.5 4.5L19 7.5" />
+                </svg>
+            </span>
+        </div>
+
+        <div class="np-center">
+            <div class="np-controls">
+                <button class="np-btn" id="prevBtn" aria-label="Previous">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M6 6h2v12H6zM9.5 12 18 18V6z" />
+                    </svg>
+                </button>
+                <button class="np-btn np-main" id="playBtn" aria-label="Play">
+                    <svg class="icon-play" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+                    </svg>
+                </button>
+                <button class="np-btn" id="nextBtn" aria-label="Next">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                        <path d="M16 6h2v12h-2zM6 18l8.5-6L6 6z" />
+                    </svg>
+                </button>
+            </div>
+            <div class="np-seek">
+                <span id="curTime">0:00</span>
+                <input type="range" id="seek" min="0" max="100" step="0.1" value="0" aria-label="Seek">
+                <span id="durTime">0:00</span>
+            </div>
+        </div>
+
+        <div class="np-volume">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <path d="M3 9v6h4l5 4V5L7 9zM16.5 12a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z" />
+            </svg>
+            <input type="range" id="volume" min="0" max="1" step="0.01" value="1" aria-label="Volume">
+            <button class="np-btn" id="fsBtn" aria-label="Full screen" title="Full screen">
+                <svg class="fs-enter" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3" />
+                </svg>
+                <svg class="fs-exit" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M8 3v3a2 2 0 0 1-2 2H3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M16 21v-3a2 2 0 0 1 2-2h3" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- ═════════ FULL-SCREEN NOW PLAYING (opens when the mini player is tapped on phones) ═════════ -->
+    <section class="nf" id="npFull" aria-label="Now playing" aria-hidden="true">
+        <div class="nf-top">
+            <button class="nf-icon" id="nfClose" aria-label="Close player">
+                <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 9l7 7 7-7" />
+                </svg>
+            </button>
+            <div class="nf-from">
+                <span>Playing from Playlist</span>
+                <strong>My Songs</strong>
+            </div>
+            <span class="nf-icon nf-dots" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor">
+                    <circle cx="12" cy="5" r="2" />
+                    <circle cx="12" cy="12" r="2" />
+                    <circle cx="12" cy="19" r="2" />
+                </svg>
+            </span>
+        </div>
+
+        <div class="nf-body">
+            <img class="nf-cover" id="nfCover" src="../img/my_song/mistery_of_love.jpg" alt="Song cover">
+
+            <div class="nf-meta">
+                <div class="nf-names">
+                    <h2 id="nfTitle">Mystery of Love</h2>
+                    <p id="nfArtist">Sufjan Stevens</p>
+                </div>
+                <span class="nf-check" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#111" stroke-width="3"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12.5l4.5 4.5L19 7.5" />
+                    </svg>
+                </span>
+            </div>
+
+            <div class="nf-seek">
+                <input type="range" id="nfSeek" min="0" max="100" step="0.1" value="0" aria-label="Seek">
+                <div class="nf-times"><span id="nfCur">0:00</span><span id="nfDur">0:00</span></div>
+            </div>
+
+            <div class="nf-controls">
+                <button class="nf-ctl" id="nfShuffle" aria-label="Shuffle" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5" />
+                    </svg>
+                </button>
+                <button class="nf-ctl" id="nfPrev" aria-label="Previous">
+                    <svg viewBox="0 0 24 24" width="38" height="38" fill="currentColor">
+                        <path d="M6 6h2.4v12H6zM9.5 12 19 18.5v-13z" />
+                    </svg>
+                </button>
+                <button class="nf-play" id="nfPlay" aria-label="Play">
+                    <svg class="icon-play" viewBox="0 0 24 24" width="38" height="38" fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                    <svg class="icon-pause" viewBox="0 0 24 24" width="38" height="38" fill="currentColor">
+                        <path d="M6 5h4v14H6zM14 5h4v14h-4z" />
+                    </svg>
+                </button>
+                <button class="nf-ctl" id="nfNext" aria-label="Next">
+                    <svg viewBox="0 0 24 24" width="38" height="38" fill="currentColor">
+                        <path d="M15.6 6H18v12h-2.4zM5 18.5 14.5 12 5 5.5z" />
+                    </svg>
+                </button>
+                <button class="nf-ctl" id="nfRepeat" aria-label="Repeat" aria-pressed="false">
+                    <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 2l4 4-4 4" />
+                        <path d="M3 11V9a3 3 0 0 1 3-3h15" />
+                        <path d="M7 22l-4-4 4-4" />
+                        <path d="M21 13v2a3 3 0 0 1-3 3H3" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="nf-bottom">
+                <button class="nf-ctl nf-small" id="nfFs" aria-label="Full screen" title="Full screen">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3" />
+                    </svg>
+                </button>
+                <button class="nf-ctl nf-small" id="nfShare" aria-label="Share">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="18" cy="5" r="3" />
+                        <circle cx="6" cy="12" r="3" />
+                        <circle cx="18" cy="19" r="3" />
+                        <path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4" />
+                    </svg>
+                </button>
+                <button class="nf-ctl nf-small" id="nfQueue" aria-label="Show track list">
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="4" y="3" width="16" height="6" rx="2" />
+                        <path d="M4 14h16M4 19h16" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="nf-cards">
+                <div class="nf-about">
+                    <h3>About this song</h3>
+                    <p id="nfAbout"></p>
+                </div>
+                <div class="nf-details">
+                    <h3>Song details</h3>
+                    <ul id="nfDetails"></ul>
+                </div>
+                <div class="nf-meaning">
+                    <h3>Why I Love It &amp; Song Meaning</h3>
+                    <p id="nfMeaning"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <audio id="player" preload="metadata"></audio>
+
+    <script src="../js/my_song.js?v=7"></script>
 </body>
 
 </html>

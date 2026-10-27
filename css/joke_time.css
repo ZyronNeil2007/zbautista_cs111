@@ -1,0 +1,60 @@
+.joke-card {
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+    padding: var(--sp-xl) var(--sp-2xl);
+    margin-bottom: var(--sp-xl);
+    transition: transform var(--dur-base) var(--ease-smooth), background var(--dur-base) var(--ease-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.joke-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), var(--cream), var(--red));
+    opacity: 0;
+    transition: opacity var(--dur-base);
+}
+
+.joke-card:hover {
+    transform: translateY(-4px);
+    background: var(--glass-strong);
+}
+
+.joke-card:hover::after {
+    opacity: 1;
+}
+
+.joke-card h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--yellow);
+    margin-bottom: var(--sp-md);
+    letter-spacing: 0.01em;
+}
+
+.joke-card p {
+    color: var(--text-secondary);
+    line-height: 1.7;
+}
+
+.joke-card p strong {
+    color: var(--text-primary);
+}
+
+.closing-message {
+    text-align: center;
+    padding: var(--sp-lg);
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    font-style: italic;
+}

@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111 — Personal Memories Website
 
-**Version:** 2.1.0<br>
+**Version:** 2.2.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -16,7 +16,7 @@ The website serves as a digital memory vault featuring:
 - An interactive **3D fan-out Memory Folders stage** on the homepage (`index.html`) allowing visitors to hover and wheel-flip through pages or click directly into each section.
 - An interactive **DNA Helix Timeline** pinned to the *"My Journey"* portfolio section, rendered smoothly on HTML5 Canvas.
 - A **Full-screen Lightbox Image Viewer** built with vanilla JavaScript, providing seamless full-screen image inspection and captions across all memory pages.
-- Native HTML5 **Audio and Video media players** showcasing favorite music tracks (MP3) and movie trailers (MP4).
+- Native HTML5 **video playback** for movie trailers (MP4) and a custom multi-track **music player** for favorite songs (MP3).
 - A clean, standardized, modular folder architecture categorizing source code and assets by file type (`pages/`, `css/`, `js/`, and `img/`).
 
 ---
@@ -41,7 +41,7 @@ The website serves as a digital memory vault featuring:
 
 ### 🎬 4. Native Multimedia Players
 - **Video Trailers (MP4):** Integrated `<video controls preload="metadata">` for movie trailers with responsive aspect ratios.
-- **Audio Players (MP3):** Integrated `<audio controls preload="metadata">` for music playback on the song gallery page.
+- **Song Playlist (MP3):** Custom playlist with playback controls, shuffle/repeat, seeking, volume, a responsive now-playing view, and Media Session controls where supported.
 
 ### 🎨 5. Glassmorphic UI & Design System (`css/`)
 - Dark crimson backdrop gradient (`#180308` to `#3a0912`) accented with frosted glass containers (`backdrop-filter: blur(12px)`).
@@ -74,12 +74,21 @@ zbautista_cs111/
 ├── css/                         # Clean vanilla styling and design system
 │   ├── landing.css              # Hero stage, topbar, 3D folder fan-out, and responsive grid
 │   ├── portfolio.css            # Portfolio section, DNA helix layout, and design gallery
-│   └── style.css                # Universal glassmorphic design system for content pages
+│   ├── style.css                # Shared glassmorphic design system for content pages
+│   ├── childhood_memories.css   # Childhood gallery layout
+│   ├── family_relatives.css     # Family gallery layout
+│   ├── me_and_my_love.css       # Memories gallery layout
+│   ├── my_friends.css           # Friends gallery layout
+│   ├── my_favorite_food.css     # Recipe page styling
+│   ├── my_favorite_movie.css    # Movie page styling
+│   ├── my_song.css              # Song page styling
+│   └── joke_time.css            # Joke page styling
 │
 ├── js/                          # Client-side interactions & features
 │   ├── dna.js                   # Interactive HTML5 Canvas double-helix scroll visualizer
 │   ├── folders.js               # Interactive 3D folder card fan-out & page flipper
-│   └── lightbox.js              # Fullscreen image viewer modal with keyboard & touch support
+│   ├── lightbox.js              # Fullscreen image viewer modal with keyboard & touch support
+│   └── my_song.js               # Song playlist playback and now-playing controls
 │
 ├── img/                         # Optimized image, audio, and video assets
 │   ├── backgrounds/             # Portfolio backgrounds (neil_bg.jpg, ME_LANSCAPE_AT_RICEFIELD.png, bnhschool.png)
@@ -122,7 +131,8 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
   - **3D Folder Fan-out (`js/folders.js`):** Interactive page flipping, mouse hover, wheel scrolling, touch interaction, and keyboard navigation.
   - **DNA Timeline Visualizer (`js/dna.js`):** Canvas-based animated double helix responsive to scrolling and inertia.
   - **Lightbox Modal (`js/lightbox.js`):** Accessible fullscreen modal with ESC key dismiss and click-away close.
-- **Media Support:** Native browser `<audio controls>` for MP3 tracks and `<video controls>` for MP4 trailers.
+- **Song Playlist (`js/my_song.js`):** Multi-track playback, shuffle/repeat, seek and volume controls, responsive now-playing view, and Media Session integration where supported.
+- **Media Support:** Native browser `<video controls>` for MP4 trailers; MP3 playback is managed by the custom song playlist.
 - **Zero Heavy Frameworks:** Pure, high-performance vanilla web standards.
 
 ---
@@ -146,6 +156,19 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.2.0] — 2026-10-27
+#### Added
+- Redesigned the song page as an interactive playlist with track selection, playback controls, shuffle, repeat, seek, volume, and a responsive full-screen now-playing view.
+- Added Media Session integration for supported browsers and mobile devices.
+- Added page-specific stylesheets for memory categories and the song page.
+
+#### Changed
+- Moved page-specific gallery, recipe, movie, and joke styling out of the shared stylesheet.
+- Updated song page documentation and project version.
+
+#### Breaking Changes
+- None.
 
 ### [v2.1.0] — 2026-10-25
 #### Added
