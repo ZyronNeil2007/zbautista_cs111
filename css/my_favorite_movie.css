@@ -1,87 +1,792 @@
-.movie-card {
-    background: var(--glass);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-xl);
-    backdrop-filter: blur(var(--glass-blur));
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    box-shadow: var(--glass-shadow);
-    padding: var(--sp-2xl);
-    margin-bottom: var(--sp-2xl);
-}
+/* ════════════════════════════════════════════════════════════════════════════
+   MY FAVORITE MOVIES — Netflix-style browse layout
+   Built on the shared tokens + components in style.css (crimson glass theme)
+   ════════════════════════════════════════════════════════════════════════════ */
 
-.movie-card figure {
-    margin: 0 0 var(--sp-xl);
-    border-radius: var(--radius-md);
+/* ───────── Billboard (featured hero) ───────── */
+.billboard {
+    position: relative;
+    z-index: 1;
+    min-height: clamp(460px, 78vh, 720px);
+    display: flex;
+    align-items: flex-end;
+    padding: calc(var(--navbar-height) + 2rem) clamp(1.25rem, 5vw, 4rem) clamp(2.5rem, 7vw, 5rem);
     overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
-.movie-card figure img {
-    width: 100%;
-    max-width: 450px;
-    height: auto;
-    display: block;
-    border-radius: var(--radius-md);
-    transition: transform var(--dur-slow) var(--ease-smooth);
+.billboard-bg {
+    position: absolute;
+    inset: 0;
+    background:
+        url("../img/my_favorite_movie/rwrb.jpg") center 25% / cover no-repeat;
+    filter: saturate(1.1) brightness(0.75);
+    transform: scale(1.04);
 }
 
-.movie-card figure:hover img {
-    transform: scale(1.03);
+/* crimson vignette so the image melts into the page like Netflix's billboard */
+.billboard-fade {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(58, 9, 18, 0.95) 0%, rgba(58, 9, 18, 0.6) 40%, transparent 75%),
+        linear-gradient(0deg, var(--bg-3) 0%, rgba(58, 9, 18, 0.55) 22%, transparent 55%);
 }
 
-.movie-card figure figcaption {
-    padding: var(--sp-md) 0;
+.billboard-content {
+    position: relative;
+    z-index: 1;
+    max-width: 620px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-lg);
+}
+
+.billboard-tag {
+    font-family: var(--font-mono);
+    font-style: italic;
     font-size: 0.85rem;
-    color: var(--text-muted);
+    color: var(--peach);
+    letter-spacing: 0.02em;
 }
 
-.movie-card h2 {
+.billboard .hero-title {
+    font-size: clamp(2.4rem, 7vw, 5rem);
+}
+
+.billboard-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-md);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.match {
+    color: #5ee08a;
+    font-weight: 700;
+}
+
+.badge-rating {
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    padding: 0.05rem 0.55rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.78rem;
+    color: var(--cream);
+}
+
+.billboard-desc {
+    color: var(--text-primary);
+    font-size: clamp(0.92rem, 1.8vw, 1.05rem);
+    line-height: 1.7;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.billboard-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-md);
+    margin-top: var(--sp-sm);
+}
+
+.btn-play,
+.btn-info {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-sm);
+    padding: 0.8rem 1.7rem;
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform var(--dur-base) var(--ease-smooth), background var(--dur-base) var(--ease-smooth);
+}
+
+.btn-play {
+    background: var(--cream);
+    color: var(--cream-dark);
+    border: 2px solid var(--cream);
+}
+
+.btn-play:hover {
+    background: #fff;
+    transform: translateY(-2px);
+}
+
+.btn-info {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-primary);
+    border: 2px solid var(--glass-border);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.btn-info:hover {
+    background: rgba(255, 255, 255, 0.32);
+    transform: translateY(-2px);
+}
+
+/* ───────── Browse rows ───────── */
+.browse {
+    position: relative;
+    z-index: 2;
+    margin-top: -2.5rem;
+    padding-bottom: var(--sp-3xl);
+}
+
+.row {
+    margin-bottom: clamp(1.5rem, 4vw, 3rem);
+}
+
+.row-title {
     font-family: var(--font-display);
     font-weight: 400;
-    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    font-size: clamp(1.2rem, 2.6vw, 1.7rem);
     color: var(--cream);
-    margin-bottom: var(--sp-lg);
     letter-spacing: 0.01em;
     text-shadow: 2px 2px 0 var(--cream-dark);
-}
-
-.movie-card h3 {
-    font-weight: 700;
-    color: var(--peach);
-    margin: var(--sp-xl) 0 var(--sp-md);
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    font-size: 0.88rem;
-}
-
-.movie-card p {
-    color: var(--text-secondary);
-    line-height: 1.75;
+    padding: 0 clamp(1.25rem, 5vw, 4rem);
     margin-bottom: var(--sp-md);
 }
 
-.media-player-wrapper {
-    background: rgba(0, 0, 0, 0.18);
-    border: 1px solid var(--glass-border);
-    border-radius: var(--radius-lg);
-    padding: var(--sp-xl);
-    margin-top: var(--sp-lg);
+.row-wrap {
+    position: relative;
 }
 
-video {
-    width: 100%;
-    max-width: 600px;
-    border-radius: var(--radius-md);
+.row-scroller {
+    display: flex;
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    padding: 2rem clamp(1.25rem, 5vw, 4rem) 3rem;
+}
+
+.row-scroller::-webkit-scrollbar {
+    display: none;
+}
+
+.row-arrow {
+    position: absolute;
+    top: 2rem;
+    bottom: 3rem;
+    width: clamp(36px, 4.5vw, 60px);
+    z-index: 5;
+    border: none;
+    color: #fff;
+    font-size: 1.8rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity var(--dur-base) ease, background var(--dur-base) ease;
+}
+
+.row-arrow.left {
+    left: 0;
+    background: linear-gradient(90deg, rgba(58, 9, 18, 0.9), transparent);
+}
+
+.row-arrow.right {
+    right: 0;
+    background: linear-gradient(270deg, rgba(58, 9, 18, 0.9), transparent);
+}
+
+.row-wrap:hover .row-arrow {
+    opacity: 1;
+}
+
+/* ───────── Tiles (Top-10 style rank + poster) ───────── */
+.tile {
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: flex-end;
+    scroll-snap-align: start;
+    cursor: pointer;
     outline: none;
 }
 
-.media-note {
-    font-size: 0.82rem;
+.rank {
+    font-family: var(--font-display);
+    font-size: clamp(7rem, 15vw, 11rem);
+    line-height: 0.75;
+    color: transparent;
+    -webkit-text-stroke: 3px var(--cream);
+    margin-right: -1.2rem;
+    margin-bottom: 0.2rem;
+    text-shadow: 6px 6px 0 var(--cream-dark);
+    user-select: none;
+    position: relative;
+    z-index: 0;
+}
+
+.poster {
+    position: relative;
+    z-index: 1;
+    width: clamp(150px, 17vw, 215px);
+    aspect-ratio: 2 / 3;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+    transition: transform var(--dur-base) var(--ease-smooth), box-shadow var(--dur-base) var(--ease-smooth);
+}
+
+.poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.tile-overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 2.5rem var(--sp-md) var(--sp-md);
+    background: linear-gradient(0deg, rgba(40, 6, 14, 0.95), transparent);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity var(--dur-base) ease, transform var(--dur-base) var(--ease-smooth);
+}
+
+.tile-overlay h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--cream);
+}
+
+.tile-overlay p {
+    font-size: 0.74rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.tile:hover .poster,
+.tile:focus-visible .poster {
+    transform: scale(1.1);
+    z-index: 3;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.7), 0 0 0 2px var(--cream);
+}
+
+.tile:hover .tile-overlay,
+.tile:focus-visible .tile-overlay {
+    opacity: 1;
+    transform: none;
+}
+
+/* ───────── Modal ───────── */
+body.modal-open {
+    overflow: hidden;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow-y: auto;
+    padding: clamp(1rem, 4vw, 3rem) 1rem;
+}
+
+.modal[hidden] {
+    display: none;
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 4, 10, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: fadeIn 0.25s ease both;
+}
+
+.modal-box {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 860px);
+    background: linear-gradient(160deg, rgba(110, 22, 40, 0.98), rgba(58, 9, 18, 0.98));
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 40px rgba(201, 52, 63, 0.3);
+    overflow: hidden;
+    animation: fadeInUp 0.35s var(--ease-out) both;
+}
+
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 3;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--glass-border);
+    background: rgba(40, 6, 14, 0.85);
+    color: #fff;
+    font-size: 1.6rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background var(--dur-fast) ease, transform var(--dur-base) ease;
+}
+
+.modal-close:hover {
+    background: var(--red);
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    padding: 0 0 var(--sp-2xl);
+}
+
+.modal-body h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 4vw, 2.3rem);
+    color: var(--cream);
+    text-shadow: 2px 2px 0 var(--cream-dark);
+    padding: var(--sp-xl) var(--sp-2xl) var(--sp-sm);
+    margin: 0;
+}
+
+.detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-md);
+    padding: 0 var(--sp-2xl);
+    margin-bottom: var(--sp-lg);
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.media-player-wrapper {
+    background: #000;
+    line-height: 0;
+}
+
+.media-player-wrapper video {
+    width: 100%;
+    max-width: none;
+    aspect-ratio: 16 / 9;
+    border-radius: 0;
+    background: #000;
+    outline: none;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: var(--sp-2xl);
+    padding: var(--sp-xl) var(--sp-2xl) 0;
+}
+
+.modal-body h3 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--peach);
+    margin: 0 0 var(--sp-sm);
+}
+
+.detail-grid>div>h3:not(:first-child) {
+    margin-top: var(--sp-lg);
+}
+
+.modal-body p {
+    color: var(--text-secondary);
+    line-height: 1.75;
+    font-size: 0.93rem;
+}
+
+.modal-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.modal-body li {
+    font-size: 0.88rem;
+    padding: var(--sp-xs) 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 0;
+}
+
+.modal-body li:last-child {
+    border-bottom: none;
+}
+
+/* ───────── Responsive ───────── */
+@media (max-width: 860px) {
+    .billboard {
+        min-height: 520px;
+    }
+
+    .billboard-fade {
+        background:
+            linear-gradient(0deg, var(--bg-3) 0%, rgba(58, 9, 18, 0.75) 45%, rgba(58, 9, 18, 0.35) 100%);
+    }
+
+    .row-arrow {
+        display: none;
+    }
+
+    .rank {
+        -webkit-text-stroke: 2px var(--cream);
+        margin-right: -0.9rem;
+    }
+
+    .tile:hover .poster {
+        transform: none;
+    }
+
+    .tile-overlay {
+        opacity: 1;
+        transform: none;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+        gap: var(--sp-lg);
+    }
+
+    .modal-box {
+        background: rgb(70, 12, 26);
+    }
+}
+
+@media (max-width: 480px) {
+
+    .btn-play,
+    .btn-info {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.92rem;
+    }
+
+    .modal-body h2,
+    .detail-meta,
+    .detail-grid {
+        padding-left: var(--sp-lg);
+        padding-right: var(--sp-lg);
+    }
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   UX PASS — rotating billboard, modal navigation, accessibility, polish
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* ───────── Accessibility ───────── */
+:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 3px;
+}
+
+.tile:focus-visible {
+    outline: none;
+    /* the poster ring shows focus instead */
+}
+
+.skip-link {
+    position: fixed;
+    top: -70px;
+    left: 1rem;
+    z-index: 6000;
+    padding: 0.6rem 1.1rem;
+    border-radius: var(--radius-md);
+    background: var(--cream);
+    color: var(--cream-dark);
+    font-weight: 700;
+    transition: top var(--dur-base) var(--ease-smooth);
+}
+
+.skip-link:focus {
+    top: 1rem;
+    color: var(--cream-dark);
+}
+
+/* ───────── Billboard v2 ───────── */
+.billboard-inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--sp-3xl);
+}
+
+/* portrait posters look soft when stretched, so the backdrop is a rich blur and the sharp poster sits beside the text */
+.billboard-bg {
+    background-size: cover;
+    background-position: center;
+    filter: blur(26px) saturate(1.25) brightness(0.6);
+    transform: scale(1.3);
+    transition: opacity 0.35s ease;
+}
+
+.billboard-content,
+.billboard-poster {
+    transition: opacity 0.28s ease, transform 0.28s var(--ease-smooth);
+}
+
+.billboard.is-swapping .billboard-content,
+.billboard.is-swapping .billboard-poster {
+    opacity: 0;
+    transform: translateY(8px);
+}
+
+.billboard.is-swapping .billboard-bg {
+    opacity: 0.35;
+}
+
+.billboard-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 0.95rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cream);
+}
+
+.billboard-eyebrow::before {
+    content: '';
+    width: 5px;
+    height: 1.1em;
+    border-radius: 3px;
+    background: linear-gradient(180deg, var(--cream), var(--red));
+}
+
+.billboard .billboard-title {
+    font-size: clamp(2rem, 5.2vw, 3.8rem);
+}
+
+.billboard-desc {
+    min-height: 5.2em;
+    /* keeps the layout steady while titles rotate */
+}
+
+.billboard-poster {
+    flex: 0 0 auto;
+    width: clamp(180px, 22vw, 280px);
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+}
+
+.billboard-poster:hover {
+    transform: translateY(-4px);
+}
+
+/* progress dots: the active bar fills over 7s, then the next movie appears */
+.billboard-dots {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: var(--sp-sm);
+}
+
+.dot {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    /* generous hit area */
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.dot::before,
+.dot::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 4px;
+    margin-top: -2px;
+    border-radius: 4px;
+}
+
+.dot::before {
+    right: 0;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.dot::after {
+    width: 0;
+    background: var(--cream);
+}
+
+.dot.done::after {
+    width: 100%;
+}
+
+.dot.active::after {
+    animation: dotFill 7s linear forwards;
+}
+
+@keyframes dotFill {
+    to {
+        width: 100%;
+    }
+}
+
+/* pause the rotation whenever someone is interacting, reading a trailer, or the billboard is off-screen */
+.billboard:hover .dot.active::after,
+.billboard:focus-within .dot.active::after,
+.billboard.is-offscreen .dot.active::after,
+body.modal-open .dot.active::after {
+    animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dot.active::after {
+        width: 100%;
+    }
+}
+
+/* ───────── Tiles ───────── */
+.poster {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* hover play button */
+.poster::after {
+    content: '\25B6';
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    width: 52px;
+    height: 52px;
+    margin: -26px 0 0 -26px;
+    display: grid;
+    place-items: center;
+    padding-left: 4px;
+    border-radius: 50%;
+    background: rgba(246, 231, 193, 0.94);
+    color: var(--cream-dark);
+    font-size: 1.1rem;
+    opacity: 0;
+    transform: scale(0.7);
+    transition: opacity var(--dur-base) ease, transform var(--dur-base) var(--ease-spring);
+    pointer-events: none;
+}
+
+.tile:hover .poster::after,
+.tile:focus-visible .poster::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+@media (hover: none) {
+    .poster::after {
+        display: none;
+    }
+}
+
+/* if a poster file is missing, show the title instead of a broken image */
+.poster.is-missing {
+    display: grid;
+    place-items: center;
+    text-align: center;
+}
+
+.poster.is-missing img {
+    display: none;
+}
+
+.poster.is-missing .tile-overlay {
+    position: static;
+    opacity: 1;
+    transform: none;
+    background: none;
+}
+
+/* ───────── Row arrows ───────── */
+.row-arrow:disabled {
+    visibility: hidden;
+}
+
+.row-arrow:focus-visible {
+    opacity: 1;
+}
+
+/* ───────── Modal navigation ───────── */
+.modal-body {
+    padding-bottom: 0;
+}
+
+.modal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-md);
+    margin-top: var(--sp-xl);
+    padding: var(--sp-lg) var(--sp-2xl) var(--sp-xl);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.modal-nav button {
+    padding: 0.55rem 1.2rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--glass-border);
+    background: var(--glass);
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--dur-base) ease, transform var(--dur-base) var(--ease-smooth);
+}
+
+.modal-nav button:hover {
+    background: rgba(255, 255, 255, 0.28);
+    transform: translateY(-2px);
+}
+
+.modal-count {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
     color: var(--text-muted);
-    font-style: italic;
-    margin-top: var(--sp-md);
-    padding: var(--sp-md);
-    background: rgba(246, 231, 193, 0.08);
-    border: 1px solid rgba(246, 231, 193, 0.2);
-    border-radius: var(--radius-sm);
+}
+
+.video-error {
+    padding: var(--sp-2xl);
+    line-height: 1.5;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+/* ───────── Responsive ───────── */
+@media (max-width: 860px) {
+    .billboard-poster {
+        display: none;
+    }
+
+    .billboard-desc {
+        min-height: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-nav {
+        padding-left: var(--sp-lg);
+        padding-right: var(--sp-lg);
+    }
 }

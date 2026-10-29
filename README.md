@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111 — Personal Memories Website
 
-**Version:** 2.2.0<br>
+**Version:** 2.3.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -17,6 +17,7 @@ The website serves as a digital memory vault featuring:
 - An interactive **DNA Helix Timeline** pinned to the *"My Journey"* portfolio section, rendered smoothly on HTML5 Canvas.
 - A **Full-screen Lightbox Image Viewer** built with vanilla JavaScript, providing seamless full-screen image inspection and captions across all memory pages.
 - Native HTML5 **video playback** for movie trailers (MP4) and a custom multi-track **music player** for favorite songs (MP3).
+- A movie discovery page with a rotating featured title, categorized poster rows, trailer playback, and keyboard-accessible detail dialogs.
 - A clean, standardized, modular folder architecture categorizing source code and assets by file type (`pages/`, `css/`, `js/`, and `img/`).
 
 ---
@@ -66,7 +67,7 @@ zbautista_cs111/
 │   ├── family_relatives.html    # 5 family photos, tributes, and reflections
 │   ├── me_and_my_love.html      # 5 photos capturing meaningful affections & passions
 │   ├── my_favorite_food.html    # 4 favorite dishes with recipes & instructions
-│   ├── my_favorite_movie.html   # 5 favorite films with posters, synopses & MP4 trailers
+│   ├── my_favorite_movie.html   # Movie discovery page with posters, details & MP4 trailers
 │   ├── my_friends.html          # 5 photo highlights with circles of friends
 │   ├── my_song.html             # 5 songs with reflections & MP3 audio players
 │   └── joke_time.html           # 5 clean, witty school & programming jokes
@@ -88,6 +89,7 @@ zbautista_cs111/
 │   ├── dna.js                   # Interactive HTML5 Canvas double-helix scroll visualizer
 │   ├── folders.js               # Interactive 3D folder card fan-out & page flipper
 │   ├── lightbox.js              # Fullscreen image viewer modal with keyboard & touch support
+│   ├── my_favorite_movie.js     # Movie billboard, poster rows, and details dialog
 │   └── my_song.js               # Song playlist playback and now-playing controls
 │
 ├── img/                         # Optimized image, audio, and video assets
@@ -156,6 +158,18 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.3.0] — 2026-10-29
+#### Added
+- Redesigned the favorite movies page with a rotating featured billboard, progress indicators, and categorized, horizontally browsable poster rows.
+- Added movie detail dialogs with trailer playback, film information, previous/next navigation, keyboard controls, and focus management.
+- Added responsive layouts, reduced-motion support, poster fallbacks, and a message for unavailable trailers.
+
+#### Changed
+- Updated the project version and documentation to describe the movie discovery experience.
+
+#### Breaking Changes
+- None.
 
 ### [v2.2.0] — 2026-10-27
 #### Added
