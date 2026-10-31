@@ -12,3 +12,6 @@ desktop.ini
 # Temporary & Log Files
 *.log
 scratch/
+
+# Local archive, not part of the current site
+/discard/2.0/

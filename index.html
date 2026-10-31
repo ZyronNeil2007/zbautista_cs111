@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#3a0912">
     <meta name="description"
         content="Personal Memories Website by Zyron Neil A. Bautista — CS111 Introduction to Computing">
     <title>My Personal Memories — Zyron Neil A. Bautista | CS111</title>
@@ -18,16 +19,23 @@
 </head>
 
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
     <div class="stage">
 
         <!-- Top bar -->
-        <nav class="topbar rise">
+        <nav class="topbar rise" aria-label="Primary">
             <a href="index.html" class="logo" aria-label="My Memories">ZB</a>
-            <a href="index.html" class="pill active">Home</a>
-            <label class="search glass" style="border-radius:999px;">
-                <span aria-hidden="true">Q</span>
-                <input type="search" id="folder-search" placeholder="search..." autocomplete="off">
+            <a href="index.html" class="pill active" aria-current="page">Home</a>
+            <label class="search glass">
+                <span class="sr-only">Search folders</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7"></circle>
+                    <path d="m20 20-3.5-3.5"></path>
+                </svg>
+                <input type="search" id="folder-search" placeholder="Search…" autocomplete="off"
+                    enterkeyhint="search" aria-controls="folder-grid">
             </label>
             <div class="topnav">
                 <a href="#folders">Folders</a>
@@ -119,25 +127,35 @@
                 my life — from cherished childhood experiences, moments with loved ones and friends, to my personal
                 favorites in food, cinema, and music, plus a little humor to brighten your day.
             </p>
-            <p class="hint">Click on any folder below to explore its contents.</p>
+            <p class="hint">Click or tap any folder below to explore its contents.</p>
         </section>
 
         <!-- Bottom-right quick thumbnails -->
         <div class="thumbs">
-            <a href="pages/my_friends.html" class="thumb-btn glass rise d2" title="My Friends"><span
-                    class="mini-folder lg" style="--mf:#f2e24f;--mf2:#fff3a0" aria-hidden="true"></span></a>
-            <a href="pages/my_favorite_food.html" class="thumb-btn glass rise d3" title="My Favorite Food"><span
-                    class="mini-folder lg" style="--mf:#6c8cff;--mf2:#b6c6ff" aria-hidden="true"></span></a>
-            <a href="pages/my_song.html" class="thumb-btn glass rise d4" title="My Song"><span class="mini-folder lg"
-                    style="--mf:#b15cff;--mf2:#dcb6ff" aria-hidden="true"></span></a>
+            <a href="pages/my_friends.html" class="thumb-btn glass rise d2">
+                <span class="mini-folder lg" style="--mf:#f2e24f;--mf2:#fff3a0" aria-hidden="true"></span>
+                <span class="thumb-label">My Friends</span>
+            </a>
+            <a href="pages/my_favorite_food.html" class="thumb-btn glass rise d3">
+                <span class="mini-folder lg" style="--mf:#6c8cff;--mf2:#b6c6ff" aria-hidden="true"></span>
+                <span class="thumb-label">Favorite Food</span>
+            </a>
+            <a href="pages/my_song.html" class="thumb-btn glass rise d4">
+                <span class="mini-folder lg" style="--mf:#b15cff;--mf2:#dcb6ff" aria-hidden="true"></span>
+                <span class="thumb-label">My Song</span>
+            </a>
             <span class="credit">By Zyron Neil A. Bautista</span>
         </div>
     </div>
 
     <!-- All folders -->
-    <main class="folders-section" id="folders">
-        <h2>Memory Folders</h2>
-        <p class="fx-hint">Hover a folder, then scroll to flip through its pages. Click to open it.</p>
+    <main id="main" tabindex="-1">
+    <section class="folders-section" id="folders" aria-labelledby="folders-title">
+        <h2 id="folders-title">Memory Folders</h2>
+        <p class="fx-hint">
+            <span class="hint-hover">Hover a folder, then scroll to flip through its pages. Click to open it.</span>
+            <span class="hint-touch">Tap a folder to peek inside, use ▲ ▼ to flip pages, tap again to open it.</span>
+        </p>
         <ul class="fx-grid" id="folder-grid">
             <li class="fx-card" data-key="childhood" data-name="childhood memories"
                 data-href="pages/childhood_memories.html">
@@ -310,8 +328,8 @@
                 </a>
             </li>
         </ul>
-        <p class="no-results" id="no-results">No folders match your search.</p>
-    </main>
+        <p class="no-results" id="no-results" role="status">No folders match your search.</p>
+    </section>
 
     <!-- ═════════ PORTFOLIO ═════════ -->
     <section class="pf" id="portfolio">
@@ -329,8 +347,8 @@
             </div>
         </header>
 
-        <!-- About -->
-        <div class="pf-block pf-about-section" id="about">
+        <!-- About — Page 1: Who I Am + Personal Details -->
+        <div class="pf-about-page pf-about-page--1" id="about">
             <div class="pf-about-inner">
                 <div class="pf-about-header pf-reveal">
                     <h3 class="pf-title">About Me</h3>
@@ -342,13 +360,31 @@
                     <section class="pf-about-bio">
                         <h4>Who I Am</h4>
                         <p>A passionate tech enthusiast pursuing a degree in Computer Science. He enjoys turning ideas
-                            into
-                            real, working systems &mdash; whether it's a quiz application, a functional website, or a
-                            creative layout. Outside coding, he values creativity, aesthetics, and storytelling. His
+                            into real, working systems &mdash; whether it's a quiz application, a functional website, or
+                            a creative layout. Outside coding, he values creativity, aesthetics, and storytelling. His
                             ultimate goal is to become a software engineer and continue creating systems that make an
                             impact.</p>
                     </section>
 
+                    <section class="pf-about-details">
+                        <h4>Personal Details</h4>
+                        <ul class="pf-details-list">
+                            <li><span class="pf-detail-label">Birth Date</span><span class="pf-detail-value">February 10, 2007</span></li>
+                            <li><span class="pf-detail-label">Age</span><span class="pf-detail-value">19</span></li>
+                            <li><span class="pf-detail-label">Height</span><span class="pf-detail-value">167 cm</span></li>
+                            <li><span class="pf-detail-label">Weight</span><span class="pf-detail-value">50 kg</span></li>
+                            <li><span class="pf-detail-label">Gender</span><span class="pf-detail-value">Male</span></li>
+                            <li><span class="pf-detail-label">Status</span><span class="pf-detail-value">Single</span></li>
+                        </ul>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- About — Page 2: What I Do + Technical Arsenal -->
+        <div class="pf-about-page pf-about-page--2">
+            <div class="pf-about-inner pf-about-inner--left">
+                <div class="pf-about-panel pf-reveal">
                     <div class="pf-about-row">
                         <section>
                             <h4>What I Do</h4>
@@ -372,24 +408,63 @@
                     <section class="pf-about-skills">
                         <h4>Technical Arsenal</h4>
                         <div class="pf-skills">
+
                             <div class="pf-skill-col">
                                 <h5>Programming</h5>
-                                <div class="pf-skill"><span>Java</span><em>75%</em><i style="--v:75%"></i></div>
-                                <div class="pf-skill"><span>Python</span><em>80%</em><i style="--v:80%"></i></div>
-                                <div class="pf-skill"><span>C++</span><em>65%</em><i style="--v:65%"></i></div>
+                                <div class="pf-skill-tags">
+                                    <span>C#</span>
+                                    <span>Java</span>
+                                    <span>Python</span>
+                                    <span>C++</span>
+                                    <span>JavaScript</span>
+                                </div>
                             </div>
+
                             <div class="pf-skill-col">
                                 <h5>Web Development</h5>
-                                <div class="pf-skill"><span>HTML</span><em>80%</em><i style="--v:80%"></i></div>
-                                <div class="pf-skill"><span>CSS</span><em>85%</em><i style="--v:85%"></i></div>
-                                <div class="pf-skill"><span>JavaScript</span><em>75%</em><i style="--v:75%"></i></div>
+                                <div class="pf-skill-tags">
+                                    <span>HTML</span>
+                                    <span>CSS</span>
+                                    <span>Bootstrap</span>
+                                    <span>PHP</span>
+                                </div>
                             </div>
+
                             <div class="pf-skill-col">
-                                <h5>Tools &amp; Design</h5>
-                                <div class="pf-skill"><span>VS Code</span><em>90%</em><i style="--v:90%"></i></div>
-                                <div class="pf-skill"><span>Layouting</span><em>85%</em><i style="--v:85%"></i></div>
-                                <div class="pf-skill"><span>phpMyAdmin</span><em>70%</em><i style="--v:70%"></i></div>
+                                <h5>Database Management</h5>
+                                <div class="pf-skill-tags">
+                                    <span>MySQL</span>
+                                    <span>phpMyAdmin</span>
+                                </div>
                             </div>
+
+                            <div class="pf-skill-col">
+                                <h5>Frameworks &amp; Tools</h5>
+                                <div class="pf-skill-tags">
+                                    <span>.NET Framework</span>
+                                    <span>Git</span>
+                                    <span>GitHub</span>
+                                </div>
+                            </div>
+
+                            <div class="pf-skill-col">
+                                <h5>UI/UX Design</h5>
+                                <div class="pf-skill-tags">
+                                    <span>Figma</span>
+                                    <span>Canva</span>
+                                </div>
+                            </div>
+
+                            <div class="pf-skill-col">
+                                <h5>Graphic &amp; Publication Design</h5>
+                                <div class="pf-skill-tags">
+                                    <span>Poster Design</span>
+                                    <span>Layout Design</span>
+                                    <span>Branding</span>
+                                    <span>Typography</span>
+                                </div>
+                            </div>
+
                         </div>
                     </section>
                 </div>
@@ -528,80 +603,106 @@
             <div class="pf-work">
                 <article class="glass pf-card pf-proj pf-reveal">
                     <span class="pf-num">01</span>
-                    <span class="pf-cat">Web Dev &middot; Logic</span>
-                    <h4>BNHS Online Quiz Website</h4>
-                    <p>A comprehensive system featuring admin and student portals, complete with quiz management,
-                        results tracking, and a built-in feedback system.</p>
+                    <div class="pf-proj-preview" role="img"
+                        aria-label="Screenshot placeholder for ISU ID Issuance System">
+                        <span aria-hidden="true">Replace with project screenshot</span>
+                    </div>
+                    <span class="pf-cat">Web App &middot; Education</span>
+                    <h4>ISU ID Issuance System</h4>
+                    <p>A responsive, client-side ID generator for all 11 Isabela State University campuses, with
+                        customizable card previews and print-ready exports.</p>
+                    <div class="pf-proj-links">
+                        <a href="https://github.com/ZyronNeil2007/Isabela-State-University_Cabagan"
+                            target="_blank" rel="noopener noreferrer">GitHub repository</a>
+                        <a href="https://zyronneil2007.github.io/Isabela-State-University_Cabagan/"
+                            target="_blank" rel="noopener noreferrer">Live demo</a>
+                    </div>
                     <ul class="pf-tags">
-                        <li>Web Dev</li>
-                        <li>phpMyAdmin</li>
-                        <li>Logic Design</li>
+                        <li>HTML</li>
+                        <li>CSS</li>
+                        <li>JavaScript</li>
                     </ul>
                 </article>
                 <article class="glass pf-card pf-proj pf-reveal">
                     <span class="pf-num">02</span>
-                    <span class="pf-cat">Web Dev &middot; Layout &amp; UI</span>
-                    <h4>School Platform</h4>
-                    <p>Designed and developed a fully functional school website tailored for seamless user experience
-                        and accessibility.</p>
+                    <div class="pf-proj-preview" role="img"
+                        aria-label="Screenshot placeholder for E-Lodging ISU">
+                        <span aria-hidden="true">Replace with project screenshot</span>
+                    </div>
+                    <span class="pf-cat">Web Platform &middot; Housing</span>
+                    <h4>E-Lodging ISU</h4>
+                    <p>A boarding-house directory and management platform that helps ISU students find safe,
+                        accredited, and affordable housing near campus.</p>
+                    <div class="pf-proj-links">
+                        <a href="https://github.com/ZyronNeil2007/e-Lodging-ISU"
+                            target="_blank" rel="noopener noreferrer">GitHub repository</a>
+                    </div>
                     <ul class="pf-tags">
-                        <li>HTML</li>
-                        <li>CSS</li>
-                        <li>JS</li>
-                        <li>UI/UX</li>
+                        <li>Python</li>
+                        <li>FastAPI</li>
+                        <li>Web App</li>
                     </ul>
                 </article>
                 <article class="glass pf-card pf-proj pf-reveal">
                     <span class="pf-num">03</span>
-                    <span class="pf-cat">Business &middot; Layout &amp; UI</span>
-                    <h4>Nephricarn Business</h4>
-                    <p>A food business concept offering burgers and guava juice, designed to appeal to students with
-                        affordable pricing, branding strategy, and product positioning.</p>
+                    <div class="pf-proj-preview" role="img"
+                        aria-label="Screenshot placeholder for Personal Portfolio">
+                        <span aria-hidden="true">Replace with project screenshot</span>
+                    </div>
+                    <span class="pf-cat">Web Dev &middot; Portfolio</span>
+                    <h4>Personal Portfolio</h4>
+                    <p>A personal portfolio built with React, Vite, and Tailwind CSS, featuring a custom Minecraft.net
+                        inspired interface and interactive 3D hero.</p>
+                    <div class="pf-proj-links">
+                        <a href="https://github.com/ZyronNeil2007/personal-portfolio"
+                            target="_blank" rel="noopener noreferrer">GitHub repository</a>
+                        <a href="https://personal-portfolio-ten-sage-56.vercel.app/"
+                            target="_blank" rel="noopener noreferrer">Live site</a>
+                    </div>
                     <ul class="pf-tags">
-                        <li>#Business</li>
-                        <li>#Entrepreneurship</li>
-                        <li>#FoodService</li>
-                        <li>#Marketing</li>
+                        <li>React</li>
+                        <li>Vite</li>
+                        <li>Tailwind CSS</li>
                     </ul>
                 </article>
                 <article class="glass pf-card pf-proj pf-reveal">
                     <span class="pf-num">04</span>
-                    <span class="pf-cat">Research</span>
-                    <h4>BNHS Study: Online Quiz Research</h4>
-                    <p>A research study titled &ldquo;Effectiveness of Online Quiz Website to Grade 11 Students&rdquo;.
-                        Evaluated how an online quiz system impacts student learning, accessibility, and performance
-                        using structured data collection and analysis.</p>
+                    <div class="pf-proj-preview" role="img"
+                        aria-label="Screenshot placeholder for BNHS Online Quiz">
+                        <span aria-hidden="true">Replace with project screenshot</span>
+                    </div>
+                    <span class="pf-cat">Web App &middot; Education</span>
+                    <h4>BNHS Online Quiz</h4>
+                    <p>An online quiz platform for students and administrators, with quiz management and student
+                        results tracking.</p>
+                    <div class="pf-proj-links">
+                        <a href="https://github.com/ZyronNeil2007/bnhs.online.quiz"
+                            target="_blank" rel="noopener noreferrer">GitHub repository</a>
+                    </div>
                     <ul class="pf-tags">
-                        <li>#Research</li>
-                        <li>#Academic</li>
-                        <li>#DataAnalysis</li>
-                        <li>#Education</li>
+                        <li>Web Development</li>
+                        <li>Quizzes</li>
+                        <li>Education</li>
                     </ul>
                 </article>
                 <article class="glass pf-card pf-proj pf-reveal">
                     <span class="pf-num">05</span>
-                    <span class="pf-cat">Layout &amp; UI</span>
-                    <h4>Layout &amp; Design Portfolio</h4>
-                    <p>A collection of creative works including posters, logos, and publication layouts. Experienced in
-                        visual hierarchy, typography, and branding through school publications and competitions.</p>
+                    <div class="pf-proj-preview" role="img"
+                        aria-label="Screenshot placeholder for 3D Pop-Art Hand Tracking">
+                        <span aria-hidden="true">Replace with project screenshot</span>
+                    </div>
+                    <span class="pf-cat">Computer Vision &middot; Creative Tech</span>
+                    <h4>3D Pop-Art Hand Tracking</h4>
+                    <p>A real-time hand-tracking project that uses computer vision to create a colorful 3D pop-art
+                        visual effect.</p>
+                    <div class="pf-proj-links">
+                        <a href="https://github.com/ZyronNeil2007/3d-pop-art-hand-tracking"
+                            target="_blank" rel="noopener noreferrer">GitHub repository</a>
+                    </div>
                     <ul class="pf-tags">
-                        <li>#GraphicDesign</li>
-                        <li>#LayoutArtist</li>
-                        <li>#Branding</li>
-                        <li>#Creative</li>
-                    </ul>
-                </article>
-                <article class="glass pf-card pf-proj pf-reveal">
-                    <span class="pf-num">06</span>
-                    <span class="pf-cat">Presentation</span>
-                    <h4>Research &amp; Business Presentations</h4>
-                    <p>Designed and developed structured presentations for research defense and business proposals,
-                        focusing on clarity, visual appeal, and effective communication of ideas.</p>
-                    <ul class="pf-tags">
-                        <li>#Presentation</li>
-                        <li>#VisualDesign</li>
-                        <li>#Communication</li>
-                        <li>#Academic</li>
+                        <li>Python</li>
+                        <li>OpenCV</li>
+                        <li>MediaPipe</li>
                     </ul>
                 </article>
             </div>
@@ -649,6 +750,7 @@
             </div>
         </div>
     </section>
+    </main>
 
     <footer class="site-footer">
         <p>Designed &amp; Developed by Zyron Neil Bautista</p>
@@ -661,7 +763,8 @@
                 var input = document.getElementById('folder-search');
                 var cards = document.querySelectorAll('#folder-grid .fx-card');
                 var empty = document.getElementById('no-results');
-                input.addEventListener('input', function () {
+                var folders = document.getElementById('folders');
+                function apply() {
                     var q = input.value.trim().toLowerCase(), shown = 0;
                     cards.forEach(function (c) {
                         var match = !q || c.dataset.name.indexOf(q) !== -1;
@@ -669,7 +772,17 @@
                         if (match) shown++;
                     });
                     empty.style.display = shown ? 'none' : 'block';
-                    if (q) document.getElementById('folders').scrollIntoView({ behavior: 'smooth' });
+                    return q;
+                }
+                input.addEventListener('input', function () {
+                    var q = apply();
+                    // bring the results into view once, only if they are still below the fold
+                    if (q && folders.getBoundingClientRect().top > window.innerHeight * 0.5) {
+                        folders.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+                input.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') { input.value = ''; apply(); }
                 });
             })();
     </script>

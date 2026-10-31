@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111 — Personal Memories Website
 
-**Version:** 2.3.0<br>
+**Version:** 2.4.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -18,6 +18,7 @@ The website serves as a digital memory vault featuring:
 - A **Full-screen Lightbox Image Viewer** built with vanilla JavaScript, providing seamless full-screen image inspection and captions across all memory pages.
 - Native HTML5 **video playback** for movie trailers (MP4) and a custom multi-track **music player** for favorite songs (MP3).
 - A movie discovery page with a rotating featured title, categorized poster rows, trailer playback, and keyboard-accessible detail dialogs.
+- Accessible navigation and touch-friendly controls across the landing page and interactive memory folders.
 - A clean, standardized, modular folder architecture categorizing source code and assets by file type (`pages/`, `css/`, `js/`, and `img/`).
 
 ---
@@ -28,7 +29,8 @@ The website serves as a digital memory vault featuring:
 - **Fanning Divider Tabs:** Mouse hover or focus expands folder tab dividers styled with curated warm gradient pairs.
 - **Dynamic Page Flipping:** Use the mouse scroll wheel, on-screen `▲` / `▼` navigation buttons, or keyboard arrow keys (`ArrowUp`/`ArrowDown`/`ArrowLeft`/`ArrowRight`) to cycle through memory photos inside each folder.
 - **Live Search Filtering:** Real-time filter box in the top navigation bar to quickly search memory folders by keyword with smooth scrolling to matching results.
-- **Touch-Device Friendly:** Optimized pointer events with single-tap preview and tap-outside dismiss for touch displays.
+- **Touch-Device Friendly:** Optimized pointer events with single-tap preview, tap-outside dismiss, and reliable folder switching on touch displays.
+- **Keyboard Accessible:** Focus-visible folder controls and keyboard navigation for browsing and opening folders.
 
 ### 🧬 2. Canvas DNA Double Helix Timeline (`js/dna.js`)
 - **Scroll-Synchronized Rotation:** Custom canvas rendering simulates a rotating double helix pinned beside the timeline cards in *"My Journey"*.
@@ -49,8 +51,8 @@ The website serves as a digital memory vault featuring:
 - Fluid typography using Google Fonts: *Lilita One*, *Poppins*, and *Space Mono*.
 
 ### 🌄 6. Scenic Portfolio
-- Full-width portfolio hero and About section use custom rice-field and school backgrounds.
-- The responsive About panel presents the biography, interests, activities, and technical skills in one cohesive layout.
+- Full-width portfolio hero and first About page use custom rice-field and school backgrounds.
+- Responsive About pages present personal details separately from activities, interests, and technical skills.
 
 ---
 
@@ -158,6 +160,28 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.4.0] — 2026-10-31
+#### Added
+- Added a skip-to-content link, accessible labels, visible folder thumbnail labels, and focus-visible keyboard styling.
+
+#### Improved
+- Refined landing-page typography, contrast, control sizing, and responsive touch targets.
+- Improved touch folder behavior and keyboard focus handling.
+- Reworked the About section into two responsive pages and removed the scenic background from the activities and skills page.
+
+#### Fixed
+- Corrected spacing and alignment at the top of the activities and skills panel.
+
+#### Technical Changes
+- Added the small-viewport-height CSS unit where appropriate and excluded the local `discard/2.0/` archive from version control.
+
+#### Documentation
+- Updated the project version and feature descriptions.
+- Tracked unfinished About Me, gallery/work imagery, Memory Folders layout, and landing-page polish in [issue #1](https://github.com/ZyronNeil2007/zbautista_cs111/issues/1).
+
+#### Breaking Changes
+- None.
 
 ### [v2.3.0] — 2026-10-29
 #### Added

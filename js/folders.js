@@ -115,6 +115,7 @@
 
         var scene = card.querySelector('.fx-scene');
         var stack = card.querySelector('.fx-stack');
+        stack.setAttribute('aria-hidden', 'true');
         var btnUp = card.querySelector('.fx-up');
         var btnDown = card.querySelector('.fx-down');
         var pos = card.querySelector('.fx-pos');
@@ -206,8 +207,16 @@
         // Hover (mouse) / focus (keyboard)
         card.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') setOpen(true); });
         card.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') setOpen(false); });
-        scene.addEventListener('focus', function () { setOpen(true); });
-        scene.addEventListener('blur', function () { setOpen(false); });
+        scene.addEventListener('focusin', function (e) {
+            // Keyboard focus opens the folder. A tap/click also focuses it, and that must NOT count as
+            // "open": otherwise the first tap on a phone is treated as a second tap and navigates away.
+            var kb = true;
+            try { kb = e.target.matches(':focus-visible'); } catch (err) { /* very old browser: keep old behaviour */ }
+            if (kb) setOpen(true);
+        });
+        scene.addEventListener('focusout', function (e) {
+            if (!scene.contains(e.relatedTarget)) setOpen(false);
+        });
 
         // Scroll wheel flips pages while the pointer is over the folder.
         // At either end the wheel falls through so the page can still scroll.
@@ -239,7 +248,11 @@
         // Click / tap
         scene.addEventListener('click', function (e) {
             if (e.target.closest('.fx-nav')) return;
-            if (coarse && !open) { setOpen(true); return; }   // first tap opens on touch screens
+            if (coarse && !open) {                           // first tap opens on touch screens
+                cards.forEach(function (c) { if (c !== card && c._fxClose) c._fxClose(); });
+                setOpen(true);
+                return;
+            }
             window.location.href = href;
         });
 
