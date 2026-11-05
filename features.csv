@@ -1,0 +1,45 @@
+feature,area,priority,original,clone,notes
+Run on the active tab from a toolbar click,entry,must,yes,no,activeTab + scripting only
+Keyboard shortcut Alt+Shift+S,entry,must,yes,no,_execute_action command
+Click again toggles it off,entry,must,yes,no,second injection calls toggle()
+Red x badge on pages that cannot be scripted,entry,should,yes,no,chrome:// Web Store PDF viewer; resets after 2.5s
+Snapshot live DOM into a blueprint of items,capture,must,yes,no,rect image text line kinds
+Include open shadow roots in the snapshot,capture,should,yes,no,
+Clone text with computed styles (fonts links inline code icons),capture,must,yes,no,
+Boxes with fills borders radii shadows gradients masks backdrop blur,capture,must,yes,no,RECT_PROPS
+Single-side borders and hr become pen lines,capture,should,yes,no,dashed and dotted supported
+Pseudo-element boxes (absolute and a few in-flow cases),capture,could,yes,no,fragile; other cases are dropped on purpose
+Images svg video canvas iframe as media,capture,must,yes,no,
+Screenshot crop for WebGL canvas playing video cross-origin iframe,capture,should,yes,no,background.js media-only CSS then captureVisibleTab
+Detect the real scroller on app-shell pages,capture,must,yes,no,detectEnv; largest inner overflow-y container
+Hidden scroll pass to trigger lazy content,capture,should,yes,no,up to 28 steps
+Fixed and sticky layering (under and over stacks),render,must,yes,no,port inserted at scroller z-key
+Synthetic backdrop behind transparent sticky headers,render,could,yes,no,
+Dark page placeholder color,render,could,yes,no,luminance below 0.4
+Shadow-root isolated overlay,render,must,yes,no,page CSS cannot leak in
+Dirty-flag rendering with persistent nodes,render,should,yes,no,v and rv counters; keeps 4000 layers cheap
+Cap at 4000 layers and 40000px,render,must,yes,no,MAX_ITEMS MAX_WORLD_H
+Dependency-gated task scheduler,engine,must,yes,no,children wait for parent box; copies wait for master
+Scroll frontier unlocks work as the user scrolls,engine,must,yes,no,
+Crew size scales with scroll speed and backlog (8 to 48),engine,should,yes,no,
+Repeated components built as master plus alt-drag duplicates,engine,should,yes,no,findGroups; then edit swap restyle tasks
+Ruler guides with text snapping,engine,could,yes,no,max 16 guides
+Crosshair box drawing with live W x H badge,choreography,must,yes,no,
+Typed text with caret and human-looking hesitation,choreography,must,yes,no,
+Pen tool lines with anchor points,choreography,should,yes,no,
+Headings that grow in size as typed,choreography,could,yes,no,18px start; fs >= 28
+Cursor flocking for intro and finale,choreography,should,yes,no,boids-style follow(); avoids the mouse
+Named colored cursors with several shapes,choreography,should,yes,no,32 names 12 colors
+Intro around the site favicon,choreography,could,yes,no,falls back to /favicon.ico then monogram
+HUD with status progress bar and agent dots,hud,must,yes,no,
+Tour auto-scroll,hud,should,yes,no,
+Speed control 1x 2x 3x,hud,should,yes,no,
+Go live fades back to the real page,hud,must,yes,no,
+Replay,hud,should,yes,no,reuses click-time screenshot
+Esc or close exits at any time,hud,must,yes,no,
+Synthesized sound (typing clicks piano notes set pieces),sound,should,yes,no,Web Audio only; no audio files
+Sound toggle (M) and tap-to-unlock,sound,should,yes,no,
+Offline soundtrack render hook,sound,could,yes,no,fakeNow clock and __swarmSfxLog
+No network no storage no remote code,privacy,must,yes,no,promise in PRIVACY.md
+Chrome Web Store listing and install base,distribution,could,yes,skip,not part of the code
+Joel Califa motion design and physics,distribution,could,yes,skip,unlicensed upstream; write your own choreography
