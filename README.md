@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111 — Personal Memories Website
 
-**Version:** 2.4.0<br>
+**Version:** 2.5.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -160,6 +160,26 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.5.0] — 2026-11-05
+#### Added
+- Added Swarm interactive rebuild launcher control (`css/swarm-launch.css`, `js/swarm-launch.js`) with keyboard shortcut support (`Alt+Shift+S`) and navigation button integration.
+- Added custom typography asset `assets/fonts/Pillar.ttf`.
+- Added transparent background cutout asset `img/backgrounds/neil_bg_removed.png` for layered hero composition.
+
+#### Improved
+- Cleaned up semantic indentation and hierarchy across `index.html`.
+- Standardized asset path references and module styling.
+
+#### Technical Changes
+- Tracked custom font and transparent profile imagery assets in dedicated folders.
+- Integrated lazy-loading mechanism for experimental swarm animations.
+
+#### Documentation
+- Updated project version to v2.5.0 and documented newly integrated assets and launch controls.
+
+#### Breaking Changes
+- None.
 
 ### [v2.4.0] — 2026-10-31
 #### Added
