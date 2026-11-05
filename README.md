@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111 — Personal Memories Website
 
-**Version:** 2.5.0<br>
+**Version:** 2.6.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -54,6 +54,12 @@ The website serves as a digital memory vault featuring:
 - Full-width portfolio hero and first About page use custom rice-field and school backgrounds.
 - Responsive About pages present personal details separately from activities, interests, and technical skills.
 
+### 🐝 7. Swarm Rebuild (`js/swarm-rebuild.js`)
+- Starts a self-contained, dependency-free page rebuild animation on the homepage, revealing page layers as visitors scroll.
+- Animated cursor agents draw selection frames and type text; after the build, they follow mouse movement or gather in a resting ring.
+- Includes a progress toolbar, scroll tour, speed control, skip, replay, responsive agent counts, and reduced-motion support.
+- Uses the homepage logo and background color; the toolbar button and any `[data-sr-replay]` element can replay the build.
+
 ---
 
 ## 📁 Repository Structure
@@ -92,7 +98,8 @@ zbautista_cs111/
 │   ├── folders.js               # Interactive 3D folder card fan-out & page flipper
 │   ├── lightbox.js              # Fullscreen image viewer modal with keyboard & touch support
 │   ├── my_favorite_movie.js     # Movie billboard, poster rows, and details dialog
-│   └── my_song.js               # Song playlist playback and now-playing controls
+│   ├── my_song.js               # Song playlist playback and now-playing controls
+│   └── swarm-rebuild.js         # Dependency-free animated page rebuild and mouse-follow swarm
 │
 ├── img/                         # Optimized image, audio, and video assets
 │   ├── backgrounds/             # Portfolio backgrounds (neil_bg.jpg, ME_LANSCAPE_AT_RICEFIELD.png, bnhschool.png)
@@ -135,6 +142,7 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
   - **3D Folder Fan-out (`js/folders.js`):** Interactive page flipping, mouse hover, wheel scrolling, touch interaction, and keyboard navigation.
   - **DNA Timeline Visualizer (`js/dna.js`):** Canvas-based animated double helix responsive to scrolling and inertia.
   - **Lightbox Modal (`js/lightbox.js`):** Accessible fullscreen modal with ESC key dismiss and click-away close.
+  - **Swarm Rebuild (`js/swarm-rebuild.js`):** Dependency-free layer-by-layer page reveal, animated agents, mouse-follow mode, and replay controls.
 - **Song Playlist (`js/my_song.js`):** Multi-track playback, shuffle/repeat, seek and volume controls, responsive now-playing view, and Media Session integration where supported.
 - **Media Support:** Native browser `<video controls>` for MP4 trailers; MP3 playback is managed by the custom song playlist.
 - **Zero Heavy Frameworks:** Pure, high-performance vanilla web standards.
@@ -160,6 +168,23 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.6.0] — 2026-11-06
+#### Added
+- Added the standalone Swarm Rebuild experience to the homepage, with scroll-triggered layers, animated cursor agents, mouse-follow behavior, Tour, speed, skip, and replay controls.
+- Added reduced-motion handling, responsive agent limits, and logo/background configuration.
+
+#### Improved
+- Integrated the rebuild script directly into the homepage and made the existing Swarm button replay the animation.
+
+#### Technical Changes
+- Added `js/swarm-rebuild.js` as a dependency-free vanilla JavaScript feature; no project dependencies were added.
+
+#### Documentation
+- Updated the project version, feature overview, technology stack, and source tree.
+
+#### Breaking Changes
+- None.
 
 ### [v2.5.0] — 2026-11-05
 #### Added

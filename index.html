@@ -20,16 +20,17 @@
 </head>
 
 <body>
+    <script src="js/swarm-rebuild.js" data-agents="14" data-bg="#3a0912"></script>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <div class="stage">
 
         <!-- Top bar -->
         <nav class="topbar rise" aria-label="Primary">
-            <a href="index.html" class="logo" aria-label="My Memories">ZB</a>
+            <a href="index.html" class="logo" aria-label="My Memories" data-sr-logo>ZB</a>
             <a href="index.html" class="pill active" aria-current="page">Home</a>
             <button type="button" class="pill swarm-btn" id="swarm-launch"
-                title="Watch a swarm of cursors rebuild this page (Alt+Shift+S)">
+                data-sr-replay title="Replay the page rebuild">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path
                         d="M4.6 3.9C4.2 3.1 4.9 2.4 5.7 2.8L20.6 9.4c.9.4.8 1.7-.2 1.9l-6.5 1.6c-.5.1-.9.5-1 1l-1.6 6.5c-.2 1-1.5 1.1-1.9.2z" />
@@ -845,7 +846,6 @@
     <script src="js/dna.js"></script>
     <script src="js/folders.js"></script>
     <script src="js/lightbox.js"></script>
-    <script src="js/swarm-launch.js"></script>
 </body>
 
 </html>
