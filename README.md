@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111  Personal Memories Website
 
-**Version:** 2.8.0<br>
+**Version:** 2.9.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -19,6 +19,7 @@ The website serves as a digital memory vault featuring:
 - Native HTML5 **video playback** for movie trailers (MP4) and a custom multi-track **music player** for favorite songs (MP3).
 - A movie discovery page with a rotating featured title, categorized poster rows, trailer playback, and keyboard-accessible detail dialogs.
 - Accessible navigation and touch-friendly controls across the landing page and interactive memory folders.
+- A custom ZN logo shared by the homepage, memory pages, and responsive favicon.
 - A clean, standardized, modular folder architecture categorizing source code and assets by file type (`pages/`, `css/`, `js/`, and `img/`).
 - A standalone grayscale responsive wireframe (`wireframe.html`) outlining the desktop, tablet, and mobile homepage structure, navigation flow, and section purposes.
 
@@ -50,6 +51,7 @@ The website serves as a digital memory vault featuring:
 ### 🎨 5. Glassmorphic UI & Design System (`css/`)
 - Dark crimson backdrop gradient (`#180308` to `#3a0912`) accented with frosted glass containers (`backdrop-filter: blur(12px)`).
 - Fluid typography using Google Fonts: *Lilita One*, *Poppins*, and *Space Mono*.
+- Custom ZN logo branding across the site, including page favicons.
 
 ### 🌄 6. Scenic Portfolio
 - Full-width portfolio hero and first About page use custom rice-field and school backgrounds.
@@ -110,7 +112,7 @@ zbautista_cs111/
 │   ├── repo screenshots/        # High-resolution screenshots for Selected Work showcase cards
 │   ├── childhood_memories/      # Early memories photograph assets
 │   ├── family_relatives/        # Family gatherings & tribute photos
-│   ├── icons/                   # Letter and UI iconography
+│   ├── icons/                   # ZN brand logo and UI iconography
 │   ├── me_and_my_love/          # Tech, companionship, and memory photos
 │   ├── my_favorite_food/        # Dish photographs (Adobo, Sinigang, Tinola, Fries)
 │   ├── my_favorite_movie/       # Movie posters and MP4 video trailers
@@ -174,6 +176,24 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.9.0] — 2026-11-06
+#### Improved
+- Refined the landing-page hero with a layered portrait, more prominent title treatment, and improved tablet/mobile composition.
+- Improved the mobile About Me layout with a contained scenic image, clearer heading card, and more legible content panel.
+- Replaced the text badge with the custom ZN logo on the landing page and shared navigation, and added the matching favicon to every site page and the wireframe.
+- Adjusted small-screen title sizing to keep the name within narrow viewports.
+
+#### Technical Changes
+- Added `img/icons/zn.logo.png` as the shared logo and favicon asset; no dependencies were added.
+- Changed the landing background attachment to scroll for more reliable mobile rendering.
+
+#### Documentation
+- Updated the project version, logo feature description, and icon asset documentation.
+- Recorded this partial landing-page polish update in [#1](https://github.com/ZyronNeil2007/zbautista_cs111/issues/1); other tracked work remains open.
+
+#### Breaking Changes
+- None.
 
 ### [v2.8.0] — 2026-11-06
 #### Added

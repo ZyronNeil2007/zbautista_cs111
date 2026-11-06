@@ -202,20 +202,47 @@ body {
 }
 
 @keyframes orbFloat1 {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(60px, 40px) scale(1.1); }
-    66% { transform: translate(-30px, 60px) scale(0.95); }
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(60px, 40px) scale(1.1);
+    }
+
+    66% {
+        transform: translate(-30px, 60px) scale(0.95);
+    }
 }
 
 @keyframes orbFloat2 {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(-50px, -30px) scale(1.08); }
-    66% { transform: translate(40px, -50px) scale(0.92); }
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(-50px, -30px) scale(1.08);
+    }
+
+    66% {
+        transform: translate(40px, -50px) scale(0.92);
+    }
 }
 
 @keyframes orbFloat3 {
-    0%, 100% { transform: translate(0, 0) scale(1); }
-    50% { transform: translate(-40px, 30px) scale(1.15); }
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-40px, 30px) scale(1.15);
+    }
 }
 
 
@@ -256,21 +283,22 @@ body {
     text-decoration: none;
 }
 
-/* "ZB" logo badge — same as the landing page */
+/* "ZN" logo badge — matches the landing page */
 .nav-brand::before {
-    content: "ZB";
+    content: "";
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: var(--cream);
-    color: var(--cream-dark);
+    background: var(--cream) url("../img/icons/zn.logo.png") center / 75% no-repeat;
     border: 3px solid var(--cream-dark);
-    font-family: var(--font-display);
-    font-size: 0.95rem;
-    letter-spacing: 0;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+    flex-shrink: 0;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.nav-brand:hover::before {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
 }
 
 .nav-brand:hover {
@@ -376,8 +404,15 @@ body {
 }
 
 @keyframes heroFadeUp {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-badge {
@@ -719,33 +754,69 @@ li::marker {
    15. ANIMATIONS
    ═══════════════════════════════════════════════════════════════════════════ */
 @keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .animate-in {
     animation: fadeInUp 0.6s var(--ease-out) both;
 }
 
-.animate-in-delay-1 { animation-delay: 0.1s; }
-.animate-in-delay-2 { animation-delay: 0.2s; }
-.animate-in-delay-3 { animation-delay: 0.3s; }
-.animate-in-delay-4 { animation-delay: 0.4s; }
-.animate-in-delay-5 { animation-delay: 0.5s; }
-.animate-in-delay-6 { animation-delay: 0.6s; }
-.animate-in-delay-7 { animation-delay: 0.7s; }
-.animate-in-delay-8 { animation-delay: 0.8s; }
+.animate-in-delay-1 {
+    animation-delay: 0.1s;
+}
+
+.animate-in-delay-2 {
+    animation-delay: 0.2s;
+}
+
+.animate-in-delay-3 {
+    animation-delay: 0.3s;
+}
+
+.animate-in-delay-4 {
+    animation-delay: 0.4s;
+}
+
+.animate-in-delay-5 {
+    animation-delay: 0.5s;
+}
+
+.animate-in-delay-6 {
+    animation-delay: 0.6s;
+}
+
+.animate-in-delay-7 {
+    animation-delay: 0.7s;
+}
+
+.animate-in-delay-8 {
+    animation-delay: 0.8s;
+}
 
 
 /* ═══════════════════════════════════════════════════════════════════════════
    16. RESPONSIVE
    ═══════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 860px) {
+
     .floating-orbs,
     .hero-glow {
         display: none;
@@ -844,6 +915,7 @@ li::marker {
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     *,
     *::before,
     *::after {
@@ -907,8 +979,15 @@ body.lightbox-open {
 }
 
 @keyframes lightboxPop {
-    from { opacity: 0; transform: scale(0.92); }
-    to { opacity: 1; transform: scale(1); }
+    from {
+        opacity: 0;
+        transform: scale(0.92);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .lightbox-close {
