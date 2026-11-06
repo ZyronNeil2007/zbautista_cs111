@@ -23,6 +23,8 @@
 <body>
     <script src="js/swarm-rebuild.js" data-agents="14" data-bg="#3a0912" data-mobile-autostart="false"></script>
     <a class="skip-link" href="#main">Skip to content</a>
+    <progress class="reading-progress" id="reading-progress" max="100" value="0"
+        aria-label="Page reading progress"></progress>
 
     <div class="stage">
 
@@ -143,6 +145,13 @@
                 favorites in food, cinema, and music, plus a little humor to brighten your day.
             </p>
             <p class="hint">Click or tap any folder below to explore its contents.</p>
+            <a class="btn explore-link" href="#folders">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 5v14m-7-7 7 7 7-7"></path>
+                </svg>
+                Browse memory folders
+            </a>
         </section>
 
         <!-- Bottom-right quick thumbnails -->
@@ -803,7 +812,7 @@
     <footer class="site-footer">
         <p>Designed &amp; Developed by Zyron Neil Bautista</p>
         <p>&copy; 2026 Zyron Neil A. Bautista | CS111 — Introduction to Computing Personal Memories Project</p>
-        <p>Version v2.9.0</p>
+        <p>Version v2.10.0</p>
     </footer>
 
     <script>
@@ -850,6 +859,7 @@
     <script src="js/dna.js"></script>
     <script src="js/folders.js"></script>
     <script src="js/lightbox.js"></script>
+    <script src="js/reading-progress.js"></script>
 </body>
 
 </html>

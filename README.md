@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111  Personal Memories Website
 
-**Version:** 2.9.0<br>
+**Version:** 2.10.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -19,6 +19,7 @@ The website serves as a digital memory vault featuring:
 - Native HTML5 **video playback** for movie trailers (MP4) and a custom multi-track **music player** for favorite songs (MP3).
 - A movie discovery page with a rotating featured title, categorized poster rows, trailer playback, and keyboard-accessible detail dialogs.
 - Accessible navigation and touch-friendly controls across the landing page and interactive memory folders.
+- A homepage browse action and reading-progress indicator that make the long-form experience easier to navigate.
 - A custom ZN logo shared by the homepage, memory pages, and responsive favicon.
 - A clean, standardized, modular folder architecture categorizing source code and assets by file type (`pages/`, `css/`, `js/`, and `img/`).
 - A standalone grayscale responsive wireframe (`wireframe.html`) outlining the desktop, tablet, and mobile homepage structure, navigation flow, and section purposes.
@@ -58,10 +59,10 @@ The website serves as a digital memory vault featuring:
 - Responsive About pages present personal details separately from activities, interests, and technical skills.
 
 ### 🐝 7. Swarm Rebuild (`js/swarm-rebuild.js`)
-- Starts a self-contained, dependency-free page rebuild animation on the homepage, revealing page layers as visitors scroll.
+- Starts a self-contained, dependency-free page rebuild animation across the homepage, all memory pages, and the responsive wireframe, revealing page layers as visitors scroll.
 - Animated cursor agents draw selection frames and type text; after the build, they follow mouse movement or gather in a resting ring.
-- Includes a progress toolbar, scroll tour, speed control, skip, replay, responsive agent counts, and reduced-motion support.
-- Uses the homepage logo and background color; the toolbar button and any `[data-sr-replay]` element can replay the build.
+- Includes a progress toolbar, scroll tour, speed and sound controls, skip, replay, responsive agent counts, and reduced-motion support.
+- The homepage Swarm button can replay the build; the homepage animation does not auto-start on narrow screens.
 
 ---
 
@@ -105,6 +106,7 @@ zbautista_cs111/
 │   ├── lightbox.js              # Fullscreen image viewer modal with keyboard & touch support
 │   ├── my_favorite_movie.js     # Movie billboard, poster rows, and details dialog
 │   ├── my_song.js               # Song playlist playback and now-playing controls
+│   ├── reading-progress.js      # Homepage reading progress indicator
 │   └── swarm-rebuild.js         # Dependency-free animated page rebuild and mouse-follow swarm
 │
 ├── img/                         # Optimized image, audio, and video assets
@@ -149,7 +151,8 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
   - **3D Folder Fan-out (`js/folders.js`):** Interactive page flipping, mouse hover, wheel scrolling, touch interaction, and keyboard navigation.
   - **DNA Timeline Visualizer (`js/dna.js`):** Canvas-based animated double helix responsive to scrolling and inertia.
   - **Lightbox Modal (`js/lightbox.js`):** Accessible fullscreen modal with ESC key dismiss and click-away close.
-  - **Swarm Rebuild (`js/swarm-rebuild.js`):** Dependency-free layer-by-layer page reveal, animated agents, mouse-follow mode, and replay controls.
+  - **Swarm Rebuild (`js/swarm-rebuild.js`):** Dependency-free layer-by-layer page reveal on every HTML page, animated agents, mouse-follow mode, and replay controls.
+  - **Reading Progress (`js/reading-progress.js`):** Scroll-position feedback on the homepage.
 - **Song Playlist (`js/my_song.js`):** Multi-track playback, shuffle/repeat, seek and volume controls, responsive now-playing view, and Media Session integration where supported.
 - **Media Support:** Native browser `<video controls>` for MP4 trailers; MP3 playback is managed by the custom song playlist.
 - **Zero Heavy Frameworks:** Pure, high-performance vanilla web standards.
@@ -176,6 +179,32 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.10.0] — 2026-11-06
+#### Added
+- Added a direct **Browse memory folders** action and a page reading-progress indicator to the homepage.
+- Enabled the Swarm Rebuild animation on all eight memory pages and the responsive wireframe, in addition to the homepage.
+
+#### Improved
+- Moved the desktop hero name and course tagline below the quick-memory cards and reduced their desktop-only font sizes; tablet and mobile layouts remain unchanged.
+- Kept the homepage swarm from auto-starting on narrow screens while allowing visitors to launch it with the existing Swarm button.
+
+#### Fixed
+- Prevented the desktop hero title from overlapping the Childhood Memories card.
+
+#### Technical Changes
+- Added `js/reading-progress.js` and shared Swarm Rebuild script references with the correct relative paths on each HTML page.
+- Preserved reduced-motion support and added no runtime dependencies.
+
+#### Documentation
+- Updated the project version, feature descriptions, source tree, and v2.10.0 changelog.
+- Recorded this landing-page polish progress in [#1](https://github.com/ZyronNeil2007/zbautista_cs111/issues/1); remaining work is still tracked there.
+
+#### Breaking Changes
+- None.
+
+#### Credits / Contributors
+- Zyron Neil A. Bautista — project author and maintainer.
 
 ### [v2.9.0] — 2026-11-06
 #### Improved
