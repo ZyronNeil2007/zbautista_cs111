@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Responsive low-fidelity website wireframe for Zyron Neil Bautista's personal memories portfolio.">
+  <title>Website Wireframe — Zyron Neil Bautista</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #202020;
+      background: #ededed;
+      font-synthesis: none;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    button, input, textarea { font: inherit; }
+    a { color: inherit; }
+
+    .document { max-width: 1500px; margin: 0 auto; padding: 32px 24px 56px; }
+    .document-head { max-width: 880px; margin: 0 auto 24px; }
+    .eyebrow, .label, .note-title, .placeholder-label, .wire-tag {
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .eyebrow { margin: 0 0 8px; color: #555; }
+    h1 { margin: 0; font-size: clamp(1.7rem, 4vw, 2.7rem); }
+    .intro { max-width: 70ch; line-height: 1.6; color: #444; }
+
+    .device-picker {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin: 20px 0 12px;
+    }
+    .device-picker strong { margin-right: 8px; font-size: .9rem; }
+    .device-picker input {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+    .device-picker label {
+      padding: 9px 14px;
+      border: 1px solid #777;
+      background: #fff;
+      cursor: pointer;
+      font-size: .88rem;
+    }
+    .device-picker input:checked + label { color: #fff; background: #333; }
+    .device-picker input:focus-visible + label { outline: 3px solid #111; outline-offset: 3px; }
+    .viewport-caption { margin: 0 0 12px; color: #555; font-size: .82rem; }
+
+    .preview-outer { overflow-x: auto; padding: 0 0 12px; }
+    .canvas {
+      width: 100%;
+      min-width: 340px;
+      margin: 0 auto;
+      border: 1px solid #777;
+      background: #fff;
+      container: preview / inline-size;
+      transition: width .2s ease;
+    }
+    .document:has(#view-desktop:checked) .canvas { width: 100%; }
+    .document:has(#view-tablet:checked) .canvas { width: 768px; }
+    .document:has(#view-mobile:checked) .canvas { width: 390px; }
+
+    .site-header {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 24px;
+      padding: 18px 5%;
+      border-bottom: 1px solid #888;
+    }
+    .logo {
+      display: grid;
+      width: 46px;
+      height: 42px;
+      place-items: center;
+      border: 2px solid #222;
+      font-size: .9rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    .main-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 22px; }
+    .main-nav a { font-size: .86rem; text-decoration: none; }
+    .header-tools { display: flex; align-items: center; gap: 10px; }
+    .search-box { width: 150px; padding: 9px 10px; border: 1px solid #888; color: #666; font-size: .8rem; }
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 42px;
+      padding: 9px 14px;
+      border: 2px solid #222;
+      background: #fff;
+      color: #222;
+      font-size: .84rem;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .button--dark { background: #333; color: #fff; }
+    .menu-button { display: none; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      align-items: center;
+      gap: 6%;
+      padding: 54px 7%;
+      border-bottom: 1px solid #aaa;
+    }
+    .hero-copy { max-width: 620px; }
+    .hero h2 { margin: 12px 0; font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.05; }
+    .hero-copy > p:not(.label) { max-width: 58ch; color: #444; line-height: 1.65; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .image-placeholder {
+      display: grid;
+      min-height: 270px;
+      place-items: center;
+      border: 1px dashed #666;
+      background: #e8e8e8;
+      color: #454545;
+      text-align: center;
+    }
+    .image-placeholder span { max-width: 24ch; padding: 16px; }
+    .welcome-note { margin: 0; padding: 18px 7%; border-bottom: 1px solid #aaa; color: #444; line-height: 1.6; }
+
+    .site-section { padding: 42px 7%; border-bottom: 1px solid #aaa; }
+    .section-heading { max-width: 680px; margin-bottom: 22px; }
+    .section-heading h2 { margin: 7px 0; font-size: 1.7rem; }
+    .section-heading p { margin: 0; color: #555; line-height: 1.55; }
+    .card-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .memory-card, .project-card, .timeline-card, .info-card {
+      min-width: 0;
+      border: 1px solid #888;
+      background: #fff;
+    }
+    .memory-card { text-decoration: none; }
+    .memory-card .image-placeholder { min-height: 120px; border-width: 0 0 1px; }
+    .card-copy { padding: 13px; }
+    .card-copy h3 { margin: 0 0 6px; font-size: 1rem; }
+    .card-copy p { margin: 0; color: #555; font-size: .84rem; line-height: 1.5; }
+    .card-link { display: inline-block; margin-top: 12px; font-size: .82rem; font-weight: 700; text-decoration: underline; }
+    .directory { margin-top: 18px; padding: 14px; border: 1px dashed #888; line-height: 1.9; }
+    .directory a { margin-right: 12px; font-size: .85rem; }
+
+    .about-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 16px; }
+    .about-grid .image-placeholder { min-height: 240px; }
+    .info-card { padding: 18px; }
+    .info-card h3 { margin: 0 0 9px; }
+    .info-card p, .info-card li { color: #444; line-height: 1.6; }
+    .info-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+    .info-columns section { padding: 12px; border: 1px solid #aaa; }
+    .info-columns h4 { margin: 0 0 8px; }
+    .info-columns p { margin: 0; font-size: .86rem; }
+
+    .timeline { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .timeline-card { padding: 16px; }
+    .timeline-card .label { color: #555; }
+    .timeline-card h3 { margin: 9px 0 6px; }
+    .timeline-card p { margin: 0; color: #555; font-size: .88rem; line-height: 1.5; }
+
+    .project-card .image-placeholder { min-height: 150px; border-width: 0 0 1px; }
+    .project-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .project-card .card-copy { min-height: 120px; }
+    .gallery-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .gallery-strip .image-placeholder { min-height: 140px; }
+
+    .contact-panel {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 24px;
+      padding: 22px;
+      border: 1px solid #888;
+    }
+    .contact-copy h3 { margin-top: 0; font-size: 1.35rem; }
+    .contact-copy p { color: #555; line-height: 1.55; }
+    .contact-details { margin-top: 20px; font-size: .88rem; line-height: 1.8; }
+    .contact-form { display: grid; gap: 12px; }
+    .contact-form label { display: grid; gap: 5px; font-size: .84rem; font-weight: 700; }
+    .contact-form input, .contact-form textarea { width: 100%; padding: 10px; border: 1px solid #888; background: #fff; }
+    .contact-form textarea { min-height: 90px; resize: vertical; }
+
+    .site-footer { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 20px; padding: 28px 7%; background: #e8e8e8; }
+    .site-footer h2, .site-footer h3 { margin: 0 0 10px; }
+    .site-footer p, .site-footer a { color: #444; font-size: .85rem; line-height: 1.8; }
+    .footer-links { display: grid; justify-items: start; }
+    .copyright { grid-column: 1 / -1; margin: 0; padding-top: 12px; border-top: 1px solid #aaa; }
+
+    .note {
+      margin: 14px 0 0;
+      padding: 11px 13px;
+      border-left: 3px solid #555;
+      background: #f0f0f0;
+      color: #444;
+      font-size: .82rem;
+      line-height: 1.5;
+    }
+    .note-title { display: block; margin-bottom: 4px; color: #222; }
+    .flow-section, .breakdown { max-width: 1100px; margin: 42px auto 0; }
+    .flow-section h2, .breakdown h2 { margin: 0 0 8px; }
+    .flow-section > p, .breakdown > p { color: #555; line-height: 1.55; }
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 18px;
+      padding: 20px;
+      border: 1px solid #aaa;
+      background: #fff;
+    }
+    .flow-step { padding: 12px 14px; border: 1px solid #555; background: #f1f1f1; font-size: .85rem; font-weight: 700; text-align: center; }
+    .flow-arrow { font-size: 1.2rem; }
+    .flow-branches { display: flex; flex-basis: 100%; justify-content: center; flex-wrap: wrap; gap: 8px; padding-top: 6px; }
+    .breakdown-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .breakdown-item { padding: 14px; border: 1px solid #aaa; background: #fff; }
+    .breakdown-item h3 { margin: 0 0 6px; font-size: .98rem; }
+    .breakdown-item p { margin: 0; color: #555; font-size: .88rem; line-height: 1.5; }
+    .access-note { margin-top: 18px; padding: 14px; border: 1px solid #888; background: #fff; font-size: .87rem; line-height: 1.6; }
+    .doc-footer { margin-top: 36px; color: #555; font-size: .82rem; text-align: center; }
+
+    @container preview (max-width: 900px) {
+      .site-header { grid-template-columns: auto 1fr; gap: 12px; padding: 14px 4%; }
+      .main-nav { grid-column: 1 / -1; grid-row: 2; justify-content: space-between; gap: 12px; padding-top: 6px; border-top: 1px solid #bbb; }
+      .header-tools { justify-content: end; }
+      .hero { gap: 4%; padding: 38px 5%; }
+      .site-section { padding: 34px 5%; }
+      .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .site-footer { padding-right: 5%; padding-left: 5%; }
+    }
+
+    @container preview (max-width: 600px) {
+      .site-header { grid-template-columns: auto 1fr auto; gap: 8px; padding: 12px 4%; }
+      .logo { width: 40px; height: 38px; }
+      .main-nav { grid-column: 1 / -1; grid-row: 2; display: flex; justify-content: space-between; gap: 8px; overflow-x: auto; padding: 10px 0 2px; }
+      .main-nav a { flex: 0 0 auto; font-size: .78rem; }
+      .header-tools { display: contents; }
+      .search-box { grid-column: 2; grid-row: 1; width: 100%; min-width: 0; }
+      .header-tools .button { grid-column: 3; grid-row: 1; max-width: 42px; overflow: hidden; padding: 8px; white-space: nowrap; }
+      .hero { grid-template-columns: 1fr; gap: 20px; padding: 30px 5%; }
+      .hero h2 { font-size: 2.3rem; }
+      .hero .image-placeholder { min-height: 190px; }
+      .welcome-note { padding: 14px 5%; }
+      .site-section { padding: 28px 5%; }
+      .section-heading h2 { font-size: 1.45rem; }
+      .card-grid, .project-grid, .timeline, .gallery-strip { grid-template-columns: 1fr; }
+      .memory-card { display: grid; grid-template-columns: 38% 1fr; }
+      .memory-card .image-placeholder { min-height: 110px; border-width: 0 1px 0 0; }
+      .memory-card .placeholder-label { font-size: .62rem; }
+      .about-grid, .contact-panel { grid-template-columns: 1fr; }
+      .about-grid .image-placeholder { min-height: 180px; }
+      .info-columns { grid-template-columns: 1fr; }
+      .project-card { display: grid; grid-template-columns: 38% 1fr; }
+      .project-card .image-placeholder { min-height: 120px; border-width: 0 1px 0 0; }
+      .gallery-strip .image-placeholder { min-height: 120px; }
+      .contact-panel { gap: 16px; padding: 16px; }
+      .site-footer { grid-template-columns: 1fr 1fr; gap: 16px; padding: 24px 5%; }
+      .footer-brand { grid-column: 1 / -1; }
+      .copyright { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 600px) {
+      .document { padding: 24px 14px 40px; }
+      .breakdown-list { grid-template-columns: 1fr; }
+      .flow { gap: 7px; padding: 14px 8px; }
+      .flow-step { padding: 10px; font-size: .78rem; }
+      .flow-arrow { font-size: 1rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="document">
+    <header class="document-head">
+      <p class="eyebrow">Low-fidelity responsive wireframe</p>
+      <h1>Personal Memories &amp; Portfolio</h1>
+      <p class="intro">A grayscale structural concept for Zyron Neil A. Bautista's CS111 memories website. It brings the memory archive and personal portfolio into one clear journey: browse life chapters, learn about the creator, explore projects, then get in touch.</p>
+    </header>
+
+    <fieldset class="device-picker" aria-label="Choose wireframe viewport">
+      <strong>Preview size</strong>
+      <input type="radio" name="viewport" id="view-desktop" checked>
+      <label for="view-desktop">Desktop · 1440 px</label>
+      <input type="radio" name="viewport" id="view-tablet">
+      <label for="view-tablet">Tablet · 768 px</label>
+      <input type="radio" name="viewport" id="view-mobile">
+      <label for="view-mobile">Mobile · 390 px</label>
+    </fieldset>
+    <p class="viewport-caption">Choose a viewport to preview the same page structure at that width. The canvas scrolls horizontally on narrow screens.</p>
+
+    <div class="preview-outer">
+      <div class="canvas">
+        <div class="site-header">
+          <a class="logo" href="#home" aria-label="ZB home">ZB</a>
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="#home">Home</a>
+            <a href="#memories">Memory Folders</a>
+            <a href="#about">About</a>
+            <a href="#work">Selected Work</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <div class="header-tools">
+            <span class="search-box">⌕ &nbsp; Search folders</span>
+            <a class="button button--dark" href="#memories">Explore memories</a>
+          </div>
+        </div>
+        <section class="hero" id="home" aria-labelledby="hero-title">
+          <div class="hero-copy">
+            <p class="label">CS111 · Personal Memories Project</p>
+            <h2 id="hero-title">A life, collected in moments.</h2>
+            <p>Welcome to my digital memory vault. Explore the people, places, favorites, and experiences that have shaped my story.</p>
+            <div class="hero-actions">
+              <a class="button button--dark" href="#memories">Browse memory folders</a>
+              <a class="button" href="#about">Meet Zyron</a>
+            </div>
+          </div>
+          <div class="image-placeholder" role="img" aria-label="Portrait image placeholder">
+            <span><span class="placeholder-label">Image area</span><br>Profile portrait / personal hero image</span>
+          </div>
+        </section>
+        <p class="welcome-note"><strong>How to explore:</strong> Choose a memory folder to open its photos, stories, and personal notes.</p>
+
+        <section class="site-section" id="memories" aria-labelledby="memories-title">
+          <div class="section-heading">
+            <p class="label">01 · Browse the archive</p>
+            <h2 id="memories-title">Memory Folders</h2>
+            <p>Start with a chapter that interests you. Each card opens a dedicated collection with its own photos and captions.</p>
+          </div>
+          <div class="card-grid">
+            <a class="memory-card" href="pages/childhood_memories.html"><div class="image-placeholder" role="img" aria-label="Childhood photo placeholder"><span class="placeholder-label">Image</span></div><div class="card-copy"><h3>Childhood Memories</h3><p>Early years and playful adventures.</p><span class="card-link">Open collection →</span></div></a>
+            <a class="memory-card" href="pages/family_relatives.html"><div class="image-placeholder" role="img" aria-label="Family photo placeholder"><span class="placeholder-label">Image</span></div><div class="card-copy"><h3>Family &amp; Relatives</h3><p>People and moments close to home.</p><span class="card-link">Open collection →</span></div></a>
+            <a class="memory-card" href="pages/my_friends.html"><div class="image-placeholder" role="img" aria-label="Friends photo placeholder"><span class="placeholder-label">Image</span></div><div class="card-copy"><h3>My Friends</h3><p>Circles, reunions, and shared memories.</p><span class="card-link">Open collection →</span></div></a>
+            <a class="memory-card" href="pages/me_and_my_love.html"><div class="image-placeholder" role="img" aria-label="Personal passions image placeholder"><span class="placeholder-label">Image</span></div><div class="card-copy"><h3>Me &amp; My Love</h3><p>Passions and things that inspire me.</p><span class="card-link">Open collection →</span></div></a>
+            <a class="memory-card" href="pages/my_favorite_food.html"><div class="image-placeholder" role="img" aria-label="Favorite food image placeholder"><span class="placeholder-label">Image</span></div><div class="card-copy"><h3>Favorite Food</h3><p>Favorite dishes and recipes.</p><span class="card-link">Open collection →</span></div></a>
+            <a class="memory-card" href="pages/my_favorite_movie.html"><div class="image-placeholder" role="img" aria-label="Favorite movie poster placeholder"><span class="placeholder-label">Image</span></div><div class="card-copy"><h3>Favorite Movies</h3><p>Stories, posters, and trailers I enjoy.</p><span class="card-link">Open collection →</span></div></a>
+            <a class="memory-card" href="pages/my_song.html"><div class="image-placeholder" role="img" aria-label="Favorite song artwork placeholder"><span class="placeholder-label">Image</span></div><div class="card-copy"><h3>My Songs</h3><p>Tracks and the memories tied to them.</p><span class="card-link">Open collection →</span></div></a>
+            <a class="memory-card" href="pages/joke_time.html"><div class="image-placeholder" role="img" aria-label="Jokes illustration placeholder"><span class="placeholder-label">Image</span></div><div class="card-copy"><h3>Joke Time</h3><p>A few lighthearted school and coding jokes.</p><span class="card-link">Open collection →</span></div></a>
+          </div>
+          <div class="directory"><span class="label">Collection index</span><br>Quick access to all eight pages: <a href="pages/childhood_memories.html">Childhood</a><a href="pages/family_relatives.html">Family</a><a href="pages/my_friends.html">Friends</a><a href="pages/me_and_my_love.html">Passions</a><a href="pages/my_favorite_food.html">Food</a><a href="pages/my_favorite_movie.html">Movies</a><a href="pages/my_song.html">Songs</a><a href="pages/joke_time.html">Jokes</a></div>
+          <p class="note"><span class="note-title">Why this section is here</span>It is the site's primary destination and appears directly after the introduction. Consistent image, title, summary, and link patterns make the collections easy to scan and open.</p>
+        </section>
+
+        <section class="site-section" id="about" aria-labelledby="about-title">
+          <div class="section-heading">
+            <p class="label">02 · Context</p>
+            <h2 id="about-title">About Zyron</h2>
+            <p>A short introduction gives the memories a personal voice and tells visitors who created this collection.</p>
+          </div>
+          <div class="about-grid">
+            <div class="image-placeholder" role="img" aria-label="Personal photo placeholder"><span><span class="placeholder-label">Image area</span><br>Personal photo or portrait</span></div>
+            <div class="info-card">
+              <h3>A little about me</h3>
+              <p>I'm Zyron Neil A. Bautista, a student documenting the people, interests, and experiences that matter to me.</p>
+              <div class="info-columns">
+                <section><h4>My interests</h4><p>Computing, music, movies, food, and time with friends and family.</p></section>
+                <section><h4>At a glance</h4><p>CS111 student<br>Personal memories project<br>2026</p></section>
+              </div>
+            </div>
+          </div>
+          <p class="note"><span class="note-title">Why this section is here</span>Personal context follows the archive so interested visitors can learn more without interrupting the main browse-first path.</p>
+        </section>
+
+        <section class="site-section" id="journey" aria-labelledby="journey-title">
+          <div class="section-heading">
+            <p class="label">03 · Personal milestones</p>
+            <h2 id="journey-title">My Journey</h2>
+            <p>A lightweight timeline adds chronological context without competing with the photo collections.</p>
+          </div>
+          <div class="timeline">
+            <article class="timeline-card"><span class="label">Chapter 01</span><h3>Early memories</h3><p>Family, childhood, and the experiences that started my story.</p></article>
+            <article class="timeline-card"><span class="label">Chapter 02</span><h3>People &amp; passions</h3><p>Friendships and favorite things that became part of my everyday life.</p></article>
+            <article class="timeline-card"><span class="label">Chapter 03</span><h3>Learning &amp; making</h3><p>My ongoing journey as a student of computing and creative work.</p></article>
+          </div>
+          <p class="note"><span class="note-title">Why this section is here</span>Milestones help connect separate memories into a readable story. Keep entries short and chronological.</p>
+        </section>
+
+        <section class="site-section" id="work" aria-labelledby="work-title">
+          <div class="section-heading">
+            <p class="label">04 · Featured content</p>
+            <h2 id="work-title">Selected Work</h2>
+            <p>A compact showcase bridges the personal archive and the portfolio, with clear links to learn more about each project.</p>
+          </div>
+          <div class="project-grid">
+            <article class="project-card"><div class="image-placeholder" role="img" aria-label="Project screenshot placeholder"><span class="placeholder-label">Project image</span></div><div class="card-copy"><h3>ISU ID Issuance System</h3><p>Screenshot placeholder · One-line project summary.</p><a class="card-link" href="#contact">View project →</a></div></article>
+            <article class="project-card"><div class="image-placeholder" role="img" aria-label="Project screenshot placeholder"><span class="placeholder-label">Project image</span></div><div class="card-copy"><h3>E-Lodging ISU</h3><p>Screenshot placeholder · One-line project summary.</p><a class="card-link" href="#contact">View project →</a></div></article>
+            <article class="project-card"><div class="image-placeholder" role="img" aria-label="Project screenshot placeholder"><span class="placeholder-label">Project image</span></div><div class="card-copy"><h3>Personal Portfolio</h3><p>Screenshot placeholder · One-line project summary.</p><a class="card-link" href="#contact">View project →</a></div></article>
+          </div>
+          <p class="note"><span class="note-title">Why this section is here</span>Featured projects offer a next step for visitors interested in the creator's work. Image-first cards allow quick comparison and scanning.</p>
+        </section>
+
+        <section class="site-section" id="gallery" aria-labelledby="gallery-title">
+          <div class="section-heading">
+            <p class="label">05 · Visual highlights</p>
+            <h2 id="gallery-title">A few more moments</h2>
+            <p>A small image strip provides a final visual preview and routes visitors back to the full collections.</p>
+          </div>
+          <div class="gallery-strip">
+            <div class="image-placeholder" role="img" aria-label="Gallery image placeholder"><span class="placeholder-label">Gallery image 01</span></div>
+            <div class="image-placeholder" role="img" aria-label="Gallery image placeholder"><span class="placeholder-label">Gallery image 02</span></div>
+            <div class="image-placeholder" role="img" aria-label="Gallery image placeholder"><span class="placeholder-label">Gallery image 03</span></div>
+            <div class="image-placeholder" role="img" aria-label="Gallery image placeholder"><span class="placeholder-label">Gallery image 04</span></div>
+          </div>
+          <p class="note"><span class="note-title">Why this section is here</span>Use it as a preview, not a second full archive. Each image should link to its original memory page and include a useful caption.</p>
+        </section>
+
+        <section class="site-section" id="contact" aria-labelledby="contact-title">
+          <div class="section-heading">
+            <p class="label">06 · Next step</p>
+            <h2 id="contact-title">Get in touch</h2>
+            <p>Make the final action easy to find for visitors who want to connect or discuss a project.</p>
+          </div>
+          <div class="contact-panel">
+            <div class="contact-copy">
+              <h3>Let's connect.</h3>
+              <p>Have a question about my projects or want to say hello? Send a short message or find me online.</p>
+              <div class="contact-details"><strong>Email</strong> · hello@example.com<br><strong>GitHub</strong> · github.com/ZyronNeil2007</div>
+            </div>
+            <form class="contact-form" action="#contact" method="get">
+              <label for="contact-name">Your name<input id="contact-name" name="name" placeholder="Name"></label>
+              <label for="contact-email">Email address<input id="contact-email" name="email" type="email" placeholder="you@example.com"></label>
+              <label for="contact-message">Message<textarea id="contact-message" name="message" placeholder="What would you like to talk about?"></textarea></label>
+              <button class="button button--dark" type="submit">Send message</button>
+            </form>
+          </div>
+          <p class="note"><span class="note-title">Why this section is here</span>A direct invitation and short form close the journey with one clear action. Validate the destination and delivery method before launch.</p>
+        </section>
+
+        <footer class="site-footer">
+          <div class="footer-brand"><h2>ZB · Zyron Neil Bautista</h2><p>A personal archive of memories, interests, and projects created for CS111.</p></div>
+          <div><h3>Explore</h3><nav class="footer-links" aria-label="Footer navigation"><a href="#memories">Memory folders</a><a href="#about">About</a><a href="#work">Selected work</a><a href="#contact">Contact</a></nav></div>
+          <div><h3>Find me online</h3><nav class="footer-links" aria-label="Social links"><a href="https://github.com/ZyronNeil2007/zbautista_cs111">GitHub repository</a><a href="https://personal-portfolio-ten-sage-56.vercel.app/">Portfolio</a><a href="mailto:hello@example.com">Email</a></nav></div>
+          <p class="copyright">© 2026 Zyron Neil A. Bautista · CS111 Introduction to Computing</p>
+        </footer>
+      </div>
+    </div>
+
+    <section class="flow-section" aria-labelledby="flow-title">
+      <p class="eyebrow">Information architecture</p>
+      <h2 id="flow-title">Navigation &amp; user flow</h2>
+      <p>Keep global navigation available throughout the page. Dedicated memory collections should also offer a consistent route back to the homepage.</p>
+      <div class="flow" aria-label="User flow diagram">
+        <div class="flow-step">Home / hero</div><span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-step">Choose a memory folder</div><span class="flow-arrow" aria-hidden="true">→</span>
+        <div class="flow-step">Collection detail page</div>
+        <div class="flow-branches"><span class="flow-step">Return home</span><span class="flow-step">About &amp; journey</span><span class="flow-step">Selected work</span><span class="flow-step">Contact / social</span></div>
+      </div>
+      <p class="note"><span class="note-title">Navigation rule</span>Folder links open the existing collection pages. About, journey, work, and contact links scroll to their homepage sections. Keep link labels descriptive, preserve visible focus, and make the mobile navigation easy to reach.</p>
+    </section>
+
+    <section class="breakdown" aria-labelledby="breakdown-title">
+      <p class="eyebrow">Section breakdown</p>
+      <h2 id="breakdown-title">Purpose of each section</h2>
+      <div class="breakdown-list">
+        <article class="breakdown-item"><h3>Header &amp; navigation</h3><p>Establishes identity, provides direct section links, folder search, and a prominent route into the memories.</p></article>
+        <article class="breakdown-item"><h3>Hero &amp; introduction</h3><p>Explains the site's personal purpose immediately and offers browse-first and learn-more actions.</p></article>
+        <article class="breakdown-item"><h3>Memory folders</h3><p>Primary content hub; eight scannable cards link to the dedicated memory and interest pages.</p></article>
+        <article class="breakdown-item"><h3>About &amp; journey</h3><p>Adds creator context and a simple timeline so visitors can understand the person behind the archive.</p></article>
+        <article class="breakdown-item"><h3>Selected work &amp; gallery</h3><p>Highlights portfolio projects and offers a small visual preview without duplicating entire collections.</p></article>
+        <article class="breakdown-item"><h3>Contact &amp; footer</h3><p>Provides a final contact action, social destinations, secondary navigation, and ownership details.</p></article>
+      </div>
+      <div class="access-note"><strong>Responsive &amp; accessibility notes:</strong> Desktop uses four-column memory cards; tablet reduces the grid to two columns; mobile stacks sections and turns cards into compact image-and-text rows, with all main navigation links visible in a horizontally scrollable row. Keep meaningful heading order, descriptive image alt text, keyboard-visible focus, labeled form fields, sufficient grayscale contrast, and touch-friendly controls.</div>
+    </section>
+    <footer class="doc-footer">Low-fidelity only · grayscale structure · all images are placeholders</footer>
+  </main>
+</body>
+</html>

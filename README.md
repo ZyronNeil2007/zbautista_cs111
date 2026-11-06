@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111  Personal Memories Website
 
-**Version:** 2.6.0<br>
+**Version:** 2.7.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -20,6 +20,7 @@ The website serves as a digital memory vault featuring:
 - A movie discovery page with a rotating featured title, categorized poster rows, trailer playback, and keyboard-accessible detail dialogs.
 - Accessible navigation and touch-friendly controls across the landing page and interactive memory folders.
 - A clean, standardized, modular folder architecture categorizing source code and assets by file type (`pages/`, `css/`, `js/`, and `img/`).
+- A standalone grayscale responsive wireframe (`wireframe.html`) outlining the desktop, tablet, and mobile homepage structure, navigation flow, and section purposes.
 
 ---
 
@@ -67,7 +68,10 @@ The website serves as a digital memory vault featuring:
 ```text
 zbautista_cs111/
 ├── index.html                   # Main landing page with 3D memory folders & portfolio
+├── wireframe.html               # Responsive grayscale homepage wireframe and UX notes
 ├── README.md                    # Project documentation & release details
+├── features.csv                 # Swarm Rebuild feature comparison
+├── Swarm Rebuild Deep-Dive Reverse Engineering.md # Swarm Rebuild research notes
 ├── .gitignore                   # Git ignore patterns
 │
 ├── pages/                       # Dedicated secondary memory pages
@@ -164,10 +168,26 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
    # Optional: Using Node.js npx serve
    npx serve .
    ```
+4. Open `wireframe.html` directly in a browser to review the responsive low-fidelity design. Use the viewport controls to preview desktop, tablet, and mobile layouts.
 
 ---
 
 ## 📝 Changelog
+
+### [v2.7.0] — 2026-11-06
+#### Added
+- Added `wireframe.html`, a standalone grayscale wireframe with desktop, tablet, and mobile layouts, section notes, and a navigation/user-flow diagram.
+- Added Swarm Rebuild reverse-engineering notes and a feature comparison in `Swarm Rebuild Deep-Dive Reverse Engineering.md` and `features.csv`.
+
+#### Technical Changes
+- Removed the obsolete GitHub Pages `CNAME` after the custom domain became unreachable.
+- The wireframe is plain HTML and CSS and adds no dependencies.
+
+#### Documentation
+- Updated the project version, repository structure, feature overview, and local usage instructions.
+
+#### Breaking Changes
+- None.
 
 ### [v2.6.0] — 2026-11-06
 #### Added
