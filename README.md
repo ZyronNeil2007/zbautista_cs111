@@ -1,4 +1,4 @@
-# ZBAUTISTA CS111 — Personal Memories Website
+# ZBAUTISTA CS111  Personal Memories Website
 
 **Version:** 2.6.0<br>
 **Author:** Zyron Neil A. Bautista  
