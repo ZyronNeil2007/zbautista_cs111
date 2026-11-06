@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111  Personal Memories Website
 
-**Version:** 2.7.0<br>
+**Version:** 2.8.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -107,6 +107,7 @@ zbautista_cs111/
 │
 ├── img/                         # Optimized image, audio, and video assets
 │   ├── backgrounds/             # Portfolio backgrounds (neil_bg.jpg, ME_LANSCAPE_AT_RICEFIELD.png, bnhschool.png)
+│   ├── repo screenshots/        # High-resolution screenshots for Selected Work showcase cards
 │   ├── childhood_memories/      # Early memories photograph assets
 │   ├── family_relatives/        # Family gatherings & tribute photos
 │   ├── icons/                   # Letter and UI iconography
@@ -173,6 +174,30 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.8.0] — 2026-11-06
+#### Added
+- Added high-resolution project screenshots for all Selected Work cards (`img/repo screenshots/`), replacing temporary placeholders and partially addressing [#1](https://github.com/ZyronNeil2007/zbautista_cs111/issues/1).
+- Added a 6th project showcase card for **CCSICT DP Blast 2026** with live screenshot, descriptions, technology badges, and repository link.
+- Added a responsive layered mobile cutout portrait (`.hero-portrait`) in `css/landing.css` positioned between the title and subtitle on small screens (≤ 820px).
+
+#### Improved
+- Redesigned the portfolio **Contact** section into a full-viewport, modern split-column card with an active collaboration status indicator, clear primary mail action, and structured social links.
+- Updated `js/swarm-rebuild.js` with `data-mobile-autostart="false"` support to prevent heavy animations from autostarting on mobile devices (≤ 820px), improving mobile performance and battery usage.
+
+#### Fixed
+- Removed obsolete placeholder Visual Design Gallery markup in `index.html` referencing non-existent images, resolving 404 console errors.
+
+#### Technical Changes
+- Tracked new screenshots in `img/repo screenshots/` for ISU ID Issuance System, E-Lodging ISU, Personal Portfolio, BNHS Online Quiz, 3D Pop-Art Hand Tracking, and CCSICT DP Blast 2026.
+- Refined stacking contexts, isolation, and typography across mobile landing CSS and portfolio contact styles.
+
+#### Documentation
+- Updated project version to `2.8.0` across `README.md` and `index.html`.
+- Updated repository structure documentation to reflect `img/repo screenshots/`.
+
+#### Breaking Changes
+- None.
 
 ### [v2.7.0] — 2026-11-06
 #### Added

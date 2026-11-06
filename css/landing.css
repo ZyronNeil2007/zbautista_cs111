@@ -365,6 +365,10 @@ ul {
     text-shadow: 4px 4px 0 var(--cream-dark), 8px 10px 20px rgba(0, 0, 0, .35);
 }
 
+.hero-portrait {
+    display: none;
+}
+
 /* ── Right info cards ── */
 .info-col {
     grid-column: 3;
@@ -580,7 +584,8 @@ ul {
 
 .fx-card {
     position: relative;
-    padding-top: 96px;          /* room for the page that lifts out */
+    padding-top: 96px;
+    /* room for the page that lifts out */
     text-align: center;
 }
 
@@ -1132,14 +1137,9 @@ main:focus {
         padding-bottom: 36px;
     }
 
-    /* photo covers the first screen only, then fades into the crimson page */
+    /* Keep the cutout portrait on a clean crimson backdrop. */
     .stage::before {
-        background-attachment: scroll;
-        background-position: 40% 60%;
-        bottom: auto;
-        height: min(100svh, 820px);
-        -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
-        mask-image: linear-gradient(to bottom, #000 0%, #000 55%, transparent 100%);
+        display: none;
     }
 
     .stage::after {
@@ -1162,7 +1162,8 @@ main:focus {
     }
 
     .search input {
-        font-size: 16px;        /* stops iOS Safari zooming the page on focus */
+        font-size: 16px;
+        /* stops iOS Safari zooming the page on focus */
     }
 
     .topnav {
@@ -1181,11 +1182,40 @@ main:focus {
     /* name scales with the screen so it fills the width without clipping */
     .hero-title-wrap {
         order: 1;
-        padding-bottom: 0;
+        width: 100%;
+        min-width: 0;
+        isolation: isolate;
+        padding-bottom: clamp(200px, 56vw, 320px);
     }
 
     .hero-title {
-        font-size: clamp(2.4rem, calc((100vw - 52px) / 5.8), 5rem);
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        white-space: normal;
+        text-align: center;
+        font-size: clamp(2.6rem, 13vw, 5.2rem);
+    }
+
+    .hero-tag {
+        position: relative;
+        z-index: 3;
+        max-width: 34rem;
+        margin: 0 auto 6px;
+        text-align: center;
+    }
+
+    .hero-portrait {
+        display: block;
+        position: absolute;
+        z-index: 2;
+        bottom: 0;
+        left: 50%;
+        width: min(240vw, 1200px);
+        max-width: none;
+        height: auto;
+        transform: translateX(-45%);
+        pointer-events: none;
     }
 
     .left-col {
@@ -1229,7 +1259,7 @@ main:focus {
     .stage .glass {
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
-        background: rgba(90, 16, 32, .72);
+        background: rgba(90, 16, 32, .6);
     }
 }
 

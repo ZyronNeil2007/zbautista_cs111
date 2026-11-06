@@ -1610,5 +1610,5 @@
     else startTour(state);
   };
 
-  begin();
+  if (script.dataset.mobileAutostart !== "false" || window.innerWidth > 820) begin();
 }());

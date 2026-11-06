@@ -830,68 +830,169 @@ body {
 }
 
 /* contact */
+.pf-contact-page {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    align-items: center;
+    width: 100vw;
+    min-height: 100vh;
+    min-height: 100svh;
+    margin: clamp(60px, 8vw, 100px) calc(50% - 50vw) 0;
+    padding: clamp(48px, 8vw, 110px) clamp(24px, 9vw, 140px);
+    overflow: hidden;
+    background: transparent;
+}
+
 .pf-contact {
-    text-align: center;
-    padding: 50px clamp(16px, 4vw, 24px);
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(240px, .65fr);
+    align-items: center;
+    gap: clamp(40px, 8vw, 120px);
+    width: min(100%, 1120px);
+    margin: 0 auto;
+}
+
+.pf-contact-kicker,
+.pf-contact-label {
+    font-family: var(--f-mono);
+    font-size: .76rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--peach);
+}
+
+.pf-contact-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 24px;
+}
+
+.pf-contact-kicker span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #8dce8b;
+    box-shadow: 0 0 14px rgba(141, 206, 139, .8);
 }
 
 .pf-contact .pf-title {
-    margin-bottom: 12px;
+    max-width: 780px;
+    margin: 0 0 24px;
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: .96;
+    text-shadow: none;
 }
 
-.pf-contact p {
-    max-width: 520px;
-    margin: 0 auto 22px;
-    line-height: 1.7;
-    color: var(--text);
+.pf-contact .pf-title span {
+    color: var(--peach);
+}
+
+.pf-contact-intro {
+    max-width: 540px;
+    margin: 0 0 32px;
+    color: var(--text-soft);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.8;
 }
 
 .pf-mail {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    min-height: 44px;
-    text-align: center;
+    justify-content: space-between;
+    gap: 28px;
+    min-height: 56px;
     max-width: 100%;
-    padding: 12px clamp(14px, 4vw, 26px);
-    border-radius: 999px;
+    padding: 12px 22px;
+    border: 1px solid var(--cream);
+    border-radius: 4px;
     background: var(--cream);
     color: var(--cream-dark);
     font-weight: 700;
-    font-size: clamp(.78rem, 3.6vw, .95rem);
-    overflow-wrap: anywhere;
-    transition: transform .2s, box-shadow .2s;
+    font-size: .92rem;
+    transition: transform .2s, box-shadow .2s, background .2s;
 }
 
 .pf-mail:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, .35);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, .3);
+    background: #fff3d4;
+}
+
+.pf-contact-side {
+    padding: 28px 0 28px clamp(24px, 4vw, 56px);
+    border-left: 1px solid rgba(255, 255, 255, .24);
+}
+
+.pf-contact-label {
+    display: block;
+    margin-bottom: 14px;
+}
+
+.pf-contact-email {
+    color: var(--cream);
+    font-size: clamp(.9rem, 1.6vw, 1.08rem);
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    text-decoration-color: rgba(246, 231, 193, .5);
+    text-underline-offset: 5px;
+}
+
+.pf-contact-side > p {
+    margin: 38px 0 12px;
+    color: var(--text-soft);
+    font-size: .88rem;
 }
 
 .pf-social {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 26px;
+    display: grid;
+    gap: 0;
+    margin: 0;
 }
 
 .pf-social a {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    min-height: 44px;
-    padding: 9px 20px;
-    border-radius: 999px;
-    border: 1px solid var(--glass-border);
-    background: rgba(255, 255, 255, .12);
-    font-size: .85rem;
+    min-height: 46px;
+    border-bottom: 1px solid rgba(255, 255, 255, .16);
+    color: var(--cream);
+    font-size: .92rem;
     font-weight: 600;
-    transition: background .2s, transform .2s;
+    transition: color .2s, padding .2s;
+}
+
+.pf-social a span {
+    color: var(--peach);
 }
 
 .pf-social a:hover {
-    background: rgba(255, 255, 255, .3);
-    transform: translateY(-2px);
+    padding-left: 6px;
+    color: var(--peach);
+}
+
+@media (max-width: 700px) {
+    .pf-contact-page {
+        min-height: 100svh;
+        margin-top: 60px;
+        padding: 64px 24px;
+    }
+
+    .pf-contact {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .pf-contact .pf-title {
+        font-size: clamp(3rem, 14vw, 5rem);
+    }
+
+    .pf-contact-side {
+        padding: 26px 0 0;
+        border-top: 1px solid rgba(255, 255, 255, .24);
+        border-left: 0;
+    }
 }
 
 /* <=1280px: stack the about pages vertically, treat like banner layout */

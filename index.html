@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <script src="js/swarm-rebuild.js" data-agents="14" data-bg="#3a0912"></script>
+    <script src="js/swarm-rebuild.js" data-agents="14" data-bg="#3a0912" data-mobile-autostart="false"></script>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <div class="stage">
@@ -94,6 +94,7 @@
         <header class="hero-title-wrap">
             <p class="hero-tag rise d1"><b>My Personal Memories</b> · CS111 — Introduction to Computing</p>
             <h1 class="hero-title rise d2">Zyron Neil<br>A. Bautista</h1>
+            <img class="hero-portrait" src="img/backgrounds/neil_bg_removed.png" alt="" aria-hidden="true">
         </header>
 
         <!-- Right small cards -->
@@ -636,9 +637,9 @@
                 <div class="pf-work">
                     <article class="glass pf-card pf-proj pf-reveal">
                         <span class="pf-num">01</span>
-                        <div class="pf-proj-preview" role="img"
-                            aria-label="Screenshot placeholder for ISU ID Issuance System">
-                            <span aria-hidden="true">Replace with project screenshot</span>
+                        <div class="pf-proj-preview">
+                            <img src="img/repo%20screenshots/ISU_ID%20_Issuance_System.png"
+                                alt="ISU ID Issuance System screenshot" loading="lazy">
                         </div>
                         <span class="pf-cat">Web App &middot; Education</span>
                         <h4>ISU ID Issuance System</h4>
@@ -658,8 +659,9 @@
                     </article>
                     <article class="glass pf-card pf-proj pf-reveal">
                         <span class="pf-num">02</span>
-                        <div class="pf-proj-preview" role="img" aria-label="Screenshot placeholder for E-Lodging ISU">
-                            <span aria-hidden="true">Replace with project screenshot</span>
+                        <div class="pf-proj-preview">
+                            <img src="img/repo%20screenshots/E-Lodging_ISU.png" alt="E-Lodging ISU screenshot"
+                                loading="lazy">
                         </div>
                         <span class="pf-cat">Web Platform &middot; Housing</span>
                         <h4>E-Lodging ISU</h4>
@@ -677,9 +679,9 @@
                     </article>
                     <article class="glass pf-card pf-proj pf-reveal">
                         <span class="pf-num">03</span>
-                        <div class="pf-proj-preview" role="img"
-                            aria-label="Screenshot placeholder for Personal Portfolio">
-                            <span aria-hidden="true">Replace with project screenshot</span>
+                        <div class="pf-proj-preview">
+                            <img src="img/repo%20screenshots/Personal_Portfolio.png"
+                                alt="Personal Portfolio screenshot" loading="lazy">
                         </div>
                         <span class="pf-cat">Web Dev &middot; Portfolio</span>
                         <h4>Personal Portfolio</h4>
@@ -700,9 +702,9 @@
                     </article>
                     <article class="glass pf-card pf-proj pf-reveal">
                         <span class="pf-num">04</span>
-                        <div class="pf-proj-preview" role="img"
-                            aria-label="Screenshot placeholder for BNHS Online Quiz">
-                            <span aria-hidden="true">Replace with project screenshot</span>
+                        <div class="pf-proj-preview">
+                            <img src="img/repo%20screenshots/BNHS_Online_Quiz.png"
+                                alt="BNHS Online Quiz screenshot" loading="lazy">
                         </div>
                         <span class="pf-cat">Web App &middot; Education</span>
                         <h4>BNHS Online Quiz</h4>
@@ -720,9 +722,9 @@
                     </article>
                     <article class="glass pf-card pf-proj pf-reveal">
                         <span class="pf-num">05</span>
-                        <div class="pf-proj-preview" role="img"
-                            aria-label="Screenshot placeholder for 3D Pop-Art Hand Tracking">
-                            <span aria-hidden="true">Replace with project screenshot</span>
+                        <div class="pf-proj-preview">
+                            <img src="img/repo%20screenshots/3D_Pop-Art_Hand_Tracking.jpg"
+                                alt="3D Pop-Art Hand Tracking screenshot" loading="lazy">
                         </div>
                         <span class="pf-cat">Computer Vision &middot; Creative Tech</span>
                         <h4>3D Pop-Art Hand Tracking</h4>
@@ -738,49 +740,57 @@
                             <li>MediaPipe</li>
                         </ul>
                     </article>
-                </div>
-            </div>
-
-            <!-- Visual Design Gallery -->
-            <div class="pf-block" id="gallery">
-                <h3 class="pf-title pf-reveal">Visual Design Gallery</h3>
-                <p class="pf-quote pf-reveal">A curated set of design works showcased on the portfolio website.</p>
-                <div class="pf-gallery">
-                    <figure class="glass pf-shot pf-reveal"><img src="image/quiz.png" alt="Quiz design" loading="lazy">
-                        <figcaption>quiz.png</figcaption>
-                    </figure>
-                    <figure class="glass pf-shot pf-reveal"><img src="image/NOT_FINAL.jpg" alt="NOT FINAL design"
-                            loading="lazy">
-                        <figcaption>NOT_FINAL.jpg</figcaption>
-                    </figure>
-                    <figure class="glass pf-shot pf-reveal"><img src="image/get_ready.jpg" alt="Get Ready design"
-                            loading="lazy">
-                        <figcaption>get_ready.jpg</figcaption>
-                    </figure>
-                    <figure class="glass pf-shot pf-reveal"><img src="image/me_booth.jpg" alt="Me booth design"
-                            loading="lazy">
-                        <figcaption>me_booth.jpg</figcaption>
-                    </figure>
+                    <article class="glass pf-card pf-proj pf-reveal">
+                        <span class="pf-num">06</span>
+                        <div class="pf-proj-preview">
+                            <img src="img/repo%20screenshots/CCSICT-DP_Blast_2026.png"
+                                alt="CCSICT DP Blast 2026 profile picture frame generator screenshot" loading="lazy">
+                        </div>
+                        <span class="pf-cat">Web App &middot; Event Tool</span>
+                        <h4>CCSICT DP Blast 2026</h4>
+                        <p>A profile picture frame generator for A.Y. 2026&ndash;2027. Upload a photo, adjust it in
+                            the frame, then download and share your DP.</p>
+                        <div class="pf-proj-links">
+                            <a href="https://github.com/ZyronNeil2007/ccsict-dp-blast" target="_blank"
+                                rel="noopener noreferrer">GitHub repository</a>
+                        </div>
+                        <ul class="pf-tags">
+                            <li>HTML</li>
+                            <li>CSS</li>
+                            <li>JavaScript</li>
+                        </ul>
+                    </article>
                 </div>
             </div>
 
             <!-- Contact -->
-            <div class="pf-block" id="contact">
-                <div class="glass pf-contact pf-reveal">
-                    <h3 class="pf-title">Let's build something great.</h3>
-                    <p>Always open to learning new things, collaborating, and building projects that make an impact.</p>
-                    <a class="pf-mail" href="mailto:zyronneilbautista10@gmail.com">zyronneilbautista10@gmail.com</a>
-                    <ul class="pf-social">
-                        <li><a href="https://www.facebook.com/share/18ZFsaeo4S/" target="_blank"
-                                rel="noopener noreferrer">Facebook</a></li>
-                        <li><a href="https://www.instagram.com/zyronnei10/" target="_blank"
-                                rel="noopener noreferrer">Instagram</a></li>
-                        <li><a href="https://www.tiktok.com/@zyron_neil" target="_blank"
-                                rel="noopener noreferrer">TikTok</a></li>
-                        <li><a href="https://github.com/ZyronNeil2007" target="_blank"
-                                rel="noopener noreferrer">GitHub</a>
-                        </li>
-                    </ul>
+            <div class="pf-block pf-contact-page" id="contact">
+                <div class="pf-contact pf-reveal">
+                    <div class="pf-contact-main">
+                        <p class="pf-contact-kicker"><span aria-hidden="true"></span> Open to collaboration</p>
+                        <h3 class="pf-title">Let's build something <span>great.</span></h3>
+                        <p class="pf-contact-intro">Have a project in mind or just want to say hello? I'm always up
+                            for learning, sharing ideas, and making something meaningful.</p>
+                        <a class="pf-mail" href="mailto:zyronneilbautista10@gmail.com">
+                            <span>Start a conversation</span><span aria-hidden="true">&rarr;</span>
+                        </a>
+                    </div>
+                    <aside class="pf-contact-side" aria-label="Contact details">
+                        <span class="pf-contact-label">Get in touch</span>
+                        <a class="pf-contact-email"
+                            href="mailto:zyronneilbautista10@gmail.com">zyronneilbautista10@gmail.com</a>
+                        <p>Find me around the web</p>
+                        <ul class="pf-social">
+                            <li><a href="https://www.facebook.com/share/18ZFsaeo4S/" target="_blank"
+                                    rel="noopener noreferrer">Facebook <span aria-hidden="true">&nearr;</span></a></li>
+                            <li><a href="https://www.instagram.com/zyronnei10/" target="_blank"
+                                    rel="noopener noreferrer">Instagram <span aria-hidden="true">&nearr;</span></a></li>
+                            <li><a href="https://www.tiktok.com/@zyron_neil" target="_blank"
+                                    rel="noopener noreferrer">TikTok <span aria-hidden="true">&nearr;</span></a></li>
+                            <li><a href="https://github.com/ZyronNeil2007" target="_blank"
+                                    rel="noopener noreferrer">GitHub <span aria-hidden="true">&nearr;</span></a></li>
+                        </ul>
+                    </aside>
                 </div>
             </div>
         </section>
@@ -789,6 +799,7 @@
     <footer class="site-footer">
         <p>Designed &amp; Developed by Zyron Neil Bautista</p>
         <p>&copy; 2026 Zyron Neil A. Bautista | CS111 — Introduction to Computing Personal Memories Project</p>
+        <p>Version v2.8.0</p>
     </footer>
 
     <script>
@@ -821,7 +832,7 @@
             })();
     </script>
     <script>
-        // Portfolio: reveal on scroll + tidy placeholder for missing gallery images
+        // Portfolio: reveal on scroll
         (function () {
             var items = document.querySelectorAll('.pf-reveal');
             if ('IntersectionObserver' in window) {
@@ -830,17 +841,6 @@
                 }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
                 items.forEach(function (i) { io.observe(i); });
             } else { items.forEach(function (i) { i.classList.add('in'); }); }
-            document.querySelectorAll('.pf-shot img').forEach(function (img) {
-                function swap() {
-                    if (!img.parentNode) return;
-                    var ph = document.createElement('div');
-                    ph.className = 'pf-ph';
-                    ph.textContent = img.alt;
-                    img.replaceWith(ph);
-                }
-                img.addEventListener('error', swap);
-                if (img.complete && img.naturalWidth === 0) swap();   // already failed before this ran
-            });
         })();
     </script>
     <script src="js/dna.js"></script>
