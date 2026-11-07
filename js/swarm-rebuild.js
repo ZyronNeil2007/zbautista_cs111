@@ -2,6 +2,7 @@
  *  One IIFE, no dependencies. Drop it in as the FIRST tag in <body>; it never depends on your markup.
  *    <script src="swarm-rebuild.js" data-agents="14" data-speed="1" data-line="0.88" data-bg="#000" data-accent="#3D8BFF"></script>
  *  Sound: synthesised FX, on by default after the first click/key; data-sound="off" starts muted, data-volume="0..1". Toolbar speaker button toggles it.
+ *  Clone mode: data-clone="auto|on|off" (default auto). Identical siblings (card grids) are copied from the first finished one instead of rebuilt.
  *  Hooks (all optional): data-sr-skip, data-sr-logo, data-sr-replay, data-sr-stat="layers|texts|frames|agents".
  *  API: window.SwarmRebuild.replay() / .skip() / .destroy()
  */
@@ -13,7 +14,7 @@
   function noop() { }
   // 1. Reduced motion: do nothing at all, expose harmless no-op methods.
   if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    window.SwarmRebuild = { __sr: 1, active: false, replay: noop, skip: noop, destroy: noop, setSpeed: noop, setSound: noop, tour: noop, layers: [] };
+    window.SwarmRebuild = { __sr: 1, active: false, replay: noop, skip: noop, destroy: noop, setSpeed: noop, setSound: noop, setClone: noop, tour: noop, layers: [] };
     return;
   }
 
@@ -38,6 +39,7 @@
     PROGRESS: 1, METER: 1, OBJECT: 1, EMBED: 1
   };
   var MAX_LAYERS = 4000;
+  var CLONE = /^(on|off)$/.test(D.clone || '') ? D.clone : 'auto';   // clone mode: auto (when the swarm is overwhelmed) | on | off
 
   /* ───────────── state ───────────── */
   var phase = 'idle';                  // idle | scan | build
@@ -49,7 +51,7 @@
   var layerOf = new WeakMap(), mine = new WeakSet();
   var styleEl, rootEl, canvas, ctx, scanEl, sqEl, agentsEl, hudEl, hudText, mo = null, ro = null, hudEls = {};
   var speed = CFG.speed, touring = false, tourPos = 0, needRead = true, lastRead = 0, buildT0 = 0, doneT = 0, guideA = 0, lastWork = 0;
-  var trigPend = 0, toFinish = [], guideOn = false, lastHud = 0;
+  var trigPend = 0, toFinish = [], guideOn = false, lastHud = 0, groups = [], cloneNow = false;
   var ms = { x: 0, y: 0, rx: 0, ry: 0, on: false, last: 0, dx: 1, dy: 0 }, lastScroll = 0, freeMode = false, dismissed = false, leaveT0 = 0;
 
   /* ───────────── 2. CSS (one <style>, every class and id prefixed sr-) ───────────── */
@@ -296,6 +298,7 @@
       if (L.type === 'text' || L.tx) counts.texts++;
       if (L.type !== 'text') counts.frames++;
     }
+    buildGroups(out);
   }
 
   /* ───────────── 6. hide without moving anything ───────────── */
@@ -361,6 +364,7 @@
       if (L.rb < -60 || (L.trig && (L.rw <= 0 || L.rh <= 0 || L.rl + L.rw < 0 || L.rl > VW))) toFinish.push(L);   // finish instantly
       else if (L.trig) trigPend++;
     }
+    cloneNow = CLONE === 'on' || (CLONE === 'auto' && (trigPend > Math.max(6, agents.length * 1.2) || (cloneNow && trigPend > Math.max(3, agents.length * 0.5))));
     needRead = false; lastRead = performance.now();
   }
 
@@ -375,7 +379,7 @@
     if (!free.length || !trigPend) return;
     for (i = 0; i < pending.length; i++) {
       L = pending[i];
-      if (L.st === 0 && L.trig && (!L.parent || L.parent.st >= 1)) elig.push(L);
+      if (L.st === 0 && L.trig && (!L.parent || L.parent.st >= 1) && !(cloneNow && isCloneTarget(L))) elig.push(L);
     }
     for (i = 0; i < free.length && elig.length; i++) {
       a = free[i]; best = 0; bs = 1e18;
@@ -399,7 +403,7 @@
     var s = a.fr.style;
     s.transform = 'translate3d(' + l.toFixed(1) + 'px,' + t.toFixed(1) + 'px,0)';
     s.width = w.toFixed(1) + 'px'; s.height = h.toFixed(1) + 'px';
-    var txt = Math.round(w) + ' × ' + Math.round(h);
+    var txt = a.lbl || (Math.round(w) + ' × ' + Math.round(h));
     if (txt !== a.szTxt) { a.szTxt = txt; a.sz.textContent = txt; }
   }
   function dropFrame(a, ms) {
@@ -449,6 +453,7 @@
     done(L); L.ag = null; a.L = null; a.ph = 'free'; a.t = 0; a.wt = 0;
   }
   function abortTask(a) {                              // skip / replay: drop whatever the agent was doing
+    if (a.cp) { a.cp.ghosts.forEach(function (g) { g.fr.remove(); }); a.cp = null; a.lbl = null; }
     if (a.L) { a.L.ag = null; a.L = null; }
     dropFrame(a, 0);
     a.el.classList.remove('sr-on'); a.el.classList.remove('sr-ty'); a.ph = 'free'; a.t = 0;
@@ -457,6 +462,7 @@
   function stepAgent(a, dt) {
     var L = a.L, S = speed, tx, ty, p, w, h, f;
     if (!L) { if (freeMode) follow(a, dt); else wander(a, dt); return; }
+    if (a.cp) { stepCopy(a, dt); return; }
     a.t += dt;
     if (a.ph === 'travel') {                           // ease to the top-left corner (box/media) or the start of the text
       tx = L.type === 'text' ? a.sx : a.rl; ty = L.type === 'text' ? a.sy : a.rt;
@@ -635,6 +641,147 @@
   }
   function onX() { if (phase === 'done') dismiss(); else skip(); }
 
+  /* ───────────── clone mode: copy a finished object instead of rebuilding every identical sibling ───────────── */
+  // Siblings with the same structure (a grid of cards, say) form a group. Once the first one is fully built, an agent selects it,
+  // "copies" it, and pastes it onto every other triggered member at once: ghost frames fly out and each member's whole subtree fills in.
+  function elSig(e, d) {                                           // structural signature: tag, classes, children (depth-limited)
+    var c = (e.getAttribute('class') || '').split(/\s+/).filter(function (x) { return x && x.indexOf('sr-') !== 0; }).sort().join('.');
+    var s = e.tagName + (c ? '.' + c : ''), k, kids = e.children;
+    if (d > 0) {
+      s += '(';
+      for (k = 0; k < kids.length; k++) if (!HARD[kids[k].tagName.toUpperCase()] && !ours(kids[k])) s += elSig(kids[k], d - 1) + ',';
+      s += ')';
+    }
+    return s;
+  }
+  function buildGroups(out) {
+    if (CLONE === 'off') return;
+    var byParent = new Map(), i, L, p, fresh = [];
+    for (i = 0; i < out.length; i++) {
+      L = out[i];
+      if (L.type !== 'box' || !L.el.parentElement) continue;
+      p = L.el.parentElement;
+      if (!byParent.has(p)) byParent.set(p, []);
+      byParent.get(p).push(L);
+    }
+    byParent.forEach(function (list) {
+      if (list.length < 2) return;
+      var by = {};
+      list.forEach(function (L) { var sg = elSig(L.el, 4); if (sg.length < 900) (by[sg] = by[sg] || []).push(L); });
+      Object.keys(by).forEach(function (k) {
+        var m = by[k];
+        if (m.length < 2) return;
+        var g = { tpl: m[0], members: m, dead: false };
+        m.forEach(function (L) { L.cg = g; L.cgRoot = L; L.cgLayers = [L]; });
+        fresh.push(g);
+      });
+    });
+    for (i = 0; i < out.length; i++) {                             // pre-order: attach every descendant layer to its member
+      L = out[i];
+      if (L.parent && L.parent.cgRoot) {
+        if (L.cg) { L.cg.dead = true; L.cg.members.forEach(function (M) { M.cg = null; }); }   // nested groups are not cloned
+        L.cgRoot = L.parent.cgRoot; L.cgRoot.cgLayers.push(L);
+      }
+    }
+    fresh.forEach(function (g) {
+      if (g.dead || g.tpl.cgLayers.length < 3) { g.members.forEach(function (M) { M.cg = null; }); return; }   // not worth copying
+      groups.push(g);
+    });
+  }
+  function isCloneTarget(L) { var r = L.cgRoot; return !!(r && r.cg && r.cg.tpl !== r); }
+  function tplReady(g) { return g.tpl.cgLayers.every(function (D) { return D.st === 2; }); }
+
+  function dupPass() {                                             // a free agent copies a finished template onto its waiting siblings
+    if (!cloneNow || !groups.length) return;
+    var free = [], i, j, g, a, best, bd, d, targets;
+    for (i = 0; i < agents.length; i++) if (!agents[i].L) free.push(agents[i]);
+    for (i = 0; i < groups.length && free.length; i++) {
+      g = groups[i];
+      if (!g.tpl.cg || !tplReady(g)) continue;
+      targets = g.members.filter(function (M) {
+        return M !== g.tpl && M.st === 0 && M.trig && (!M.parent || M.parent.st >= 1) && M.cgLayers.every(function (D) { return D.st === 0; });
+      });
+      if (!targets.length) continue;
+      best = 0; bd = 1e18;
+      for (j = 0; j < free.length; j++) { d = Math.hypot(free[j].x - g.tpl.rl, free[j].y - g.tpl.rt); if (d < bd) { bd = d; best = j; } }
+      a = free.splice(best, 1)[0];
+      targets.forEach(function (M) { M.cgLayers.forEach(function (D) { D.st = 1; }); });
+      a.cp = { g: g, targets: targets, ph: 'fly', ghosts: [] };
+      a.L = g.tpl; a.ph = 'copy'; a.t = 0; a.lbl = null;
+      a.el.classList.add('sr-on');
+    }
+  }
+  function mkGhost(M, k) {
+    var f = mkEl('div', null, 'sr-fr'), z = mkEl('b', null, 'sr-sz'), i;
+    for (i = 0; i < 4; i++) f.appendChild(document.createElement('i'));
+    f.appendChild(z); f.style.opacity = '0'; rootEl.appendChild(f);
+    return { M: M, fr: f, sz: z, t: -k * 0.07, fl: 0, ft: 0, fw: 0, fh: 0, ml: 0, mt: 0, mw: 0, mh: 0, rd: false, done: false, szTxt: '' };
+  }
+  function readGhosts(a) {                                         // reads: live rect of every paste target
+    if (!a.cp) return;
+    for (var i = 0, g, r; i < a.cp.ghosts.length; i++) {
+      g = a.cp.ghosts[i];
+      if (g.done) continue;
+      r = g.M.el.getBoundingClientRect(); g.ml = r.left; g.mt = r.top; g.mw = r.width; g.mh = r.height; g.rd = true;
+    }
+  }
+  function pasteInto(M) {                                          // the whole copied subtree fills in at once
+    M.cgLayers.forEach(function (D) {
+      if (D.st === 2) return;
+      if (D.type !== 'text') fill(D, true);
+      if (D.type === 'text' || D.tx) restoreText(D);
+      done(D);
+    });
+  }
+  function finishCopy(a) {
+    dropFrame(a, 250 / speed);
+    a.lbl = null; a.cp = null; a.L = null; a.ph = 'free'; a.t = 0; a.wt = 0;
+    a.el.classList.remove('sr-on');
+  }
+  function stepCopy(a, dt) {
+    var c = a.cp, S = speed, f, i, g, p, alive = false, lead = null, tx, ty;
+    a.t += dt;
+    if (c.ph === 'fly') {                                          // go to the finished template
+      tx = clamp(a.rl, 0, VW - 14); ty = clamp(a.rt, 0, VH - 20);
+      f = 1 - Math.exp(-(6 + 3 * S) * dt); a.px = a.x; a.py = a.y;
+      a.x += (tx - a.x) * f; a.y += (ty - a.y) * f; aim(a, dt, true);
+      if (Math.hypot(tx - a.x, ty - a.y) < 3 || a.t >= 1.2 / S) {
+        showFrame(a); a.lbl = 'Copy ×' + c.targets.length; setFrame(a, a.rl, a.rt, a.rw, a.rh); sfx('frame', a);
+        c.ph = 'copy'; a.t = 0;
+      }
+    } else if (c.ph === 'copy') {                                  // "Ctrl+C": the frame holds, the cursor wiggles
+      setFrame(a, a.rl, a.rt, a.rw, a.rh);
+      a.px = a.x; a.py = a.y;
+      a.x = clamp(a.rl + a.rw, 0, VW - 14) + Math.sin(a.t * S * 38) * 3; a.y = clamp(a.rt + a.rh, 0, VH - 20) + Math.cos(a.t * S * 49) * 3;
+      if (a.t >= 0.2 / S) { c.targets.forEach(function (M, k) { c.ghosts.push(mkGhost(M, k)); }); c.ph = 'paste'; a.t = 0; sfx('fill', a); }
+    } else {                                                       // "Ctrl+V": a ghost of the template flies to every target
+      setFrame(a, a.rl, a.rt, a.rw, a.rh);
+      for (i = 0; i < c.ghosts.length; i++) {
+        g = c.ghosts[i];
+        if (g.done) continue;
+        alive = true; g.t += dt * S;
+        if (g.t < 0 || !g.rd) continue;
+        p = easeOut(clamp(g.t / 0.3, 0, 1));
+        g.fl = a.rl + (g.ml - a.rl) * p; g.ft = a.rt + (g.mt - a.rt) * p; g.fw = a.rw + (g.mw - a.rw) * p; g.fh = a.rh + (g.mh - a.rh) * p;
+        g.fr.style.opacity = '1';
+        g.fr.style.transform = 'translate3d(' + g.fl.toFixed(1) + 'px,' + g.ft.toFixed(1) + 'px,0)';
+        g.fr.style.width = Math.max(g.fw, 1).toFixed(1) + 'px'; g.fr.style.height = Math.max(g.fh, 1).toFixed(1) + 'px';
+        var txt = Math.round(g.fw) + ' × ' + Math.round(g.fh);
+        if (txt !== g.szTxt) { g.szTxt = txt; g.sz.textContent = txt; }
+        lead = g;
+        if (g.t >= 0.3) {                                          // landed: reveal the target's whole subtree
+          pasteInto(g.M); g.done = true; sfx('fill', a);
+          var fr = g.fr; fr.style.transitionDuration = (250 / S) + 'ms'; fr.style.opacity = '0'; later(310 / S, function () { fr.remove(); });
+        }
+      }
+      if (lead) {                                                  // the cursor rides the leading ghost's corner
+        f = 1 - Math.exp(-14 * dt); a.px = a.x; a.py = a.y;
+        a.x += (clamp(lead.fl + lead.fw, 0, VW - 14) - a.x) * f; a.y += (clamp(lead.ft + lead.fh, 0, VH - 20) - a.y) * f; aim(a, dt, true);
+      }
+      if (!alive) finishCopy(a);
+    }
+  }
+
   function place() {
     for (var i = 0; i < agents.length; i++) agents[i].el.style.transform = 'translate3d(' + agents[i].x.toFixed(1) + 'px,' + agents[i].y.toFixed(1) + 'px,0)';
   }
@@ -761,11 +908,12 @@
       }
       if (phase === 'build') {
         if (needRead || now - lastRead >= 350) readAll();          // on scroll, resize and every 350ms
-        for (i = 0; i < agents.length; i++) readAgent(agents[i]);
+        for (i = 0; i < agents.length; i++) { readAgent(agents[i]); readGhosts(agents[i]); }
         // ── write phase
         for (i = 0; i < toFinish.length; i++) instant(toFinish[i]);
         toFinish = [];
         tourStep(dt);
+        dupPass();
         pick();
         freeMode = ms.on && now - lastScroll > 500 && trigPend === 0 && !agents.some(function (a) { return a.L; });
         for (i = 0; i < agents.length; i++) stepAgent(agents[i], dt);
@@ -864,7 +1012,7 @@
   function start() {
     var g = ++gen;
     phase = 'scan'; collected = false; statsReady = false; nBuilt = 0; needCompact = false; touring = false; guideA = 0; guideOn = false;
-    layers = []; pending = []; late = []; wraps = []; addQ = []; agents = []; toFinish = []; counts = { layers: 0, texts: 0, frames: 0 };
+    layers = []; pending = []; late = []; wraps = []; addQ = []; agents = []; toFinish = []; groups = []; cloneNow = false; counts = { layers: 0, texts: 0, frames: 0 };
     VW = document.documentElement.clientWidth || window.innerWidth; VH = window.innerHeight; SX = SY = 0;
     try { history.scrollRestoration = 'manual'; } catch (e) { /* ignore */ }
     buildOverlay(); spawn(); stats();
@@ -941,10 +1089,10 @@
   }
 
   window.SwarmRebuild = {
-    __sr: 1, active: true, replay: replay, skip: skip, dismiss: dismiss, setSound: setSound, setSpeed: setSpeed, destroy: destroy,
+    __sr: 1, active: true, replay: replay, skip: skip, dismiss: dismiss, setSound: setSound, setSpeed: setSpeed, destroy: destroy, setClone: function (m) { if (/^(auto|on|off)$/.test(m)) CLONE = m; },
     tour: function (on) { if (phase === 'build') setTour(on === undefined ? !touring : on); },
     get layers() { return layers.map(function (L) { return { type: L.type, el: L.el, text: L.type === 'text' || L.tx, done: L.st === 2 }; }); }
   };
   document.addEventListener('click', function (e) { var t = e.target; if (t && t.closest && t.closest('[data-sr-replay]')) replay(); });
-  if (D.mobileAutostart !== 'false' || window.innerWidth > 820) start();
+  start();
 })();
