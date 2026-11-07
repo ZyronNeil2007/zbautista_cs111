@@ -35,6 +35,8 @@
     <!-- ═════════ BILLBOARD (featured title) ═════════ -->
     <header class="billboard" id="billboard">
         <div class="billboard-bg" id="bbBg" aria-hidden="true"></div>
+        <video class="billboard-video" id="bbVideo" muted playsinline preload="auto" tabindex="-1"
+            disablepictureinpicture disableremoteplayback aria-hidden="true"></video>
         <div class="billboard-fade" aria-hidden="true"></div>
         <div class="billboard-inner">
             <div class="billboard-content animate-in" id="bbContent">
@@ -50,6 +52,7 @@
                     Alex Claremont-Diaz, the son of the first female President of the United States, has a long-standing
                     feud with Britain's Prince Henry. A staged truce slowly turns into a secret romance.
                 </p>
+                <p class="billboard-cast" id="bbCast"></p>
                 <div class="billboard-actions">
                     <button type="button" class="btn-play" id="bbPlay">&#9654; Play Trailer</button>
                     <button type="button" class="btn-info" id="bbInfo">&#9432; More Info</button>
@@ -59,6 +62,18 @@
             <img class="billboard-poster" id="bbPoster" src="../img/my_favorite_movie/rwrb.jpg" alt=""
                 aria-hidden="true">
         </div>
+        <button type="button" class="bb-sound" id="bbSound" aria-label="Unmute trailer" aria-pressed="false">
+            <svg class="ico-off" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M11 5 6 9H2v6h4l5 4V5z" />
+                <path d="m22 9-6 6M16 9l6 6" />
+            </svg>
+            <svg class="ico-on" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M11 5 6 9H2v6h4l5 4V5z" />
+                <path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14" />
+            </svg>
+        </button>
     </header>
 
     <main class="browse" id="browse">

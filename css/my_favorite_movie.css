@@ -593,7 +593,7 @@ body.modal-open {
     transform: translateY(-4px);
 }
 
-/* progress dots: the active bar fills over 7s, then the next movie appears */
+/* progress dots: the active bar is driven by the trailer's playback time (--p is set from JS, 0 to 1) */
 .billboard-dots {
     display: flex;
     gap: 0.5rem;
@@ -628,30 +628,13 @@ body.modal-open {
 }
 
 .dot::after {
-    width: 0;
+    width: calc(var(--p, 0) * 100%);
     background: var(--cream);
+    transition: width 0.25s linear;
 }
 
 .dot.done::after {
     width: 100%;
-}
-
-.dot.active::after {
-    animation: dotFill 7s linear forwards;
-}
-
-@keyframes dotFill {
-    to {
-        width: 100%;
-    }
-}
-
-/* pause the rotation whenever someone is interacting, reading a trailer, or the billboard is off-screen */
-.billboard:hover .dot.active::after,
-.billboard:focus-within .dot.active::after,
-.billboard.is-offscreen .dot.active::after,
-body.modal-open .dot.active::after {
-    animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -788,5 +771,105 @@ body.modal-open .dot.active::after {
     .modal-nav {
         padding-left: var(--sp-lg);
         padding-right: var(--sp-lg);
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   TRAILER BACKDROP — Netflix-style autoplaying trailer behind the billboard
+   ════════════════════════════════════════════════════════════════════════════ */
+.billboard-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    filter: saturate(1.1) brightness(0.9);
+    opacity: 0;
+    transition: opacity 0.9s ease;
+    pointer-events: none;
+    background: transparent;
+}
+
+/* fades in only once the trailer is really playing; until then (or if it fails) the blurred poster stays */
+.billboard.has-video .billboard-video {
+    opacity: 1;
+}
+
+.billboard.is-swapping .billboard-video {
+    opacity: 0;
+    transition-duration: 0.25s;
+}
+
+/* like Netflix, the trailer is the hero, so the poster card steps aside while it plays */
+.billboard.has-video .billboard-poster {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* "Starring: ..." line */
+.billboard-cast {
+    min-height: 2.9em;
+    /* two lines, keeps the layout steady while titles rotate */
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--cream);
+    font-weight: 600;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
+}
+
+.billboard-cast:empty {
+    display: none;
+}
+
+.billboard-cast .cast-label {
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* mute / unmute */
+.bb-sound {
+    position: absolute;
+    z-index: 3;
+    right: clamp(1.25rem, 5vw, 4rem);
+    bottom: clamp(4.25rem, 9vw, 7rem);
+    width: 44px;
+    height: 44px;
+    display: none;
+    place-items: center;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    background: rgba(28, 4, 10, 0.5);
+    color: #fff;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    transition: background var(--dur-base) ease, transform var(--dur-base) var(--ease-smooth);
+}
+
+.billboard.has-video .bb-sound {
+    display: grid;
+}
+
+.bb-sound:hover {
+    background: rgba(255, 255, 255, 0.28);
+    transform: scale(1.08);
+}
+
+.bb-sound .ico-on {
+    display: none;
+}
+
+.bb-sound.is-on .ico-on {
+    display: block;
+}
+
+.bb-sound.is-on .ico-off {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .billboard-video {
+        display: none;
     }
 }

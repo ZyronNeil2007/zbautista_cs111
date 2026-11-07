@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111  Personal Memories Website
 
-**Version:** 2.10.0<br>
+**Version:** 2.11.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -17,7 +17,7 @@ The website serves as a digital memory vault featuring:
 - An interactive **DNA Helix Timeline** pinned to the *"My Journey"* portfolio section, rendered smoothly on HTML5 Canvas.
 - A **Full-screen Lightbox Image Viewer** built with vanilla JavaScript, providing seamless full-screen image inspection and captions across all memory pages.
 - Native HTML5 **video playback** for movie trailers (MP4) and a custom multi-track **music player** for favorite songs (MP3).
-- A movie discovery page with a rotating featured title, categorized poster rows, trailer playback, and keyboard-accessible detail dialogs.
+- A movie discovery page with muted featured-trailer previews, cast highlights, categorized poster rows, and keyboard-accessible detail dialogs.
 - Accessible navigation and touch-friendly controls across the landing page and interactive memory folders.
 - A homepage browse action and reading-progress indicator that make the long-form experience easier to navigate.
 - A custom ZN logo shared by the homepage, memory pages, and responsive favicon.
@@ -48,6 +48,7 @@ The website serves as a digital memory vault featuring:
 ### 🎬 4. Native Multimedia Players
 - **Video Trailers (MP4):** Integrated `<video controls preload="metadata">` for movie trailers with responsive aspect ratios.
 - **Song Playlist (MP3):** Custom playlist with playback controls, shuffle/repeat, seeking, volume, a responsive now-playing view, and Media Session controls where supported.
+- **Movie Previews:** The featured billboard can autoplay muted trailer previews, show main-cast names, and expose a sound toggle; previews are disabled for reduced-motion and data-saving preferences.
 
 ### 🎨 5. Glassmorphic UI & Design System (`css/`)
 - Dark crimson backdrop gradient (`#180308` to `#3a0912`) accented with frosted glass containers (`backdrop-filter: blur(12px)`).
@@ -62,7 +63,8 @@ The website serves as a digital memory vault featuring:
 - Starts a self-contained, dependency-free page rebuild animation across the homepage, all memory pages, and the responsive wireframe, revealing page layers as visitors scroll.
 - Animated cursor agents draw selection frames and type text; after the build, they follow mouse movement or gather in a resting ring.
 - Includes a progress toolbar, scroll tour, speed and sound controls, skip, replay, responsive agent counts, and reduced-motion support.
-- The homepage Swarm button can replay the build; the homepage animation does not auto-start on narrow screens.
+- When repeated sibling elements create a heavy workload, agents can copy the completed animation of one sibling to similar elements.
+- The animation starts on all screen sizes; the homepage Swarm button can replay it.
 
 ---
 
@@ -179,6 +181,31 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.11.0] — 2026-11-08
+#### Added
+- Added muted autoplaying trailer previews to the movie billboard, with a sound toggle and cast highlights extracted from each movie's Main Cast details.
+- Added an automatic clone mode to Swarm Rebuild, which copies completed animations across structurally similar sibling elements when the workload is high.
+
+#### Improved
+- Swarm Rebuild now starts on narrow screens as well as larger screens.
+- Movie billboard timing and progress indicators follow trailer playback, while poster timing remains the fallback when previews are unavailable, disabled, or unsupported.
+
+#### Bug Fixes
+- No bug fixes are included in this release.
+
+#### Technical Changes
+- Trailer previews respect reduced-motion and data-saving preferences and pause when the billboard is hidden, the document is backgrounded, or the details modal is open.
+- Added no runtime dependencies.
+
+#### Documentation
+- Updated the project version, movie and Swarm Rebuild feature descriptions, and this changelog.
+
+#### Breaking Changes
+- None.
+
+#### Credits / Contributors
+- Zyron Neil A. Bautista — project author and maintainer.
 
 ### [v2.10.0] — 2026-11-06
 #### Added
