@@ -6,14 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#3a0912">
     <meta name="description"
-        content="Personal Memories Website by Zyron Neil A. Bautista — CS111 Introduction to Computing">
-    <title>My Personal Memories — Zyron Neil A. Bautista | CS111</title>
+        content="Interactive digital portfolio of Zyron Neil A. Bautista — BS Computer Science at Isabela State University. Exploring creative web development, 3D memory archives, and systems engineering.">
+    <title>Zyron Neil A. Bautista — Digital Creator & CS Portfolio</title>
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Zyron Neil A. Bautista — CS Student & Creative Developer">
+    <meta property="og:description" content="Personal Memories & Interactive Portfolio featuring 8 memory archives, 3D interactive folders, DNA timeline, and multi-agent Swarm Rebuild.">
+    <meta property="og:image" content="https://zyronneil2007.github.io/zbautista_cs111/img/og-banner.svg">
+    <meta property="og:url" content="https://github.com/ZyronNeil2007/zbautista_cs111">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Zyron Neil A. Bautista — CS Student & Creative Developer">
+    <meta name="twitter:description" content="Personal Memories & Interactive Portfolio featuring 8 memory archives, 3D interactive folders, DNA timeline, and multi-agent Swarm Rebuild.">
+    <meta name="twitter:image" content="https://zyronneil2007.github.io/zbautista_cs111/img/og-banner.svg">
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/icons/zn.logo.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="css/tokens.css">
     <link rel="stylesheet" href="css/landing.css">
     <link rel="stylesheet" href="css/portfolio.css">
     <link rel="stylesheet" href="css/swarm-launch.css">
@@ -21,7 +38,7 @@
 </head>
 
 <body>
-    <script src="js/swarm-rebuild.js" data-agents="14" data-bg="#3a0912"></script>
+    <script src="js/swarm-rebuild.js" data-agents="14" data-bg="#3a0912" data-mobile-autostart="false"></script>
     <a class="skip-link" href="#main">Skip to content</a>
     <progress class="reading-progress" id="reading-progress" max="100" value="0"
         aria-label="Page reading progress"></progress>
@@ -35,7 +52,7 @@
             </a>
             <a href="index.html" class="pill active" aria-current="page">Home</a>
             <button type="button" class="pill swarm-btn" id="swarm-launch" data-sr-replay
-                title="Replay the page rebuild">
+                title="Swarm Rebuild: Autonomous Multi-Agent DOM Reconstruction Engine">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path
                         d="M4.6 3.9C4.2 3.1 4.9 2.4 5.7 2.8L20.6 9.4c.9.4.8 1.7-.2 1.9l-6.5 1.6c-.5.1-.9.5-1 1l-1.6 6.5c-.2 1-1.5 1.1-1.9.2z" />
@@ -44,7 +61,7 @@
             </button>
             <label class="search glass">
                 <span class="sr-only">Search folders</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="11" cy="11" r="7"></circle>
                     <path d="m20 20-3.5-3.5"></path>
@@ -99,16 +116,17 @@
 
         <!-- Big title -->
         <header class="hero-title-wrap">
-            <p class="hero-tag rise d1"><b>My Personal Memories</b> · CS111 — Introduction to Computing</p>
+            <p class="hero-tag rise d1"><b>Digital Creator &amp; CS Student</b> · Isabela State University</p>
             <h1 class="hero-title rise d2">Zyron Neil<br>A. Bautista</h1>
         </header>
 
         <!-- Right small cards -->
         <aside class="info-col">
             <div class="info-card glass rise d2">
-                <div class="thumb">CS111<span class="heart" aria-hidden="true">♡</span></div>
-                <h4>THE COURSE</h4>
-                <p>Introduction to Computing — Personal Memories Project, 2026.</p>
+                <div class="thumb">ISU<span class="heart" aria-hidden="true">♡</span></div>
+                <h4>ACADEMIC PROFILE</h4>
+                <p>BS Computer Science — Isabela State University, Cauayan Campus.</p>
+                <div class="sub">CS111 Project · 8 Interactive Memory Archives</div>
             </div>
             <div class="info-card glass rise d3">
                 <h4>FIND ME ONLINE</h4>
@@ -124,7 +142,7 @@
                     <a href="https://personal-portfolio-ten-sage-56.vercel.app/" target="_blank"
                         rel="noopener noreferrer" class="btn" id="btn-portfolio">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                             <circle cx="12" cy="12" r="10"></circle>
                             <line x1="2" y1="12" x2="22" y2="12"></line>
                             <path
@@ -140,13 +158,11 @@
         <!-- Description panel -->
         <section class="desc-panel glass rise d3">
             <p>
-                <b>Welcome to my digital memory vault.</b> Here, I have compiled different chapters and highlights of
-                my life — from cherished childhood experiences, moments with loved ones and friends, to my personal
-                favorites in food, cinema, and music, plus a little humor to brighten your day.
+                <b>Welcome to my digital memory vault.</b> An interactive multimedia archive capturing pivotal chapters of my journey — from early roots and family to technical milestones, creative visual explorations, and favorite cinema and music.
             </p>
-            <p class="hint">Click or tap any folder below to explore its contents.</p>
+            <p class="hint">Click or tap any 3D folder below or use keyboard navigation to explore each archive.</p>
             <a class="btn explore-link" href="#folders">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <path d="M12 5v14m-7-7 7 7 7-7"></path>
                 </svg>
@@ -388,15 +404,7 @@
                     <div class="pf-about-panel pf-reveal">
                         <section class="pf-about-bio">
                             <h4>Who I Am</h4>
-                            <p>A passionate tech enthusiast pursuing a degree in Computer Science. He enjoys turning
-                                ideas
-                                into real, working systems &mdash; whether it's a quiz application, a functional
-                                website, or
-                                a creative layout. Outside coding, he values creativity, aesthetics, and storytelling.
-                                His
-                                ultimate goal is to become a software engineer and continue creating systems that make
-                                an
-                                impact.</p>
+                            <p>A driven Computer Science undergraduate at Isabela State University with a passion for software craftsmanship, frontend engineering, and visual storytelling. He merges computational logic with cinematic interface design &mdash; engineering everything from custom particle engines and responsive web platforms to interactive 3D vaults. His focus is on architecting thoughtful, high-impact digital experiences that resonate with users.</p>
                         </section>
 
                         <section class="pf-about-details">
@@ -811,8 +819,8 @@
 
     <footer class="site-footer">
         <p>Designed &amp; Developed by Zyron Neil Bautista</p>
-        <p>&copy; 2026 Zyron Neil A. Bautista | CS111 — Introduction to Computing Personal Memories Project</p>
-        <p>Version v2.11.0</p>
+        <p>&copy; 2026 Zyron Neil A. Bautista | BS Computer Science, Isabela State University · Personal Memories Portfolio</p>
+        <p>Version v2.12.0</p>
     </footer>
 
     <script>
