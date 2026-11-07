@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111  Personal Memories Website
 
-**Version:** 2.11.0<br>
+**Version:** 2.12.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -181,6 +181,28 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.12.0] — 2026-11-08
+#### Added
+- **3-Layer Design Token Architecture (`css/tokens.css`):** Established primitive, semantic, and component tokens with 4px/8px standardized spacing, typography scales, glassmorphism tokens, and motion tokens across the entire site.
+- **Social Graph & Open Graph Assets (`img/og-banner.svg`):** Designed 1200×630px social preview banner and injected comprehensive Open Graph & Twitter card `<meta>` tags across `index.html`, `wireframe.html`, and all 8 memory pages.
+- **Time-Synced Karaoke & Official Lyrics UX (`pages/my_song.html`):** Built structured JSON time-synced karaoke engine with token-based scrolling and implemented a safe copyright-compliant UX pattern injecting a stylish "Search Official Lyrics on Google" button for mainstream songs.
+
+#### Improved
+- **WCAG AA Contrast Ratios:** Added dark overlay gradients inside frosted glass panels (`.glass`, `.glass-panel`, `.glass-panel-inner`) guaranteeing strict 4.5:1 text contrast against dynamic photographic backdrops.
+- **Keyboard Focus Management:** Implemented universal 2px solid yellow (`#f2e24f`) focus rings with 2px offset on all interactive controls, 3D memory folders, and the fullscreen Lightbox modal.
+- **Reduced Motion Engine Fallback:** Added global `prefers-reduced-motion: reduce` CSS reset and optimized the DNA Canvas timeline (`js/dna.js`) and Swarm Rebuild to render stationary frames without continuous RAF loops for vestibular accessibility.
+- **Brand Identity & Messaging:** Refreshed site copy, meta descriptions, and biography to present Zyron Neil Bautista as a Computer Science undergraduate at Isabela State University specializing in creative web engineering and visual storytelling.
+
+#### Technical Changes
+- Standardized SVG iconography across navigation and buttons with consistent outline stroke styling.
+- Bound accessible focus trap and restoration inside the full-screen image lightbox modal (`js/lightbox.js`).
+
+#### Breaking Changes
+- None.
+
+#### Credits / Contributors
+- Zyron Neil A. Bautista — project author and maintainer.
 
 ### [v2.11.0] — 2026-11-08
 #### Added

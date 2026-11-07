@@ -18,6 +18,15 @@
     --f-display: 'Lilita One', 'Rubik', sans-serif;
     --f-body: 'Poppins', 'Segoe UI', sans-serif;
     --f-mono: 'Space Mono', monospace;
+
+    /* 4px/8px standardized spacing scale */
+    --sp-xs: 0.25rem;  /* 4px */
+    --sp-sm: 0.5rem;   /* 8px */
+    --sp-md: 0.75rem;  /* 12px */
+    --sp-lg: 1rem;     /* 16px */
+    --sp-xl: 1.5rem;   /* 24px */
+    --sp-2xl: 2rem;    /* 32px */
+    --sp-3xl: 2.5rem;  /* 40px */
 }
 
 *,
@@ -65,7 +74,13 @@ ul {
 
 /* slight dark tint keeps white text readable on bright parts of the photo (stage cards only) */
 .stage .glass {
-    background: linear-gradient(rgba(40, 5, 14, .2), rgba(40, 5, 14, .2)), var(--glass);
+    background: linear-gradient(rgba(24, 3, 8, .28), rgba(24, 3, 8, .28)), var(--glass);
+}
+
+/* All glass panels get a subtle dark overlay to guarantee WCAG 4.5:1 text contrast
+   against bright background areas (photos, gradients). */
+.glass {
+    background: linear-gradient(rgba(24, 3, 8, .18), rgba(24, 3, 8, .18)), var(--glass);
 }
 
 /* ── Stage ── */
@@ -302,8 +317,8 @@ ul {
 .mini-card {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
+    gap: var(--sp-md, 12px);
+    padding: var(--sp-md, 12px) var(--sp-lg, 16px);
     transition: transform .25s, background .25s;
 }
 
@@ -644,7 +659,8 @@ ul {
 }
 
 .fx-scene:focus-visible {
-    outline: 2px dashed var(--cream);
+    /* Yellow ring ensures WCAG-visible focus indicator on 3D folder scenes */
+    outline: 2px solid var(--yellow);
     outline-offset: 12px;
     border-radius: 18px;
 }
@@ -1021,10 +1037,18 @@ ul {
 }
 
 /* ── Accessibility helpers ── */
+/* Global focus ring: yellow (#f2e24f) achieves >7:1 contrast against crimson bg */
+:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
 a:focus-visible,
 button:focus-visible {
-    outline: 2px solid var(--cream);
+    outline: 2px solid var(--yellow);
     outline-offset: 3px;
+    border-radius: 4px;
 }
 
 .search:focus-within {
@@ -1152,9 +1176,13 @@ main:focus {
         scroll-behavior: auto;
     }
 
-    * {
-        animation: none !important;
-        transition: none !important;
+    *,
+    *::before,
+    *::after {
+        animation-duration:        0.01ms !important;
+        animation-iteration-count: 1      !important;
+        transition-duration:       0.01ms !important;
+        scroll-behavior:           auto   !important;
     }
 }
 

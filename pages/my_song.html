@@ -5,14 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Songs — Zyron Neil A. Bautista | CS111</title>
+        <meta name="description" content="Personal soundtrack featuring favorite songs, lyrics, musical inspirations, and audio reflections.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="My Songs — Zyron Neil A. Bautista | CS111">
+    <meta property="og:description" content="Personal soundtrack featuring favorite songs, lyrics, musical inspirations, and audio reflections.">
+    <meta property="og:image" content="https://zyronneil2007.github.io/zbautista_cs111/img/og-banner.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="My Songs — Zyron Neil A. Bautista | CS111">
+    <meta name="twitter:description" content="Personal soundtrack featuring favorite songs, lyrics, musical inspirations, and audio reflections.">
+    <meta name="twitter:image" content="https://zyronneil2007.github.io/zbautista_cs111/img/og-banner.svg">
     <link rel="icon" type="image/png" href="../img/icons/zn.logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="../css/tokens.css">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/my_song.css?v=7">
+    <link rel="stylesheet" href="../css/my_song.css?v=8">
     <style>
         /* safety net: full-screen player stays hidden unless the stylesheet opens it */
         .nf {
@@ -152,8 +162,7 @@
                 </li>
 
                 <li class="sp-row track" tabindex="0" role="button" data-src="../img/my_song/Sailor Song.mp3"
-                    data-cover="../img/my_song/sailor song poster.jpg" data-title="Sailor Song"
-                    data-artist="Gigi Perez">
+                    data-cover="../img/my_song/sailor song poster.jpg" data-title="Sailor Song" data-artist="Gigi Perez">
                     <span class="c-num"><span class="num">4</span><span class="eq"
                             aria-hidden="true"><i></i><i></i><i></i></span></span>
                     <span class="c-title">
@@ -167,19 +176,32 @@
                 </li>
 
                 <li class="sp-row track" tabindex="0" role="button" data-src="../img/my_song/Earrings.mp3"
-                    data-cover="../img/my_song/earrings song poster.jpg" data-title="Earrings" data-artist="Single">
+                    data-cover="../img/my_song/earrings song poster.jpg" data-title="Earrings" data-artist="Malcolm Todd">
                     <span class="c-num"><span class="num">5</span><span class="eq"
                             aria-hidden="true"><i></i><i></i><i></i></span></span>
                     <span class="c-title">
                         <img src="../img/my_song/earrings song poster.jpg" alt="Earrings artwork" loading="lazy">
                         <span class="t-text"><span class="t-name">Earrings</span><span
-                                class="t-artist">Single</span></span>
+                                class="t-artist">Malcolm Todd</span></span>
                     </span>
                     <span class="c-album">Earrings</span>
                     <span class="c-genre">Indie / Alternative</span>
                     <span class="c-time">--:--</span>
                 </li>
             </ol>
+        </section>
+
+        <!-- Synced lyrics & Official Lyrics Provider -->
+        <section class="sp-lyrics" id="lyricsSection" aria-labelledby="lyricsHeading">
+            <div class="sp-lyrics-head">
+                <h2 class="sp-section-title" id="lyricsHeading">Lyrics &amp; Sing-Along</h2>
+                <p class="sp-lyrics-song" id="lyPageSong"></p>
+            </div>
+            <div class="karaoke-container glass" data-karaoke>
+                <div id="lyrics-scroll-box" class="lyrics-scroll-box" tabindex="0" aria-label="Song lyrics">
+                    <!-- JS will inject <p class="lyric-line"> or official search button here -->
+                </div>
+            </div>
         </section>
 
         <!-- About panel: updates with the selected song -->
@@ -297,6 +319,13 @@
         </div>
 
         <div class="np-volume">
+            <button class="np-btn" id="lyricsBtn" aria-label="Lyrics" title="Lyrics">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    <path d="M8 9h8M8 13h5" />
+                </svg>
+            </button>
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                 <path d="M3 9v6h4l5 4V5L7 9zM16.5 12a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4z" />
             </svg>
@@ -422,6 +451,14 @@
             </div>
 
             <div class="nf-cards">
+                <div class="nf-lyrics">
+                    <h3>Lyrics &amp; Sing-Along</h3>
+                    <div class="karaoke-container glass" data-karaoke>
+                        <div class="lyrics-scroll-box full-scroll-box" tabindex="0" aria-label="Song lyrics">
+                            <!-- JS will inject here -->
+                        </div>
+                    </div>
+                </div>
                 <div class="nf-about">
                     <h3>About this song</h3>
                     <p id="nfAbout"></p>
@@ -440,7 +477,7 @@
 
     <audio id="player" preload="metadata"></audio>
 
-    <script src="../js/my_song.js?v=7"></script>
+    <script src="../js/my_song.js?v=8"></script>
 </body>
 
 </html>

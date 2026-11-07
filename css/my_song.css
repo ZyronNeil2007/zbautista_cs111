@@ -1306,3 +1306,233 @@ html.nf-open {
         background: linear-gradient(180deg, #7a1018 90%, rgba(122, 16, 24, 0));
     }
 }
+
+/* ════════════════════════════════════════════════════════════
+   TIME-SYNCED KARAOKE & OFFICIAL LYRICS SYSTEM
+   Styled with 3-Layer Design Tokens
+   ════════════════════════════════════════════════════════════ */
+.sp-lyrics {
+    margin-top: var(--sp-3xl);
+}
+
+.sp-lyrics-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    column-gap: var(--sp-xl);
+    margin-bottom: var(--space-4);
+}
+
+.sp-lyrics-song {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+}
+
+/* 2. Scrolling UI Container */
+.karaoke-container {
+    height: 240px;
+    min-height: 220px;
+    overflow-y: hidden; /* Hide standard scrollbars */
+    position: relative;
+    padding: var(--space-6) var(--space-6);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--glass-border);
+    background: linear-gradient(180deg, rgba(122, 16, 24, 0.82), rgba(92, 13, 20, 0.92));
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 18%, black 82%, transparent);
+}
+
+.lyrics-scroll-box {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: calc(120px - 1.5rem) 0;
+}
+
+.lyrics-scroll-box::-webkit-scrollbar {
+    display: none;
+}
+
+/* 3. Active and Inactive Lyric States */
+.lyric-line {
+    color: var(--text-muted);
+    font-family: var(--font-base);
+    font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+    line-height: 1.4;
+    transition: color var(--dur-base) var(--ease-smooth),
+                transform var(--dur-base) var(--ease-smooth),
+                opacity var(--dur-base) var(--ease-smooth);
+    opacity: 0.5;
+    padding: var(--space-2) var(--space-4);
+    margin: 0;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    will-change: transform, color, opacity;
+}
+
+.lyric-line:hover {
+    opacity: 0.85;
+    color: var(--text-primary);
+}
+
+.lyric-line.active {
+    color: var(--action-primary);
+    opacity: 1;
+    transform: scale(1.05);
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(242, 226, 79, 0.35);
+}
+
+/* Safe Fallback for Mainstream Songs: Official Lyrics Search Card */
+.official-lyrics-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: var(--space-3) var(--space-4);
+    gap: var(--space-2);
+}
+
+.official-lyrics-tag {
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--action-accent);
+    margin: 0;
+}
+
+.official-lyrics-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 2.8vw, 1.8rem);
+    color: var(--text-primary);
+    margin: 0;
+    line-height: 1.25;
+}
+
+.official-lyrics-artist {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin: 0 0 var(--space-2);
+}
+
+.official-lyrics-notice {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    max-width: 440px;
+    margin: 0 0 var(--space-3);
+    line-height: 1.45;
+}
+
+.official-lyrics-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: var(--space-3) var(--space-6);
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(242, 226, 79, 0.45);
+    background: linear-gradient(135deg, rgba(242, 226, 79, 0.16), rgba(201, 52, 63, 0.28));
+    color: var(--color-yellow-400);
+    font-family: var(--font-base);
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    transition: transform var(--dur-fast) ease,
+                background var(--dur-fast) ease,
+                border-color var(--dur-fast) ease,
+                box-shadow var(--dur-fast) ease;
+}
+
+.official-lyrics-btn:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, rgba(242, 226, 79, 0.28), rgba(201, 52, 63, 0.42));
+    border-color: var(--action-primary);
+    color: #fff;
+    box-shadow: 0 10px 28px rgba(242, 226, 79, 0.25);
+}
+
+.official-lyrics-btn:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: 3px;
+}
+
+.official-lyrics-btn svg {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+}
+
+.official-lyrics-btn:hover svg {
+    transform: scale(1.12);
+}
+
+/* Fullscreen Now-Playing Lyrics Card */
+.nf-lyrics {
+    display: block;
+    margin: 0;
+    padding: var(--space-5) var(--space-5);
+    border-radius: var(--radius-lg);
+    background: linear-gradient(180deg, #7a1018, #5c0d14);
+}
+
+.nf-lyrics h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-3);
+}
+
+.nf-lyrics .karaoke-container {
+    height: 260px;
+    background: rgba(40, 5, 12, 0.55);
+}
+
+@media (min-width: 861px) {
+    .nf-lyrics {
+        grid-column: 1 / -1;
+        padding: var(--space-6) var(--space-8);
+    }
+
+    .nf-lyrics .karaoke-container {
+        height: 280px;
+    }
+}
+
+@media (max-width: 860px) {
+    .karaoke-container {
+        height: 220px;
+        padding: var(--space-4) var(--space-3);
+    }
+
+    .lyric-line {
+        font-size: 1.1rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lyric-line,
+    .official-lyrics-btn,
+    .lyrics-scroll-box {
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}

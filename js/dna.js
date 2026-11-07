@@ -14,7 +14,15 @@
     var canvas = box.querySelector('canvas');
     var ctx = canvas.getContext('2d');
     var items = Array.prototype.slice.call(wrap.querySelectorAll('.pf-dna-list > li'));
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var reduce = motionQuery.matches;
+    if (motionQuery.addEventListener) {
+        motionQuery.addEventListener('change', function (e) {
+            reduce = e.matches;
+            if (!reduce) requestAnimationFrame(loop);
+            else { pickActive(); draw(0); }
+        });
+    }
 
     var W = 0, H = 0, dpr = 1, onScreen = true;
     var spinNow = 0, spinTarget = 0, idle = 0, lastScroll = 0, vel = 0;
@@ -210,13 +218,28 @@
 
     function loop(t) {
         if (onScreen) { pickActive(); draw(t || 0); }
-        requestAnimationFrame(loop);
+        if (!reduce) {
+            requestAnimationFrame(loop);
+        }
     }
 
-    window.addEventListener('resize', resize);
+    window.addEventListener('resize', function () {
+        resize();
+        if (reduce) { pickActive(); draw(0); }
+    });
+
+    window.addEventListener('scroll', function () {
+        if (reduce && onScreen) {
+            pickActive();
+            draw(0);
+        }
+    }, { passive: true });
+
     if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (es) { onScreen = es[0].isIntersecting; },
-            { rootMargin: '200px 0px' }).observe(wrap);
+        new IntersectionObserver(function (es) {
+            onScreen = es[0].isIntersecting;
+            if (reduce && onScreen) { pickActive(); draw(0); }
+        }, { rootMargin: '200px 0px' }).observe(wrap);
     }
     resize();
     requestAnimationFrame(loop);

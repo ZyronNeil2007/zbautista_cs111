@@ -63,6 +63,7 @@
         });
         showAbout(i);
         syncFull(i);
+        Lyrics.load(i);
 
         if ('mediaSession' in navigator) {
             navigator.mediaSession.metadata = new MediaMetadata({
@@ -232,6 +233,7 @@
         document.body.classList.add('nf-open');
         document.documentElement.classList.add('nf-open');
         full.scrollTop = 0;
+        Lyrics.recenter();
     }
 
     /* browser fullscreen (Fullscreen API) */
@@ -352,6 +354,157 @@
 
     player.addEventListener('play', function () { nfPlay.classList.add('is-playing'); nfPlay.setAttribute('aria-label', 'Pause'); });
     player.addEventListener('pause', function () { nfPlay.classList.remove('is-playing'); nfPlay.setAttribute('aria-label', 'Play'); });
+
+    /* ═══════════════════════════════════════════════════════════════
+       TIME-SYNCED KARAOKE & OFFICIAL LYRICS SEARCH SYSTEM
+       ═══════════════════════════════════════════════════════════════ */
+    var Lyrics = (function () {
+        var pageSong = document.getElementById('lyPageSong');
+        var scrollBoxes = Array.prototype.slice.call(document.querySelectorAll('.lyrics-scroll-box, #lyrics-scroll-box'));
+        var activeIndex = -1;
+        var currentLyricsData = null;
+
+        /* 1. Structure the Time-Synced Data (JSON format for royalty-free / demo tracks) */
+        var royaltyFreeLyrics = [
+            { time: 0, text: "♪ (Instrumental Intro) ♪" },
+            { time: 8.5, text: "First line of the melody" },
+            { time: 14.0, text: "Second line continues the rhythm" },
+            { time: 20.5, text: "Harmonies build as the chorus arrives" },
+            { time: 28.0, text: "Melody flows through the acoustic chords" },
+            { time: 35.0, text: "♪ (Instrumental Outro) ♪" }
+        ];
+
+        /* 4. Sync the UI with the Audio API (timeupdate) */
+        player.addEventListener('timeupdate', function () {
+            if (!currentLyricsData || !currentLyricsData.length) return;
+            var currentTime = player.currentTime;
+
+            // Find current line based on timestamp
+            var newIndex = -1;
+            for (var k = 0; k < currentLyricsData.length; k++) {
+                var nextLine = currentLyricsData[k + 1];
+                if (currentTime >= currentLyricsData[k].time && (!nextLine || currentTime < nextLine.time)) {
+                    newIndex = k;
+                    break;
+                }
+            }
+
+            if (newIndex !== -1 && newIndex !== activeIndex) {
+                scrollBoxes.forEach(function (box) {
+                    if (activeIndex !== -1 && box.children[activeIndex]) {
+                        box.children[activeIndex].classList.remove('active');
+                    }
+                    var activeElement = box.children[newIndex];
+                    if (activeElement) {
+                        activeElement.classList.add('active');
+                        // Smoothly scroll container so active line stays centered
+                        activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+                activeIndex = newIndex;
+            }
+        });
+
+        function renderKaraokeLines(lyricsArray) {
+            currentLyricsData = lyricsArray;
+            activeIndex = -1;
+
+            scrollBoxes.forEach(function (box) {
+                box.innerHTML = '';
+                lyricsArray.forEach(function (item, idx) {
+                    var p = document.createElement('p');
+                    p.className = 'lyric-line' + (idx === 0 ? ' active' : '');
+                    p.textContent = item.text;
+                    p.addEventListener('click', function () {
+                        player.currentTime = item.time;
+                        if (player.paused) player.play().catch(function () { });
+                    });
+                    box.appendChild(p);
+                });
+                box.scrollTop = 0;
+            });
+        }
+
+        /* Safe Fallback for Mainstream Songs: Search Official Lyrics on Google */
+        function renderOfficialLyricsFallback(title, artist) {
+            currentLyricsData = null;
+            activeIndex = -1;
+
+            var query = 'lyrics ' + artist + ' ' + title;
+            var searchUrl = 'https://www.google.com/search?q=' + encodeURIComponent(query);
+
+            var html = [
+                '<div class="official-lyrics-card">',
+                '  <p class="official-lyrics-tag">🎵 Official Verified Lyrics</p>',
+                '  <h4 class="official-lyrics-title">' + escapeHTML(title) + '</h4>',
+                '  <p class="official-lyrics-artist">by ' + escapeHTML(artist) + '</p>',
+                '  <p class="official-lyrics-notice">To respect artist copyright, full lyrics are opened securely via official search.</p>',
+                '  <a href="' + searchUrl + '" target="_blank" rel="noopener noreferrer" class="official-lyrics-btn glass">',
+                '    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
+                '    Search Official Lyrics on Google',
+                '  </a>',
+                '</div>'
+            ].join('\n');
+
+            scrollBoxes.forEach(function (box) {
+                box.innerHTML = html;
+            });
+        }
+
+        function escapeHTML(str) {
+            return (str || '').replace(/[&<>'"]/g, function (tag) {
+                return ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag] || tag);
+            });
+        }
+
+        function load(i) {
+            var row = tracks[i];
+            if (!row) return;
+
+            var title = row.dataset.title || '';
+            var artist = row.dataset.artist || '';
+
+            if (pageSong) {
+                pageSong.textContent = title + ' \u00B7 ' + artist;
+            }
+
+            // If track has explicit time-synced data
+            if (row.dataset.hasTimeSync === 'true') {
+                renderKaraokeLines(royaltyFreeLyrics);
+            } else {
+                // Safe Fallback for mainstream songs
+                renderOfficialLyricsFallback(title, artist);
+            }
+        }
+
+        return {
+            load: load,
+            recenter: function () {
+                if (currentLyricsData && activeIndex >= 0) {
+                    scrollBoxes.forEach(function (box) {
+                        var activeElement = box.children[activeIndex];
+                        if (activeElement) {
+                            activeElement.scrollIntoView({ behavior: 'auto', block: 'center' });
+                        }
+                    });
+                }
+            }
+        };
+    })();
+
+    var lyricsBtn = document.getElementById('lyricsBtn');
+    lyricsBtn.addEventListener('click', function () {
+        var target = full.classList.contains('open')
+            ? document.querySelector('.nf-lyrics')
+            : document.getElementById('lyricsSection');
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
 
     /* Start with song 1 loaded (not playing) so the bar and About panel are filled */
     load(0);

@@ -1,0 +1,176 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   ZN DESIGN TOKEN SYSTEM  –  3-Layer CSS Custom Properties
+   Import this file BEFORE landing.css or style.css so tokens are available
+   across all pages.
+   ══════════════════════════════════════════════════════════════════════════════
+
+   Layer 1 ► Primitives   – raw, opinionless values
+   Layer 2 ► Semantic     – tokens assigned a purpose
+   Layer 3 ► Component    – scoped to specific UI patterns
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+
+/* ─── Layer 1: Primitives ─── */
+:root {
+    /* Crimson palette */
+    --color-crimson-950: #0d0106;
+    --color-crimson-900: #180308;
+    --color-crimson-800: #3a0912;
+    --color-crimson-700: #5c1020;
+    --color-crimson-600: #8e2434;
+    --color-crimson-500: #c9343f;
+
+    /* Warm palette */
+    --color-yellow-400: #f2e24f;
+    --color-yellow-300: #f6ed80;
+    --color-peach-300:  #f4c7a5;
+    --color-cream-100:  #f6e7c1;
+    --color-cream-dark: #7a1626;
+
+    /* White alphas */
+    --color-white-a04: rgba(255, 255, 255, 0.04);
+    --color-white-a08: rgba(255, 255, 255, 0.08);
+    --color-white-a12: rgba(255, 255, 255, 0.12);
+    --color-white-a14: rgba(255, 255, 255, 0.14);
+    --color-white-a17: rgba(255, 255, 255, 0.17);
+    --color-white-a32: rgba(255, 255, 255, 0.32);
+    --color-white-a38: rgba(255, 255, 255, 0.38);
+
+    /* Black alphas */
+    --color-black-a16: rgba(0, 0, 0, 0.16);
+    --color-black-a28: rgba(0, 0, 0, 0.28);
+    --color-black-a40: rgba(0, 0, 0, 0.40);
+
+    /* Typography scale */
+    --font-display: 'Lilita One', 'Rubik', sans-serif;
+    --font-base:    'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono:    'Space Mono', monospace;
+
+    /* Spacing (4px base × multiplier) */
+    --space-1:  0.25rem;   /* 4px  */
+    --space-2:  0.5rem;    /* 8px  */
+    --space-3:  0.75rem;   /* 12px */
+    --space-4:  1rem;      /* 16px */
+    --space-5:  1.25rem;   /* 20px */
+    --space-6:  1.5rem;    /* 24px */
+    --space-8:  2rem;      /* 32px */
+    --space-10: 2.5rem;    /* 40px */
+    --space-12: 3rem;      /* 48px */
+    --space-16: 4rem;      /* 64px */
+
+    /* Border-radius scale */
+    --radius-xs:   4px;
+    --radius-sm:   8px;
+    --radius-md:   14px;
+    --radius-lg:   20px;
+    --radius-xl:   26px;
+    --radius-full: 9999px;
+
+    /* Easing */
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-smooth: cubic-bezier(0.25, 0.8, 0.25, 1);
+    --ease-out:    cubic-bezier(0, 0, 0.2, 1);
+
+    /* Duration */
+    --dur-fast:   150ms;
+    --dur-base:   280ms;
+    --dur-slow:   600ms;
+    --dur-xslow:  900ms;
+}
+
+
+/* ─── Layer 2: Semantic ─── */
+:root {
+    /* Surfaces */
+    --bg-base:     var(--color-crimson-900);
+    --bg-surface:  var(--color-crimson-800);
+    --bg-raised:   var(--color-crimson-700);
+    --bg-elevated: var(--color-crimson-600);
+
+    /* Text */
+    --text-primary:   var(--color-cream-100);
+    --text-secondary: rgba(246, 231, 193, 0.80);
+    --text-muted:     rgba(246, 231, 193, 0.58);
+
+    /* Actions */
+    --action-primary:    var(--color-yellow-400);
+    --action-primary-hl: var(--color-yellow-300);
+    --action-accent:     var(--color-peach-300);
+    --action-danger:     var(--color-crimson-500);
+
+    /* Focus ring (WCAG AA: 4.5:1 against dark bg) */
+    --focus-ring-color:  var(--color-yellow-400);
+    --focus-ring-width:  2px;
+    --focus-ring-offset: 2px;
+
+    /* Borders */
+    --border-subtle: var(--color-white-a12);
+    --border-light:  var(--color-white-a32);
+    --border-bright: var(--color-white-a38);
+
+    /* Layout */
+    --navbar-height:   72px;
+    --container-max:   1200px;
+}
+
+
+/* ─── Layer 3: Component ─── */
+:root {
+    /* Glass panel */
+    --glass-bg:          var(--color-white-a14);
+    --glass-bg-strong:   var(--color-white-a17);
+    --glass-bg-subtle:   var(--color-white-a08);
+    --glass-blur:        blur(14px);
+    --glass-blur-heavy:  blur(20px);
+    --glass-border:      var(--color-white-a38);
+    --glass-inset:       inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    --glass-shadow:      0 14px 34px var(--color-black-a28);
+    /* dark overlay inside glass to guarantee contrast against bright backgrounds */
+    --glass-contrast-overlay: rgba(24, 3, 8, 0.22);
+
+    /* Cards */
+    --card-bg:        var(--glass-bg);
+    --card-radius:    var(--radius-xl);
+    --card-shadow:    var(--glass-shadow);
+    --card-border:    1px solid var(--glass-border);
+
+    /* Buttons */
+    --btn-radius:     var(--radius-full);
+    --btn-padding-y:  var(--space-2);
+    --btn-padding-x:  var(--space-6);
+    --btn-font-size:  0.875rem;
+    --btn-font-weight: 600;
+}
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   GLOBAL ACCESSIBILITY RULES
+   Applied here so they cascade into every page that imports tokens.css.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* 1. Universal focus ring – visible on keyboard navigation only */
+:focus-visible {
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+    border-radius: var(--radius-xs);
+}
+
+/* 2. Suppress focus ring on mouse/pointer interactions */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+/* 3. Reduced-motion: cut all animation for users who opt-in to stillness.
+      Individual JS files (dna.js, swarm-rebuild.js) check the same media
+      query and skip their animation loops entirely. */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration:       0.01ms !important;
+        animation-iteration-count: 1     !important;
+        transition-duration:      0.01ms !important;
+        scroll-behavior:          auto   !important;
+    }
+}
+

@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <!-- Background Gradients -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3a0912"/>
+      <stop offset="45%" stop-color="#180308"/>
+      <stop offset="100%" stop-color="#0a0104"/>
+    </linearGradient>
+    <radialGradient id="glow-crimson" cx="20%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#8e2434" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#180308" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow-gold" cx="85%" cy="75%" r="50%">
+      <stop offset="0%" stop-color="#f2e24f" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#180308" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Card Gradients -->
+    <linearGradient id="card-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.04"/>
+    </linearGradient>
+    <linearGradient id="card-border" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.45"/>
+      <stop offset="50%" stop-color="#f4c7a5" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#c9343f" stop-opacity="0.4"/>
+    </linearGradient>
+    <linearGradient id="text-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f2e24f"/>
+      <stop offset="60%" stop-color="#f4c7a5"/>
+      <stop offset="100%" stop-color="#f6e7c1"/>
+    </linearGradient>
+    <linearGradient id="zn-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f2e24f"/>
+      <stop offset="50%" stop-color="#f4c7a5"/>
+      <stop offset="100%" stop-color="#c9343f"/>
+    </linearGradient>
+
+    <filter id="card-shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="24" stdDeviation="30" flood-color="#000000" flood-opacity="0.6"/>
+    </filter>
+  </defs>
+
+  <style>
+    .font-display { font-family: 'Lilita One', 'Segoe UI', system-ui, sans-serif; font-weight: 900; }
+    .font-body { font-family: 'Poppins', -apple-system, system-ui, sans-serif; }
+    .font-mono { font-family: 'Space Mono', monospace; }
+  </style>
+
+  <!-- Deep canvas background -->
+  <rect width="1200" height="630" fill="url(#bg-grad)"/>
+  <rect width="1200" height="630" fill="url(#glow-crimson)"/>
+  <rect width="1200" height="630" fill="url(#glow-gold)"/>
+
+  <!-- Decorative subtle grid -->
+  <g opacity="0.08" stroke="#ffffff" stroke-width="1">
+    <line x1="80" y1="0" x2="80" y2="630"/>
+    <line x1="280" y1="0" x2="280" y2="630"/>
+    <line x1="480" y1="0" x2="480" y2="630"/>
+    <line x1="680" y1="0" x2="680" y2="630"/>
+    <line x1="880" y1="0" x2="880" y2="630"/>
+    <line x1="1080" y1="0" x2="1080" y2="630"/>
+    <line x1="0" y1="100" x2="1200" y2="100"/>
+    <line x1="0" y1="250" x2="1200" y2="250"/>
+    <line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="550" x2="1200" y2="550"/>
+  </g>
+
+  <!-- Main Hero Glass Card -->
+  <g filter="url(#card-shadow)">
+    <rect x="70" y="60" width="1060" height="510" rx="28" fill="url(#card-grad)" stroke="url(#card-border)" stroke-width="1.5"/>
+  </g>
+
+  <!-- Top bar inside card -->
+  <g transform="translate(110, 105)">
+    <!-- Brand mark -->
+    <rect x="0" y="0" width="54" height="42" rx="10" fill="#2a0610" stroke="rgba(242,226,79,0.4)" stroke-width="1.5"/>
+    <text x="27" y="28" text-anchor="middle" class="font-display" font-size="22" fill="url(#zn-grad)">ZN</text>
+
+    <!-- Tag -->
+    <text x="68" y="26" class="font-mono" font-size="14" fill="#f4c7a5" letter-spacing="1">DIGITAL CREATOR &amp; SOFTWARE DEVELOPER</text>
+    
+    <!-- Status pill -->
+    <rect x="770" y="4" width="130" height="28" rx="14" fill="rgba(242,226,79,0.14)" stroke="rgba(242,226,79,0.5)" stroke-width="1"/>
+    <circle cx="788" cy="18" r="4" fill="#f2e24f"/>
+    <text x="800" y="22" class="font-body" font-size="12" font-weight="600" fill="#f6e7c1">BS CS @ ISU</text>
+  </g>
+
+  <!-- Hero Content -->
+  <g transform="translate(110, 210)">
+    <text x="0" y="60" class="font-display" font-size="68" fill="#ffffff" letter-spacing="-1">ZYRON NEIL</text>
+    <text x="0" y="130" class="font-display" font-size="68" fill="url(#text-gold)" letter-spacing="-1">A. BAUTISTA</text>
+    
+    <text x="0" y="180" class="font-body" font-size="20" font-weight="400" fill="rgba(255,244,241,0.88)">
+      Crafting interactive systems, creative web experiences, and visual storytelling.
+    </text>
+
+    <!-- Tech Arsenal Tags -->
+    <g transform="translate(0, 220)">
+      <g transform="translate(0, 0)">
+        <rect width="105" height="34" rx="17" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <text x="52" y="22" text-anchor="middle" class="font-body" font-size="13" font-weight="500" fill="#f6e7c1">Full Stack</text>
+      </g>
+      <g transform="translate(115, 0)">
+        <rect width="115" height="34" rx="17" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <text x="57" y="22" text-anchor="middle" class="font-body" font-size="13" font-weight="500" fill="#f6e7c1">UI/UX Design</text>
+      </g>
+      <g transform="translate(240, 0)">
+        <rect width="125" height="34" rx="17" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <text x="62" y="22" text-anchor="middle" class="font-body" font-size="13" font-weight="500" fill="#f6e7c1">Swarm Engine</text>
+      </g>
+      <g transform="translate(375, 0)">
+        <rect width="120" height="34" rx="17" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.25)" stroke-width="1"/>
+        <text x="60" y="22" text-anchor="middle" class="font-body" font-size="13" font-weight="500" fill="#f6e7c1">3D Memory</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Right Decorative Geometric / Accent Column -->
+  <g transform="translate(860, 200)">
+    <rect width="180" height="260" rx="20" fill="rgba(24,3,8,0.55)" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+    
+    <text x="90" y="45" text-anchor="middle" class="font-mono" font-size="12" fill="#f2e24f">SYSTEM STATS</text>
+    
+    <line x1="20" y1="62" x2="160" y2="62" stroke="rgba(255,255,255,0.12)"/>
+    
+    <text x="25" y="95" class="font-body" font-size="12" fill="#f4c7a5">Memories</text>
+    <text x="155" y="95" text-anchor="end" class="font-display" font-size="18" fill="#ffffff">8 Folders</text>
+    
+    <text x="25" y="140" class="font-body" font-size="12" fill="#f4c7a5">Engine</text>
+    <text x="155" y="140" text-anchor="end" class="font-display" font-size="16" fill="#f2e24f">Vanilla JS</text>
+
+    <text x="25" y="185" class="font-body" font-size="12" fill="#f4c7a5">Theme</text>
+    <text x="155" y="185" text-anchor="end" class="font-display" font-size="16" fill="#c9343f">Crimson</text>
+
+    <text x="25" y="230" class="font-body" font-size="12" fill="#f4c7a5">Version</text>
+    <text x="155" y="230" text-anchor="end" class="font-mono" font-size="14" fill="#f6e7c1">v2.12.0</text>
+  </g>
+</svg>

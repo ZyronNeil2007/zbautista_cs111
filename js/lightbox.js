@@ -37,8 +37,10 @@
         const captionEl = modal.querySelector('.lightbox-caption');
         const closeBtn = modal.querySelector('.lightbox-close');
         const backdrop = modal.querySelector('.lightbox-backdrop');
+        let previousActiveElement = null;
 
         function openModal(img) {
+            previousActiveElement = document.activeElement;
             // Find appropriate caption text from nearest figcaption if present, or alt text
             let captionHTML = '';
             const figure = img.closest('figure');
@@ -64,11 +66,18 @@
 
             modal.classList.add('active');
             document.body.classList.add('lightbox-open');
+            // Shift focus into modal for keyboard navigation
+            setTimeout(() => {
+                closeBtn.focus();
+            }, 50);
         }
 
         function closeModal() {
             modal.classList.remove('active');
             document.body.classList.remove('lightbox-open');
+            if (previousActiveElement && typeof previousActiveElement.focus === 'function') {
+                previousActiveElement.focus();
+            }
             setTimeout(() => {
                 if (!modal.classList.contains('active')) {
                     imgEl.src = '';
@@ -81,8 +90,13 @@
         backdrop.addEventListener('click', closeModal);
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
+            if (!modal.classList.contains('active')) return;
+            if (e.key === 'Escape') {
                 closeModal();
+            } else if (e.key === 'Tab') {
+                // Keep focus inside modal
+                e.preventDefault();
+                closeBtn.focus();
             }
         });
 
