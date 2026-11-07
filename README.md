@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111  Personal Memories Website
 
-**Version:** 2.12.0<br>
+**Version:** 2.13.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -66,6 +66,13 @@ The website serves as a digital memory vault featuring:
 - When repeated sibling elements create a heavy workload, agents can copy the completed animation of one sibling to similar elements.
 - The animation starts on all screen sizes; the homepage Swarm button can replay it.
 
+### 🎮 8. Interactive Memory Pages
+- **Joke Time (`js/joke-time.js`):** 3D flip cards that reveal each punchline, 😂 / 😐 reactions saved in the browser, a random-joke machine with bonus jokes, and a *Guess the Punchline* quiz with scoring.
+- **My Favorite Food (`js/recipe-tools.js`):** servings slider that rescales every ingredient (fractions, ranges, and plurals included), tick-off checklists that persist, and a full-screen **Cook Mode** with step-by-step navigation, per-step countdown timers (beep + vibration), and screen wake lock.
+- **Childhood / Family / Friends (`js/memory-game.js`):** a *Memory Match* card game built automatically from each page's own photos, with move counter, timer, and per-page best score.
+- **My Song (`js/song-visualizer.js`):** a live Web Audio visualizer (bars, wave, ring) that reacts to the music, plus reflection lines that highlight as each song plays (click a line to jump there). Falls back to a simulated animation when opened from `file://`.
+- All new widgets are keyboard accessible, respect `prefers-reduced-motion`, and opt out of the Swarm Rebuild animation with `data-sr-skip`.
+
 ---
 
 ## 📁 Repository Structure
@@ -90,6 +97,8 @@ zbautista_cs111/
 │   └── joke_time.html           # 5 clean, witty school & programming jokes
 │
 ├── css/                         # Clean vanilla styling and design system
+│   ├── memory-game.css          # Memory Match game styling
+│   ├── song-visualizer.css      # Visualizer and reflections styling
 │   ├── landing.css              # Hero stage, topbar, 3D folder fan-out, and responsive grid
 │   ├── portfolio.css            # Portfolio section, DNA helix layout, and design gallery
 │   ├── style.css                # Shared glassmorphic design system for content pages
@@ -106,9 +115,13 @@ zbautista_cs111/
 │   ├── dna.js                   # Interactive HTML5 Canvas double-helix scroll visualizer
 │   ├── folders.js               # Interactive 3D folder card fan-out & page flipper
 │   ├── lightbox.js              # Fullscreen image viewer modal with keyboard & touch support
+│   ├── joke-time.js             # Joke flip cards, reactions, random joke, and quiz
+│   ├── memory-game.js           # Photo memory-matching game for gallery pages
 │   ├── my_favorite_movie.js     # Movie billboard, poster rows, and details dialog
 │   ├── my_song.js               # Song playlist playback and now-playing controls
 │   ├── reading-progress.js      # Homepage reading progress indicator
+│   ├── recipe-tools.js          # Servings scaler, checklists, and cook mode with timers
+│   ├── song-visualizer.js       # Web Audio visualizer and synced reflections
 │   └── swarm-rebuild.js         # Dependency-free animated page rebuild and mouse-follow swarm
 │
 ├── img/                         # Optimized image, audio, and video assets

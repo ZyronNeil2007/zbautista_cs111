@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="../css/tokens.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/my_song.css?v=8">
+    <link rel="stylesheet" href="../css/song-visualizer.css?v=1">
     <style>
         /* safety net: full-screen player stays hidden unless the stylesheet opens it */
         .nf {
@@ -189,6 +190,22 @@
                     <span class="c-time">--:--</span>
                 </li>
             </ol>
+        </section>
+
+        <!-- Live visualizer + reflections that follow the music -->
+        <section class="sp-viz glass-panel" id="vizSection" data-sr-skip aria-labelledby="vizHeading">
+            <div class="sp-viz-head">
+                <h2 class="sp-section-title" id="vizHeading">Live Visualizer</h2>
+                <div class="viz-modes" role="group" aria-label="Visualizer style">
+                    <button type="button" data-mode="bars" aria-pressed="true">Bars</button>
+                    <button type="button" data-mode="wave" aria-pressed="false">Wave</button>
+                    <button type="button" data-mode="ring" aria-pressed="false">Ring</button>
+                </div>
+            </div>
+            <canvas id="vizCanvas" aria-hidden="true"></canvas>
+            <p class="viz-hint">Press play on any song to start the show.</p>
+            <p class="reflect-song" id="reflectSong"></p>
+            <ol class="reflect-lines" id="reflectLines" aria-label="My reflections on this song"></ol>
         </section>
 
         <!-- Synced lyrics & Official Lyrics Provider -->
@@ -478,6 +495,7 @@
     <audio id="player" preload="metadata"></audio>
 
     <script src="../js/my_song.js?v=8"></script>
+    <script src="../js/song-visualizer.js?v=1"></script>
 </body>
 
 </html>

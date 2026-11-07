@@ -1,0 +1,115 @@
+/* My Song — visualizer + reflections */
+.sp-viz {
+    --bass: 0;
+    position: relative;
+    margin: var(--sp-2xl) 0;
+    padding: var(--sp-xl);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 0 calc(var(--bass) * 48px) rgba(242, 226, 79, calc(var(--bass) * 0.55)), var(--glass-shadow);
+    transition: box-shadow 0.12s linear;
+}
+
+.sp-viz-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-md);
+}
+
+.viz-modes {
+    display: inline-flex;
+    gap: 0.35rem;
+    padding: 0.25rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.viz-modes button {
+    padding: 0.4rem 0.95rem;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-primary);
+    font: 600 0.85rem var(--font-base);
+    cursor: pointer;
+}
+
+.viz-modes button[aria-pressed="true"] {
+    background: var(--yellow);
+    color: #3a0912;
+}
+
+.viz-modes button:focus-visible,
+.reflect-line:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 2px;
+}
+
+#vizCanvas {
+    display: block;
+    width: 100%;
+    height: clamp(160px, 28vw, 260px);
+    margin-top: var(--sp-lg);
+    border-radius: var(--radius-md);
+    background: rgba(0, 0, 0, 0.28);
+}
+
+.viz-hint {
+    margin: var(--sp-sm, 0.5rem) 0 0;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.viz-hint[hidden] {
+    display: none;
+}
+
+.reflect-song {
+    margin: var(--sp-xl) 0 var(--sp-md);
+    color: var(--peach);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+.reflect-lines {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.35rem;
+}
+
+.reflect-line {
+    width: 100%;
+    padding: 0.55rem 0.9rem;
+    border: 0;
+    border-left: 3px solid transparent;
+    border-radius: var(--radius-sm, 8px);
+    background: transparent;
+    color: var(--text-muted);
+    font: 500 clamp(1rem, 2.4vw, 1.2rem)/1.5 var(--font-base);
+    text-align: left;
+    cursor: pointer;
+    transition: color 0.3s, background 0.3s, transform 0.3s var(--ease-smooth), border-color 0.3s;
+}
+
+.reflect-line:hover {
+    color: var(--text-secondary);
+}
+
+.reflect-line.is-active {
+    color: var(--cream);
+    background: rgba(255, 255, 255, 0.08);
+    border-left-color: var(--yellow);
+    transform: translateX(6px);
+    font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sp-viz,
+    .reflect-line {
+        transition: none;
+    }
+}

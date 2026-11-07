@@ -1,0 +1,139 @@
+/* Memory Match game (childhood, family, friends pages) */
+.memory-game {
+    margin-top: var(--sp-2xl);
+}
+
+.mg-stats {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-sm, 0.5rem) var(--sp-xl);
+    margin: var(--sp-lg) 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.mg-stats strong {
+    color: var(--yellow);
+    font-family: var(--font-mono);
+}
+
+.mg-new {
+    margin-left: auto;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: var(--red, #c9343f);
+    color: #fff;
+    font: 600 0.9rem var(--font-base);
+    cursor: pointer;
+    transition: transform var(--dur-base) var(--ease-smooth);
+}
+
+.mg-new:hover {
+    transform: translateY(-2px);
+}
+
+.mg-board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-md);
+}
+
+@media (min-width: 720px) {
+    .mg-board {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+.mg-card {
+    aspect-ratio: 1;
+    padding: 0;
+    border: 0;
+    background: none;
+    perspective: 800px;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+}
+
+.mg-inner {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.45s var(--ease-smooth);
+}
+
+.mg-card.is-flipped .mg-inner,
+.mg-card.is-matched .mg-inner {
+    transform: rotateY(180deg);
+}
+
+.mg-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--glass-border);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+.mg-back {
+    background: linear-gradient(145deg, var(--color-crimson-700, #5c1020), var(--color-crimson-900, #180308));
+    box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.4);
+}
+
+.mg-back img {
+    width: 55%;
+    height: auto;
+    opacity: 0.85;
+}
+
+.mg-front {
+    transform: rotateY(180deg);
+    background: #000;
+}
+
+.mg-front img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.mg-card:hover:not(.is-flipped):not(.is-matched) .mg-inner {
+    transform: translateY(-3px);
+}
+
+.mg-card.is-matched .mg-face {
+    border-color: var(--yellow);
+    box-shadow: 0 0 0 2px var(--yellow), 0 0 18px rgba(242, 226, 79, 0.45);
+}
+
+.mg-card:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 3px;
+}
+
+.mg-status {
+    min-height: 1.6em;
+    margin: var(--sp-lg) 0 0;
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.mg-status.is-win {
+    color: var(--yellow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mg-inner,
+    .mg-new {
+        transition: none;
+    }
+}
