@@ -174,3 +174,45 @@
     }
 }
 
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   FOLDER → PAGE MORPH  (cross-document View Transitions)
+   js/folders.js gives the clicked homepage folder `view-transition-name: folder-morph`
+   right before navigating (and the matching folder when coming back). Each memory page
+   names its header the same, so the browser grows the folder into the header and shrinks
+   it back. Browsers without support, and file:// previews, use the overlay fallback in
+   js/folders.js instead. Nothing runs when the visitor prefers reduced motion.
+   ══════════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+        navigation: auto;
+    }
+}
+
+.hero-section,
+.billboard,
+.sp-hero {
+    view-transition-name: folder-morph;
+}
+
+::view-transition-group(folder-morph) {
+    animation-duration: 720ms;
+    animation-timing-function: cubic-bezier(0.2, 0.85, 0.2, 1);
+    overflow: clip;
+}
+
+::view-transition-old(folder-morph),
+::view-transition-new(folder-morph) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+::view-transition-old(root) {
+    animation-duration: 260ms;
+}
+
+::view-transition-new(root) {
+    animation-duration: 460ms;
+}
+

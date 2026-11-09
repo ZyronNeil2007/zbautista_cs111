@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111  Personal Memories Website
 
-**Version:** 2.14.0<br>
+**Version:** 2.15.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -34,6 +34,7 @@ The website serves as a digital memory vault featuring:
 - **Live Search Filtering:** Real-time filter box in the top navigation bar to quickly search memory folders by keyword with smooth scrolling to matching results.
 - **Touch-Device Friendly:** Optimized pointer events with single-tap preview, tap-outside dismiss, and reliable folder switching on touch displays.
 - **Keyboard Accessible:** Focus-visible folder controls and keyboard navigation for browsing and opening folders.
+- **Folder-to-Page Morph (`js/folder-morph.js`):** Opening a folder lifts its first page, then the folder grows into the memory page header; "Back to Homepage" shrinks the header back into the folder it came from. Uses cross-document View Transitions in Chrome, Edge and Safari, an expanding-panel fallback elsewhere and on `file://` previews, and plain navigation when reduced motion is requested.
 
 ### 🧬 2. Canvas DNA Double Helix Timeline (`js/dna.js`)
 - **Scroll-Synchronized Rotation:** Custom canvas rendering simulates a rotating double helix pinned beside the timeline cards in *"My Journey"*.
@@ -116,6 +117,7 @@ zbautista_cs111/
 │
 ├── js/                          # Client-side interactions & features
 │   ├── dna.js                   # Interactive HTML5 Canvas double-helix scroll visualizer
+│   ├── folder-morph.js          # Homepage View Transition hooks for the folder-to-page morph
 │   ├── folders.js               # Interactive 3D folder card fan-out & page flipper
 │   ├── lightbox.js              # Fullscreen image viewer modal with keyboard & touch support
 │   ├── joke-time.js             # Joke flip cards, reactions, random joke, and quiz
@@ -169,6 +171,7 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 - **Vanilla CSS3:** Modern glassmorphism, CSS Grid, Flexbox, custom properties (CSS variables), micro-interactions, and mobile-responsive breakpoints.
 - **Vanilla JavaScript (ES6+):**
   - **3D Folder Fan-out (`js/folders.js`):** Interactive page flipping, mouse hover, wheel scrolling, touch interaction, and keyboard navigation.
+  - **Folder-to-Page Morph (`js/folder-morph.js`, `css/tokens.css`):** View Transition hooks that pair the opened homepage folder with the memory page header, in both directions.
   - **DNA Timeline Visualizer (`js/dna.js`):** Canvas-based animated double helix responsive to scrolling and inertia.
   - **Lightbox Modal (`js/lightbox.js`):** Accessible fullscreen modal with ESC key dismiss and click-away close.
   - **Swarm Rebuild (`js/swarm-rebuild.js`):** Dependency-free layer-by-layer page reveal on the homepage and wireframe (once per session), animated agents, mouse-follow mode, and replay controls.
@@ -200,6 +203,29 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.15.0] — 2026-11-09
+#### Added
+- Folder-to-page morph: opening a homepage folder lifts its first page, then the folder grows into the memory page header. "Back to Homepage" shrinks the header back into the folder you came from, scrolling it into view first.
+- Browsers without cross-document View Transitions, and `file://` previews, get an expanding panel that grows from the folder to the full screen.
+
+#### Improved
+- Visitors who prefer reduced motion get plain navigation with no transition.
+- The folder title link uses the same opening animation as the folder preview.
+
+#### Bug Fixes
+- Restored the `data-once` handling in `js/swarm-rebuild.js`: the homepage intro runs once per browser session again, and the homepage Swarm button still replays it.
+
+#### Technical Changes
+- Added `js/folder-morph.js`, loaded from the homepage `<head>` together with `<link rel="expect" href="#no-results" blocking="render">` so the view-transition listeners and the folder grid exist before the first paint.
+- Added `@view-transition` and the `folder-morph` transition styles to `css/tokens.css`; the memory page headers (`.hero-section`, `.billboard`, `.sp-hero`) carry the shared name.
+- `js/folders.js` now handles the opening beat and the fallback panel.
+
+#### Breaking Changes
+- None.
+
+#### Credits / Contributors
+- Zyron Neil A. Bautista — project author and maintainer.
 
 ### [v2.14.0] — 2026-11-09
 #### Improved

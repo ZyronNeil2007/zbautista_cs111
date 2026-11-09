@@ -107,6 +107,53 @@
         return e;
     }
 
+    /* ── Folder → page morph ──────────────────────────────────────────────────
+       Chrome/Edge/Safari: the folder is given a view-transition-name just before the
+       navigation, and each memory page's header carries the same name (css/tokens.css), so the
+       browser grows the folder into the page header and shrinks it back on the way home.
+       Everything else (Firefox, file:// previews): a gradient panel grows from the folder to the
+       full screen, and the page fades in on top of it. Reduced motion: plain navigation. */
+    var Morph = (function () {
+        var NAME = 'folder-morph';
+        var BEAT = 340;                        // ms the folder gets to open and lift a page first
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        var useNative = ('onpageswap' in window) && window.location.protocol !== 'file:';
+
+        function overlay(scene, done) {
+            var r = scene.getBoundingClientRect();
+            var box = el('div', 'fx-morph-overlay');
+            box.setAttribute('aria-hidden', 'true');
+            box.style.cssText = 'position:fixed;z-index:9999;margin:0;pointer-events:none;' +
+                'background:linear-gradient(135deg,#8e2434,#5c1020 55%,#3a0912);' +
+                'box-shadow:0 24px 70px rgba(0,0,0,.5);';
+            document.body.appendChild(box);
+            if (!box.animate) { done(); return; }
+            var w = document.documentElement.clientWidth, h = window.innerHeight;
+            var anim = box.animate([
+                { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px', borderRadius: '26px', opacity: 0.85 },
+                { left: '0px', top: '0px', width: w + 'px', height: h + 'px', borderRadius: '0px', opacity: 1 }
+            ], { duration: 560, easing: 'cubic-bezier(.2,.85,.2,1)', fill: 'forwards' });
+            anim.onfinish = done;
+            anim.oncancel = done;
+        }
+
+        // prepare() opens the folder and lifts a page; it returns how long to let that play.
+        function go(href, scene, prepare) {
+            if (reduce.matches) { window.location.href = href; return; }
+            var wait = prepare();
+            window.setTimeout(function () {
+                if (useNative) { window.location.href = href; return; }
+                overlay(scene, function () { window.location.href = href; });
+            }, wait);
+        }
+
+        function clearOverlays() {
+            Array.prototype.forEach.call(document.querySelectorAll('.fx-morph-overlay'), function (n) { n.remove(); });
+        }
+
+        return { NAME: NAME, BEAT: BEAT, native: useNative, go: go, clearOverlays: clearOverlays };
+    })();
+
     var cards = Array.prototype.slice.call(document.querySelectorAll('.fx-card'));
 
     cards.forEach(function (card, ci) {
@@ -197,8 +244,11 @@
             return true;
         }
 
+        var launching = false;
+
         function setOpen(v) {
             if (v === open) return;
+            if (!v && launching) return;           // keep the folder open while it morphs into the page
             open = v;
             if (open) loadImages(); else idx = -1;
             render();
@@ -252,11 +302,42 @@
                 setOpen(true);
                 return;
             }
-            window.location.href = href;
+            launch();
         });
 
+        // Open the folder, lift its first page, then morph into the memory page.
+        function launch() {
+            if (launching) return;
+            launching = true;
+            Morph.go(href, scene, function () {
+                var wait = 0;
+                if (!open) { setOpen(true); wait = Morph.BEAT; }
+                if (idx < 0) { go(0); wait = Morph.BEAT; }
+                return wait;
+            });
+        }
+
+        // The label link below the folder gets the same animation (modified clicks keep their default).
+        var label = card.querySelector('.fx-label');
+        if (label) {
+            label.addEventListener('click', function (e) {
+                if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                e.preventDefault();
+                launch();
+            });
+        }
+
         card._fxClose = function () { setOpen(false); };
+        card._fxReset = function () { launching = false; setOpen(false); };
         render();
+    });
+
+    // Back/forward cache: undo any leftover morph state when the page is shown again.
+    // (The native view-transition hooks live in js/folder-morph.js, loaded from <head>.)
+    window.addEventListener('pageshow', function (e) {
+        if (!e.persisted) return;
+        Morph.clearOverlays();
+        cards.forEach(function (c) { if (c._fxReset) c._fxReset(); });
     });
 
     // Touch screens: tapping elsewhere closes any open folder
