@@ -107,6 +107,108 @@
         return e;
     }
 
+    /* ── Folder ↔ page handoff ────────────────────────────────────────────────
+       Click: the folder's front flap swings open, the page you are on rises out, and that sheet
+       grows until it fills the screen. The memory page starts under the same crimson sheet and
+       fades it away (js/page-arrive.js, css/tokens.css). "Back to Homepage" runs it in reverse: a
+       full-screen sheet shrinks into the folder it came from. Reduced motion: plain navigation. */
+    var Morph = (function () {
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        var LIFT = 480;                                 // ms for the flap to swing open and the page to rise
+        var GROW = 720;                                 // ms for the sheet to fill the screen
+        var SHRINK = 640;                               // ms for the sheet to settle back into the folder
+        var EASE = 'cubic-bezier(.65, 0, .2, 1)';
+        var FRESH = 10000;                              // ms a "return" flag stays valid
+
+        function frame(r) { return { left: r.left + 'px', top: r.top + 'px', width: r.width + 'px', height: r.height + 'px' }; }
+        function screen() {
+            return { left: '0px', top: '0px', width: document.documentElement.clientWidth + 'px', height: window.innerHeight + 'px' };
+        }
+        function mix(a, b) { var o = {}, k; for (k in a) o[k] = a[k]; for (k in b) o[k] = b[k]; return o; }
+        function titleOf(card) { var h = card.querySelector('.fx-label h3'); return h ? h.textContent : ''; }
+
+        // A sheet of paper above the page. `face` is the folder page it starts as; `bg` is the crimson page it becomes.
+        function makeSheet(f, title, face, faceBg) {
+            var sheet = el('div', 'fx-paper');
+            sheet.setAttribute('aria-hidden', 'true');
+            sheet.style.left = f.left;
+            sheet.style.top = f.top;
+            sheet.style.width = f.width;
+            sheet.style.height = f.height;
+            if (faceBg) sheet.style.backgroundImage = faceBg;
+            var faceEl = el('div', 'fx-paper-face');
+            if (face) faceEl.appendChild(face);
+            var bg = el('div', 'fx-paper-bg');
+            var t = el('span', 'fx-paper-title', title);
+            bg.appendChild(t);
+            sheet.appendChild(faceEl);
+            sheet.appendChild(bg);
+            document.body.appendChild(sheet);
+            return { sheet: sheet, face: faceEl, bg: bg, title: t };
+        }
+
+        // The raised page leaves the folder and grows to fill the screen, then the browser navigates.
+        function fly(card, href) {
+            var raised = card.querySelector('.fx-sheet.is-active');
+            var from = (raised || card.querySelector('.fx-scene')).getBoundingClientRect();
+            var page = raised && raised.querySelector('.fx-page');
+            var p = makeSheet(frame(from), titleOf(card), page ? page.cloneNode(true) : null,
+                raised ? window.getComputedStyle(raised).backgroundImage : null);
+            if (raised) raised.style.visibility = 'hidden';
+
+            var go = function () {
+                try { window.sessionStorage.setItem('fx-arrive', String(Date.now())); } catch (e) { /* ignore */ }
+                window.location.href = href;
+            };
+            if (!p.sheet.animate) { go(); return; }
+
+            var grow = p.sheet.animate([
+                mix(frame(from), { borderRadius: '10px' }),
+                mix(screen(), { borderRadius: '0px' })
+            ], { duration: GROW, easing: EASE, fill: 'forwards' });
+            p.face.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, delay: 220, fill: 'forwards' });
+            p.bg.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 360, delay: 180, fill: 'forwards' });
+            p.title.animate([
+                { opacity: 0, transform: 'translateY(18px) scale(.94)' },
+                { opacity: 1, transform: 'none' }
+            ], { duration: 420, delay: 300, easing: 'ease-out', fill: 'both' });
+            p.title.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 160, delay: GROW - 160, fill: 'forwards' });
+            grow.onfinish = go;
+            grow.oncancel = go;
+        }
+
+        // Coming home: a full-screen sheet shrinks into the folder the visitor came from.
+        function land(card, peek) {
+            var scene = card.querySelector('.fx-scene');
+            scene.scrollIntoView({ block: 'center', behavior: 'instant' });
+            var to = scene.getBoundingClientRect();
+            var p = makeSheet(screen(), titleOf(card), null, null);
+            p.sheet.style.borderRadius = '0';
+            p.bg.style.opacity = '1';
+            document.documentElement.classList.remove('fx-returning');   // the real sheet takes over, same frame
+            peek(true);
+            card.classList.add('is-returning');
+
+            var end = { left: (to.left + to.width * 0.07) + 'px', top: (to.top + 6) + 'px', width: (to.width * 0.86) + 'px', height: (to.height * 0.5) + 'px' };
+            if (!p.sheet.animate) { p.sheet.remove(); card.classList.remove('is-returning'); peek(false); return; }
+            var shrink = p.sheet.animate([
+                mix(screen(), { borderRadius: '0px' }),
+                mix(end, { borderRadius: '10px' })
+            ], { duration: SHRINK, easing: EASE, fill: 'forwards' });
+            p.title.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, fill: 'forwards' });
+            p.sheet.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, delay: SHRINK - 160, fill: 'forwards' });
+            window.setTimeout(function () { card.classList.remove('is-returning'); peek(false); }, SHRINK - 220);
+            shrink.onfinish = function () { p.sheet.remove(); };
+        }
+
+        function clearSheets() {
+            Array.prototype.forEach.call(document.querySelectorAll('.fx-paper'), function (n) { n.remove(); });
+            document.documentElement.classList.remove('fx-returning');
+        }
+
+        return { reduce: reduce, LIFT: LIFT, FRESH: FRESH, fly: fly, land: land, clearSheets: clearSheets };
+    })();
+
     var cards = Array.prototype.slice.call(document.querySelectorAll('.fx-card'));
 
     cards.forEach(function (card, ci) {
@@ -197,8 +299,11 @@
             return true;
         }
 
+        var launching = false;
+
         function setOpen(v) {
             if (v === open) return;
+            if (!v && launching) return;           // keep the folder open while it morphs into the page
             open = v;
             if (open) loadImages(); else idx = -1;
             render();
@@ -252,11 +357,63 @@
                 setOpen(true);
                 return;
             }
-            window.location.href = href;
+            launch();
         });
 
+        // Open the flap, raise a page, then let that page grow into the memory page.
+        function launch() {
+            if (launching) return;
+            launching = true;
+            if (Morph.reduce.matches) { window.location.href = href; return; }
+            if (!open) setOpen(true);
+            if (idx < 0) go(0);
+            card.classList.add('is-launching');
+            window.setTimeout(function () { Morph.fly(card, href); }, Morph.LIFT);
+        }
+
+        // The label link below the folder gets the same animation (modified clicks keep their default).
+        var label = card.querySelector('.fx-label');
+        if (label) {
+            label.addEventListener('click', function (e) {
+                if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+                e.preventDefault();
+                launch();
+            });
+        }
+
         card._fxClose = function () { setOpen(false); };
+        card._fxReset = function () {
+            launching = false;
+            card.classList.remove('is-launching', 'is-returning');
+            sheets.forEach(function (s) { s.style.visibility = ''; });
+            setOpen(false);
+        };
+        // Used when the visitor comes back from the memory page: open on the first page, then close again.
+        card._fxPeek = function (v) { if (v) { setOpen(true); go(0); } else { setOpen(false); } };
         render();
+    });
+
+    // Coming back from a memory page: a full-screen sheet shrinks into the folder it came from.
+    (function () {
+        var raw = null, card = null;
+        try { raw = window.sessionStorage.getItem('fx-return'); window.sessionStorage.removeItem('fx-return'); } catch (e) { /* ignore */ }
+        var parts = raw ? raw.split('|') : [];
+        if (parts.length === 2 && Date.now() - Number(parts[1]) < Morph.FRESH &&
+            !Morph.reduce.matches && !document.documentElement.classList.contains('sr-lock')) {
+            cards.forEach(function (c) {
+                var h = c.getAttribute('data-href');
+                try { if (h && new URL(h, window.location.href).pathname === parts[0]) card = c; } catch (e) { /* ignore */ }
+            });
+        }
+        if (card && !card.classList.contains('hidden') && card._fxPeek) Morph.land(card, card._fxPeek);
+        else document.documentElement.classList.remove('fx-returning');
+    })();
+
+    // Back/forward cache: undo any leftover handoff state when the page is shown again.
+    window.addEventListener('pageshow', function (e) {
+        if (!e.persisted) return;
+        Morph.clearSheets();
+        cards.forEach(function (c) { if (c._fxReset) c._fxReset(); });
     });
 
     // Touch screens: tapping elsewhere closes any open folder

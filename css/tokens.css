@@ -173,4 +173,42 @@
         scroll-behavior:          auto   !important;
     }
 }
+/* ══════════════════════════════════════════════════════════════════════════════
+   FOLDER ↔ PAGE HANDOFF  (js/folders.js + js/page-arrive.js)
+   The homepage grows a crimson sheet over the screen when a folder opens; the memory page
+   starts under the same sheet and fades it away. "Back to Homepage" starts the homepage under
+   a sheet that js/folders.js then shrinks into the folder. Disabled for reduced motion.
+   ══════════════════════════════════════════════════════════════════════════════ */
+html.fx-arriving::before,
+html.fx-returning::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    pointer-events: none;
+    background: linear-gradient(135deg, #8e2434, #5c1020 55%, #3a0912);
+}
+
+html.fx-arriving::before {
+    animation: fx-cover-out 0.6s ease 0.12s forwards;
+}
+
+/* failsafe: js/folders.js normally removes the class long before this fires */
+html.fx-returning::before {
+    animation: fx-cover-out 0.01s linear 3s forwards;
+}
+
+@keyframes fx-cover-out {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.fx-arriving::before,
+    html.fx-returning::before {
+        display: none;
+    }
+}
 
