@@ -14,15 +14,17 @@
     <meta property="og:title" content="Zyron Neil A. Bautista — CS Student & Creative Developer">
     <meta property="og:description"
         content="Personal Memories & Interactive Portfolio featuring 8 memory archives, 3D interactive folders, DNA timeline, and multi-agent Swarm Rebuild.">
-    <meta property="og:image" content="https://zyronneil2007.github.io/zbautista_cs111/img/og-banner.svg">
-    <meta property="og:url" content="https://github.com/ZyronNeil2007/zbautista_cs111">
+    <meta property="og:image" content="https://zyronneil2007.github.io/zbautista_cs111/img/og-banner.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://zyronneil2007.github.io/zbautista_cs111/">
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Zyron Neil A. Bautista — CS Student & Creative Developer">
     <meta name="twitter:description"
         content="Personal Memories & Interactive Portfolio featuring 8 memory archives, 3D interactive folders, DNA timeline, and multi-agent Swarm Rebuild.">
-    <meta name="twitter:image" content="https://zyronneil2007.github.io/zbautista_cs111/img/og-banner.svg">
+    <meta name="twitter:image" content="https://zyronneil2007.github.io/zbautista_cs111/img/og-banner.png">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="img/icons/zn.logo.png">
@@ -40,7 +42,7 @@
 </head>
 
 <body>
-    <script src="js/swarm-rebuild.js" data-agents="14" data-bg="#3a0912" data-mobile-autostart="false"></script>
+    <script src="js/swarm-rebuild.js" data-agents="14" data-bg="#3a0912" data-once></script>
     <a class="skip-link" href="#main">Skip to content</a>
     <progress class="reading-progress" id="reading-progress" max="100" value="0"
         aria-label="Page reading progress"></progress>
@@ -68,7 +70,7 @@
                     <circle cx="11" cy="11" r="7"></circle>
                     <path d="m20 20-3.5-3.5"></path>
                 </svg>
-                <input type="search" id="folder-search" placeholder="Search…" autocomplete="off" enterkeyhint="search"
+                <input type="search" id="folder-search" placeholder="Search folders…" autocomplete="off" enterkeyhint="search"
                     aria-controls="folder-grid">
             </label>
             <div class="topnav">
@@ -197,15 +199,14 @@
         <section class="folders-section" id="folders" aria-labelledby="folders-title">
             <h2 id="folders-title">Memory Folders</h2>
             <p class="fx-hint">
-                <span class="hint-hover">Hover a folder, then scroll to flip through its pages. Click to open it.</span>
-                <span class="hint-touch">Tap a folder to peek inside, use ▲ ▼ to flip pages, tap again to open
-                    it.</span>
+                <span class="hint-hover">Hover a folder, then scroll to flip through its pages. Click a preview or title link to open it.</span>
+                <span class="hint-touch">Tap a folder to peek inside, use ▲ ▼ to flip pages, then tap again or use its title link to open it.</span>
             </p>
             <ul class="fx-grid" id="folder-grid">
                 <li class="fx-card" data-key="childhood" data-name="childhood memories"
                     data-href="pages/childhood_memories.html">
-                    <div class="fx-scene" tabindex="0" role="link"
-                        aria-label="Childhood Memories — flip through pages, press Enter to open">
+                    <div class="fx-scene" tabindex="0" role="group"
+                        aria-label="Childhood Memories folder preview — arrow keys flip pages, the link below opens it">
                         <div class="fx-back"></div>
                         <div class="fx-stack"></div>
                         <div class="fx-front">
@@ -226,8 +227,8 @@
                 </li>
                 <li class="fx-card" data-key="family" data-name="my family relatives"
                     data-href="pages/family_relatives.html">
-                    <div class="fx-scene" tabindex="0" role="link"
-                        aria-label="My Family &amp; Relatives — flip through pages, press Enter to open">
+                    <div class="fx-scene" tabindex="0" role="group"
+                        aria-label="My Family &amp; Relatives folder preview — arrow keys flip pages, the link below opens it">
                         <div class="fx-back"></div>
                         <div class="fx-stack"></div>
                         <div class="fx-front">
@@ -247,8 +248,8 @@
                     </a>
                 </li>
                 <li class="fx-card" data-key="friends" data-name="my friends" data-href="pages/my_friends.html">
-                    <div class="fx-scene" tabindex="0" role="link"
-                        aria-label="My Friends — flip through pages, press Enter to open">
+                    <div class="fx-scene" tabindex="0" role="group"
+                        aria-label="My Friends folder preview — arrow keys flip pages, the link below opens it">
                         <div class="fx-back"></div>
                         <div class="fx-stack"></div>
                         <div class="fx-front">
@@ -268,8 +269,8 @@
                     </a>
                 </li>
                 <li class="fx-card" data-key="love" data-name="me my love" data-href="pages/me_and_my_love.html">
-                    <div class="fx-scene" tabindex="0" role="link"
-                        aria-label="Me &amp; My Love — flip through pages, press Enter to open">
+                    <div class="fx-scene" tabindex="0" role="group"
+                        aria-label="Me &amp; My Love folder preview — arrow keys flip pages, the link below opens it">
                         <div class="fx-back"></div>
                         <div class="fx-stack"></div>
                         <div class="fx-front">
@@ -290,8 +291,8 @@
                 </li>
                 <li class="fx-card" data-key="food" data-name="my favorite food"
                     data-href="pages/my_favorite_food.html">
-                    <div class="fx-scene" tabindex="0" role="link"
-                        aria-label="My Favorite Food — flip through pages, press Enter to open">
+                    <div class="fx-scene" tabindex="0" role="group"
+                        aria-label="My Favorite Food folder preview — arrow keys flip pages, the link below opens it">
                         <div class="fx-back"></div>
                         <div class="fx-stack"></div>
                         <div class="fx-front">
@@ -312,8 +313,8 @@
                 </li>
                 <li class="fx-card" data-key="movie" data-name="my favorite movie"
                     data-href="pages/my_favorite_movie.html">
-                    <div class="fx-scene" tabindex="0" role="link"
-                        aria-label="My Favorite Movie — flip through pages, press Enter to open">
+                    <div class="fx-scene" tabindex="0" role="group"
+                        aria-label="My Favorite Movie folder preview — arrow keys flip pages, the link below opens it">
                         <div class="fx-back"></div>
                         <div class="fx-stack"></div>
                         <div class="fx-front">
@@ -333,8 +334,8 @@
                     </a>
                 </li>
                 <li class="fx-card" data-key="song" data-name="my song" data-href="pages/my_song.html">
-                    <div class="fx-scene" tabindex="0" role="link"
-                        aria-label="My Song — flip through pages, press Enter to open">
+                    <div class="fx-scene" tabindex="0" role="group"
+                        aria-label="My Song folder preview — arrow keys flip pages, the link below opens it">
                         <div class="fx-back"></div>
                         <div class="fx-stack"></div>
                         <div class="fx-front">
@@ -354,8 +355,8 @@
                     </a>
                 </li>
                 <li class="fx-card" data-key="joke" data-name="joke time" data-href="pages/joke_time.html">
-                    <div class="fx-scene" tabindex="0" role="link"
-                        aria-label="Joke Time — flip through pages, press Enter to open">
+                    <div class="fx-scene" tabindex="0" role="group"
+                        aria-label="Joke Time folder preview — arrow keys flip pages, the link below opens it">
                         <div class="fx-back"></div>
                         <div class="fx-stack"></div>
                         <div class="fx-front">
@@ -830,7 +831,7 @@
         <p>Designed &amp; Developed by Zyron Neil Bautista</p>
         <p>&copy; 2026 Zyron Neil A. Bautista | BS Computer Science, Isabela State University · Personal Memories
             Portfolio</p>
-        <p>Version v2.13.0</p>
+        <p>Version v2.14.0</p>
     </footer>
 
     <script>
