@@ -195,6 +195,34 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 
 ## 📝 Changelog
 
+### [v2.13.0] — 2026-11-09
+#### Added
+- Added interactive Joke Time cards with saved reactions, a random-joke machine, and a punchline quiz.
+- Added photo-based Memory Match games to the Childhood, Family, and Friends pages, with move and time tracking and per-page best scores.
+- Added recipe serving scaling, persistent ingredient and step checklists, and Cook Mode with step timers to My Favorite Food.
+- Added a music visualizer with selectable bars, wave, and ring views, plus reflections synchronized to playback on My Song.
+
+#### Improved
+- Expanded Swarm Rebuild with manual element pinning, lookahead building, instant handling for marked widgets and scroll containers, a draggable toolbar, clone-mode refinements, and reduced-frequency layout reads.
+- Added Swarm Rebuild accessibility announcements, a timeout failsafe, and automatic cleanup if the script encounters a runtime error.
+- The song visualizer now honors `prefers-reduced-motion` while keeping playback reflections available.
+
+#### Bug Fixes
+- Added recovery paths to prevent an interrupted or failed Swarm Rebuild from leaving page content hidden.
+
+#### Technical Changes
+- Added `js/joke-time.js`, `js/memory-game.js`, `js/recipe-tools.js`, and `js/song-visualizer.js` with their supporting stylesheets. No runtime dependencies were added.
+- Persisted joke reactions, recipe checklist state, and Memory Match best scores in browser storage.
+
+#### Documentation
+- Updated the project version, feature overview, source tree, and release changelog.
+
+#### Breaking Changes
+- None.
+
+#### Credits / Contributors
+- Zyron Neil A. Bautista — project author and maintainer.
+
 ### [v2.12.0] — 2026-11-08
 #### Added
 - **3-Layer Design Token Architecture (`css/tokens.css`):** Established primitive, semantic, and component tokens with 4px/8px standardized spacing, typography scales, glassmorphism tokens, and motion tokens across the entire site.

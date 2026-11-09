@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joke Time — Zyron Neil A. Bautista | CS111</title>
-        <meta name="description" content="A curated collection of lighthearted, witty jokes to brighten your day.">
+    <meta name="description" content="A curated collection of lighthearted, witty jokes to brighten your day.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Joke Time — Zyron Neil A. Bautista | CS111">
     <meta property="og:description" content="A curated collection of lighthearted, witty jokes to brighten your day.">
@@ -17,7 +17,8 @@
     <link rel="icon" type="image/png" href="../img/icons/zn.logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="../css/tokens.css">
     <link rel="stylesheet" href="../css/style.css">
@@ -62,7 +63,8 @@
 
         <section class="glass-panel joke-tools animate-in" data-sr-skip>
             <h2 class="section-title">Joke Machine</h2>
-            <p class="content-intro">Tap a card to reveal its punchline and rate it, or let the joke machine surprise you.</p>
+            <p class="content-intro">Tap a card to reveal its punchline and rate it, or let the joke machine surprise
+                you.</p>
             <div class="joke-machine">
                 <button type="button" class="joke-btn" id="random-joke-btn">&#127922; Random joke</button>
                 <button type="button" class="joke-btn joke-ghost" id="flip-all-btn">Flip all cards</button>
@@ -75,91 +77,118 @@
             </div>
         </section>
 
-        <section class="joke-card joke-flip animate-in animate-in-delay-1" data-joke="1" data-wrong="Because their screens are stuck in Dark Mode|Because they can't count all the pixels" data-sr-skip>
+        <section class="joke-card joke-flip animate-in animate-in-delay-1" data-joke="1"
+            data-wrong="Because their screens are stuck in Dark Mode|Because they can't count all the pixels"
+            data-sr-skip>
             <div class="joke-inner">
                 <div class="joke-face joke-front">
                     <h3>Joke #1: The Programmer's Glasses</h3>
-                    <p><strong>Question:</strong> <span class="joke-setup">Why do programmers prefer wearing glasses?</span></p>
+                    <p><strong>Question:</strong> <span class="joke-setup">Why do programmers prefer wearing
+                            glasses?</span></p>
                     <button type="button" class="joke-btn joke-reveal">Reveal punchline</button>
                 </div>
                 <div class="joke-face joke-back" inert>
                     <h3>Joke #1: The Programmer's Glasses</h3>
                     <p><strong>Answer:</strong> <span class="joke-punch">Because they don't C#! (see sharp)</span></p>
                     <div class="joke-reactions" role="group" aria-label="Rate this joke">
-                        <button type="button" class="joke-react" data-react="laugh" aria-pressed="false">&#128514; Funny <span class="joke-count" aria-hidden="true"></span></button>
-                        <button type="button" class="joke-react" data-react="meh" aria-pressed="false">&#128528; Meh <span class="joke-count" aria-hidden="true"></span></button>
+                        <button type="button" class="joke-react" data-react="laugh" aria-pressed="false">&#128514; Funny
+                            <span class="joke-count" aria-hidden="true"></span></button>
+                        <button type="button" class="joke-react" data-react="meh" aria-pressed="false">&#128528; Meh
+                            <span class="joke-count" aria-hidden="true"></span></button>
                         <button type="button" class="joke-btn joke-ghost joke-unflip">Flip back</button>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="joke-card joke-flip animate-in animate-in-delay-2" data-joke="2" data-wrong="Because nobody opened it after the exam|Because it kept getting divided by zero" data-sr-skip>
+        <section class="joke-card joke-flip animate-in animate-in-delay-2" data-joke="2"
+            data-wrong="Because nobody opened it after the exam|Because it kept getting divided by zero" data-sr-skip>
             <div class="joke-inner">
                 <div class="joke-face joke-front">
                     <h3>Joke #2: The Math Book's Dilemma</h3>
-                    <p><strong>Question:</strong> <span class="joke-setup">Why was the math book always looking so sad and depressed?</span></p>
+                    <p><strong>Question:</strong> <span class="joke-setup">Why was the math book always looking so sad
+                            and depressed?</span></p>
                     <button type="button" class="joke-btn joke-reveal">Reveal punchline</button>
                 </div>
                 <div class="joke-face joke-back" inert>
                     <h3>Joke #2: The Math Book's Dilemma</h3>
-                    <p><strong>Answer:</strong> <span class="joke-punch">Because it had way too many problems of its own to solve!</span></p>
+                    <p><strong>Answer:</strong> <span class="joke-punch">Because it had way too many problems of its own
+                            to solve!</span></p>
                     <div class="joke-reactions" role="group" aria-label="Rate this joke">
-                        <button type="button" class="joke-react" data-react="laugh" aria-pressed="false">&#128514; Funny <span class="joke-count" aria-hidden="true"></span></button>
-                        <button type="button" class="joke-react" data-react="meh" aria-pressed="false">&#128528; Meh <span class="joke-count" aria-hidden="true"></span></button>
+                        <button type="button" class="joke-react" data-react="laugh" aria-pressed="false">&#128514; Funny
+                            <span class="joke-count" aria-hidden="true"></span></button>
+                        <button type="button" class="joke-react" data-react="meh" aria-pressed="false">&#128528; Meh
+                            <span class="joke-count" aria-hidden="true"></span></button>
                         <button type="button" class="joke-btn joke-ghost joke-unflip">Flip back</button>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="joke-card joke-flip animate-in animate-in-delay-3" data-joke="3" data-wrong="Because its fan was stuck on turbo|Because the Wi-Fi had no bars" data-sr-skip>
+        <section class="joke-card joke-flip animate-in animate-in-delay-3" data-joke="3"
+            data-wrong="Because its fan was stuck on turbo|Because the Wi-Fi had no bars" data-sr-skip>
             <div class="joke-inner">
                 <div class="joke-face joke-front">
                     <h3>Joke #3: Cold Computer</h3>
-                    <p><strong>Question:</strong> <span class="joke-setup">Why was the student's laptop shivering and catching a cold during the lecture?</span></p>
+                    <p><strong>Question:</strong> <span class="joke-setup">Why was the student's laptop shivering and
+                            catching a cold during the lecture?</span></p>
                     <button type="button" class="joke-btn joke-reveal">Reveal punchline</button>
                 </div>
                 <div class="joke-face joke-back" inert>
                     <h3>Joke #3: Cold Computer</h3>
-                    <p><strong>Answer:</strong> <span class="joke-punch">Because somebody left too many Windows open!</span></p>
+                    <p><strong>Answer:</strong> <span class="joke-punch">Because somebody left too many Windows
+                            open!</span></p>
                     <div class="joke-reactions" role="group" aria-label="Rate this joke">
-                        <button type="button" class="joke-react" data-react="laugh" aria-pressed="false">&#128514; Funny <span class="joke-count" aria-hidden="true"></span></button>
-                        <button type="button" class="joke-react" data-react="meh" aria-pressed="false">&#128528; Meh <span class="joke-count" aria-hidden="true"></span></button>
+                        <button type="button" class="joke-react" data-react="laugh" aria-pressed="false">&#128514; Funny
+                            <span class="joke-count" aria-hidden="true"></span></button>
+                        <button type="button" class="joke-react" data-react="meh" aria-pressed="false">&#128528; Meh
+                            <span class="joke-count" aria-hidden="true"></span></button>
                         <button type="button" class="joke-btn joke-ghost joke-unflip">Flip back</button>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="joke-card joke-flip animate-in animate-in-delay-4" data-joke="4" data-wrong="“I think I flunked. My eraser got more use than I did.”|“That exam really rubbed me the wrong way!”" data-sr-skip>
+        <section class="joke-card joke-flip animate-in animate-in-delay-4" data-joke="4"
+            data-wrong="“I think I flunked. My eraser got more use than I did.”|“That exam really rubbed me the wrong way!”"
+            data-sr-skip>
             <div class="joke-inner">
                 <div class="joke-face joke-front">
                     <h3>Joke #4: The Lost Pencil</h3>
-                    <p><strong>Question:</strong> <span class="joke-setup">What did one pencil say to the other after taking a long exam?</span></p>
+                    <p><strong>Question:</strong> <span class="joke-setup">What did one pencil say to the other after
+                            taking a long exam?</span></p>
                     <button type="button" class="joke-btn joke-reveal">Reveal punchline</button>
                 </div>
                 <div class="joke-face joke-back" inert>
                     <h3>Joke #4: The Lost Pencil</h3>
-                    <p><strong>Answer:</strong> <span class="joke-punch">“Looking sharp! But honestly, I feel completely pointless right now.”</span></p>
+                    <p><strong>Answer:</strong> <span class="joke-punch">“Looking sharp! But honestly, I feel completely
+                            pointless right now.”</span></p>
                     <div class="joke-reactions" role="group" aria-label="Rate this joke">
-                        <button type="button" class="joke-react" data-react="laugh" aria-pressed="false">&#128514; Funny <span class="joke-count" aria-hidden="true"></span></button>
-                        <button type="button" class="joke-react" data-react="meh" aria-pressed="false">&#128528; Meh <span class="joke-count" aria-hidden="true"></span></button>
+                        <button type="button" class="joke-react" data-react="laugh" aria-pressed="false">&#128514; Funny
+                            <span class="joke-count" aria-hidden="true"></span></button>
+                        <button type="button" class="joke-react" data-react="meh" aria-pressed="false">&#128528; Meh
+                            <span class="joke-count" aria-hidden="true"></span></button>
                         <button type="button" class="joke-btn joke-ghost joke-unflip">Flip back</button>
                     </div>
                 </div>
             </div>
         </section>
-        <section class="joke-card joke-flip animate-in animate-in-delay-5" data-joke="5" data-wrong="Those who code in Python, and those who prefer Java.|Those who sleep early, and those who debug at 3 AM." data-sr-skip>
+        <section class="joke-card joke-flip animate-in animate-in-delay-5" data-joke="5"
+            data-wrong="Those who code in Python, and those who prefer Java.|Those who sleep early, and those who debug at 3 AM."
+            data-sr-skip>
             <div class="joke-inner">
                 <div class="joke-face joke-front">
                     <h3>Joke #5: The Binary Secret</h3>
-                    <p><strong>Statement:</strong> <span class="joke-setup">There are only 10 types of people in the world...</span></p>
+                    <p><strong>Statement:</strong> <span class="joke-setup">There are only 10 types of people in the
+                            world...</span></p>
                     <button type="button" class="joke-btn joke-reveal">Reveal punchline</button>
                 </div>
                 <div class="joke-face joke-back" inert>
                     <h3>Joke #5: The Binary Secret</h3>
-                    <p><strong>Punchline:</strong> <span class="joke-punch">Those who understand binary numbers, and those who don't!</span></p>
+                    <p><strong>Punchline:</strong> <span class="joke-punch">Those who understand binary numbers, and
+                            those who don't!</span></p>
                     <div class="joke-reactions" role="group" aria-label="Rate this joke">
-                        <button type="button" class="joke-react" data-react="laugh" aria-pressed="false">&#128514; Funny <span class="joke-count" aria-hidden="true"></span></button>
-                        <button type="button" class="joke-react" data-react="meh" aria-pressed="false">&#128528; Meh <span class="joke-count" aria-hidden="true"></span></button>
+                        <button type="button" class="joke-react" data-react="laugh" aria-pressed="false">&#128514; Funny
+                            <span class="joke-count" aria-hidden="true"></span></button>
+                        <button type="button" class="joke-react" data-react="meh" aria-pressed="false">&#128528; Meh
+                            <span class="joke-count" aria-hidden="true"></span></button>
                         <button type="button" class="joke-btn joke-ghost joke-unflip">Flip back</button>
                     </div>
                 </div>

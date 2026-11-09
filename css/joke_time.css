@@ -174,7 +174,9 @@
 }
 
 @keyframes joke-pop {
-    40% { transform: scale(1.25) rotate(-4deg); }
+    40% {
+        transform: scale(1.25) rotate(-4deg);
+    }
 }
 
 .joke-machine {
@@ -282,6 +284,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .joke-inner,
     .joke-btn,
     .quiz-option {

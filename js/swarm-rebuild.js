@@ -1,9 +1,13 @@
 /*! swarm-rebuild.js: "Swarm Rebuild". Cursor agents scan a page, then rebuild it layer by layer as the visitor scrolls.
  *  One IIFE, no dependencies. Drop it in as the FIRST tag in <body>; it never depends on your markup.
- *    <script src="swarm-rebuild.js" data-agents="14" data-speed="1" data-line="0.88" data-bg="#000" data-accent="#3D8BFF"></script>
+ *    <script src="swarm-rebuild.js" data-agents="14" data-speed="1" data-line="0.88" data-bg="#000" data-accent="#0D99FF"></script>
  *  Sound: synthesised FX, on by default after the first click/key; data-sound="off" starts muted, data-volume="0..1". Toolbar speaker button toggles it.
  *  Clone mode: data-clone="auto|on|off" (default auto). Identical siblings (card grids) are copied from the first finished one instead of rebuilt.
- *  Hooks (all optional): data-sr-skip, data-sr-logo, data-sr-replay, data-sr-stat="layers|texts|frames|agents".
+ *  data-sound="quiet" keeps only the soft cues (no per-layer clicks). data-lookahead="0.25" lets idle agents build just below the line (0 = off).
+ *  data-failsafe="60" finishes the page after N seconds no matter what (0 = off).
+ *  Hooks (all optional): data-sr-skip, data-sr-logo, data-sr-replay, data-sr-stat="layers|texts|frames|agents",
+ *  data-sr-instant (build this element and everything inside it in one step: maps, embeds). Scroll containers are treated the same way.
+ *  Visitors: Alt/Option + click on an element sends agents to build it first (a "pin").
  *  API: window.SwarmRebuild.replay() / .skip() / .destroy()
  */
 (function () {
@@ -27,18 +31,19 @@
     speed: [1, 2, 4].indexOf(num(D.speed, 1)) >= 0 ? num(D.speed, 1) : 1,
     line: clamp(num(D.line, 0.88), 0.05, 2),
     bg: D.bg || '#000',
-    accent: D.accent || '#3D8BFF'
+    accent: D.accent || '#0D99FF'
   };
   var Z = 2147483000;                                               // root < scan < agents < hud
-  var PAL = ['#FF5C8A', '#FFC233', '#A970FF', '#2DD4BF', '#4ADE80', '#FF8A3D', '#38BDF8', '#F43F5E', '#C084FC', '#FACC15',
-    '#34D399', '#60A5FA', '#FB7185', '#F97316', '#22D3EE', '#A3E635'];
-  var NAMES = ['Ada', 'Bo', 'Cyd', 'Dex', 'Eli', 'Fen', 'Gus', 'Hal', 'Ivy', 'Jun', 'Kai', 'Lux', 'Mo', 'Nia', 'Oz', 'Pip'];
+  var PAL = ['#F24E1E', '#A259FF', '#1ABCFE', '#0ACF83', '#FF7262', '#FFC700', '#9747FF', '#E8467C', '#14AE5C', '#0D99FF', '#FF8A00', '#00B5CE'];
+  var NAMES = ['Ada', 'Linus', 'Grace', 'Alan', 'Margaret', 'Ken', 'Barbara', 'Dennis', 'Radia', 'Guido', 'Frances', 'Bjarne', 'Hedy', 'Tim', 'Katherine', 'Edsger'];
   var HARD = { SCRIPT: 1, STYLE: 1, TEMPLATE: 1, META: 1, BR: 1 };
   var MEDIA = {
     IMG: 1, SVG: 1, CANVAS: 1, VIDEO: 1, AUDIO: 1, PICTURE: 1, INPUT: 1, TEXTAREA: 1, SELECT: 1, IFRAME: 1, HR: 1,
     PROGRESS: 1, METER: 1, OBJECT: 1, EMBED: 1
   };
   var MAX_LAYERS = 4000;
+  var LOOK = clamp(num(D.lookahead, 0.25), 0, 1);                // idle agents build layers this far (x viewport) below the build line
+  var FAILSAFE = num(D.failsafe, 60), failTimer = 0, SRC = (S && S.src) || '';
   var CLONE = /^(on|off)$/.test(D.clone || '') ? D.clone : 'auto';   // clone mode: auto (when the swarm is overwhelmed) | on | off
 
   /* ───────────── state ───────────── */
@@ -49,9 +54,9 @@
   var nBuilt = 0, needCompact = false, lastUi = 0;
   var counts = { layers: 0, texts: 0, frames: 0 };
   var layerOf = new WeakMap(), mine = new WeakSet();
-  var styleEl, rootEl, canvas, ctx, scanEl, sqEl, agentsEl, hudEl, hudText, mo = null, ro = null, hudEls = {};
+  var styleEl, rootEl, canvas, ctx, scanEl, sqEl, agentsEl, hudEl, hudText, liveEl, mo = null, ro = null, hudEls = {};
   var speed = CFG.speed, touring = false, tourPos = 0, needRead = true, lastRead = 0, buildT0 = 0, doneT = 0, guideA = 0, lastWork = 0;
-  var trigPend = 0, toFinish = [], guideOn = false, lastHud = 0, groups = [], cloneNow = false;
+  var trigPend = 0, toFinish = [], guideOn = false, lastHud = 0, groups = [], cloneNow = false, lastFull = 0;
   var ms = { x: 0, y: 0, rx: 0, ry: 0, on: false, last: 0, dx: 1, dy: 0 }, lastScroll = 0, freeMode = false, dismissed = false, leaveT0 = 0;
 
   /* ───────────── 2. CSS (one <style>, every class and id prefixed sr-) ───────────── */
@@ -77,27 +82,38 @@
       '@keyframes sr-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}',
       '#sr-agents{left:0;top:0;right:0;bottom:0;z-index:' + (Z + 2) + ';pointer-events:none;overflow:hidden}',
       '.sr-ag{position:absolute;left:0;top:0;will-change:transform}',
-      '.sr-ar{position:absolute;left:0;top:0;overflow:visible;transform-origin:0 0;filter:drop-shadow(0 1px 2px rgba(0,0,0,.45))}',
-      '.sr-ib{position:absolute;left:-5px;top:-9px;display:none;overflow:visible;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}',
-      '.sr-ty .sr-ar{display:none}.sr-ty .sr-ib{display:block}',
-      '.sr-nm{position:absolute;left:12px;top:17px;opacity:0;transition:opacity .2s;font:600 10.5px/1 system-ui,-apple-system,sans-serif;' +
-      'color:#101114;padding:3px 7px;border-radius:999px;white-space:nowrap}',
-      '.sr-ty .sr-nm{left:7px;top:12px}.sr-on .sr-nm{opacity:1}',
+      '.sr-ar{position:absolute;left:-5px;top:-3.5px;overflow:visible;transform-origin:5px 3.5px;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.28))}',
+      '.sr-ib,.sr-cx{position:absolute;left:-12px;top:-12px;display:none;overflow:visible;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.28))}',
+      '.sr-ty .sr-ar,.sr-dr .sr-ar{display:none}.sr-ty .sr-ib{display:block}.sr-dr:not(.sr-ty) .sr-cx{display:block}',
+      '.sr-nm{position:absolute;left:14px;top:18px;opacity:0;transition:opacity .2s;font:600 11px/16px Inter,system-ui,-apple-system,"Segoe UI",sans-serif;' +
+      'color:#fff;padding:1px 4px;border-radius:2px;white-space:nowrap}',
+      '.sr-ty .sr-nm,.sr-dr .sr-nm{left:10px;top:12px}.sr-on .sr-nm{opacity:1}',
+      '.sr-fr.sr-gr{background-color:#D9D9D9}.sr-fr{transition-property:opacity,background-color;transition-duration:.22s}',
       // 5. toolbar
       '#sr-hud{left:50%;bottom:calc(18px + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:' + (Z + 3) + ';display:flex;align-items:center;' +
-      'gap:10px;max-width:calc(100vw - 24px);padding:7px 8px 7px 12px;border-radius:13px;background:rgba(22,23,27,.9);' +
+      'gap:10px;max-width:calc(100vw - 24px);padding:7px 8px 7px 12px;border-radius:13px;background:rgba(30,30,30,.94);' +
       '-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:#f4f4f6;border:1px solid rgba(255,255,255,.1);' +
-      'font:500 12px/1 system-ui,-apple-system,sans-serif;pointer-events:auto;box-shadow:0 8px 28px rgba(0,0,0,.4)}',
+      'font:500 12px/1 Inter,system-ui,-apple-system,sans-serif;pointer-events:auto;box-shadow:0 8px 28px rgba(0,0,0,.4)}',
       '.sr-avs{display:flex;flex:none}',
-      '.sr-av{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;margin-left:-7px;border:2px solid #16171b;box-sizing:content-box;' +
-      'font:700 9px/1 system-ui,sans-serif;color:#101114}.sr-av:first-child{margin-left:0}',
+      '.sr-av{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;margin-left:-7px;border:2px solid #1e1e1e;box-sizing:content-box;' +
+      'font:700 9px/1 Inter,system-ui,sans-serif;color:#fff}.sr-av:first-child{margin-left:0}',
       '.sr-st{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}.sr-an{font-weight:600;margin-right:6px}',
-      '.sr-bar{flex:none;width:64px;height:4px;border-radius:2px;background:rgba(255,255,255,.14);overflow:hidden}',
+      '.sr-bar{flex:none;width:64px;height:3px;border-radius:2px;background:#3a3a3a;overflow:hidden}',
       '.sr-bar i{display:block;height:100%;width:100%;background:var(--sr-ac);transform-origin:0 0;transform:scaleX(0)}',
-      '.sr-bt{all:unset;cursor:pointer;flex:none;padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.1);color:#f4f4f6;' +
-      'font:500 12px/1 system-ui,-apple-system,sans-serif;white-space:nowrap}.sr-bt:hover{background:rgba(255,255,255,.18)}',
+      '.sr-bt{all:unset;cursor:pointer;flex:none;padding:6px 10px;border-radius:8px;background:#2c2c2c;color:#fff;' +
+      'font:500 12px/1 Inter,system-ui,-apple-system,sans-serif;white-space:nowrap}.sr-bt:hover{background:#3a3a3a}.sr-tour{background:var(--sr-ac)}.sr-tour:hover{background:var(--sr-ac);filter:brightness(1.12)}',
       '.sr-bt:focus-visible{outline:2px solid var(--sr-ac);outline-offset:2px}.sr-bx{padding:6px 9px;font-size:15px}',
       '.sr-snd{display:grid;place-items:center;padding:6px 8px}.sr-snd svg{display:block}',
+      '#sr-hud{cursor:grab;touch-action:none}#sr-hud.sr-drag{cursor:grabbing}.sr-bt{cursor:pointer}',
+      '.sr-tour{position:relative}.sr-tour::after{content:"";position:absolute;inset:-3px;border-radius:11px;padding:2px;pointer-events:none;' +
+      'background:conic-gradient(var(--sr-ac) calc(var(--p,0)*1%),transparent 0);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);' +
+      '-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}',
+      '#sr-hud:not(.sr-s-build) .sr-tour::after{display:none}',
+      '.sr-cb{display:none;flex:none;padding:3px 7px;border-radius:999px;background:var(--sr-ac);color:#101114;font:700 10px/1 system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase}',
+      '#sr-hud.sr-cl.sr-s-build .sr-cb{display:block}',
+      '#sr-live{position:fixed;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;margin:-1px}',
+      '.sr-pin{position:absolute;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2px solid var(--sr-ac);box-sizing:border-box;animation:sr-pp .9s ease-out 2 both}',
+      '@keyframes sr-pp{from{transform:scale(.4);opacity:1}to{transform:scale(2.8);opacity:0}}',
       '#sr-hud:not(.sr-s-build) .sr-avs,#sr-hud:not(.sr-s-build) .sr-bar,#sr-hud:not(.sr-s-build) .sr-an{display:none}',
       '@media (max-width:559px){.sr-avs,.sr-bar,.sr-an{display:none!important}}',
       // 6. hiding without moving anything: paint only, opacity only, or transparent text that still occupies its space
@@ -142,7 +158,9 @@
     (document.head || document.documentElement).appendChild(styleEl);
     rootEl = mkEl('div', 'sr-root'); canvas = mkEl('canvas'); ctx = canvas.getContext('2d'); rootEl.appendChild(canvas);
     agentsEl = mkEl('div', 'sr-agents');
-    hudEl = mkEl('div', 'sr-hud'); hudEl.className = 'sr-s-scan';
+    hudEl = mkEl('div', 'sr-hud'); hudEl.className = 'sr-s-scan'; hudEl.setAttribute('role', 'toolbar'); hudEl.setAttribute('aria-label', 'Swarm Rebuild');
+    liveEl = mkEl('div', 'sr-live'); liveEl.setAttribute('aria-live', 'polite'); liveEl.setAttribute('role', 'status');
+    hudEls.cb = mkEl('span', null, 'sr-cb'); hudEls.cb.textContent = 'Clone'; hudEls.cb.title = 'Clone mode: copying identical items';
     hudEls.av = mkEl('span', null, 'sr-avs');
     hudEls.st = mkEl('span', null, 'sr-st'); hudEls.an = mkEl('b', null, 'sr-an'); hudEls.sl = mkEl('span');
     hudEls.st.appendChild(hudEls.an); hudEls.st.appendChild(hudEls.sl);
@@ -151,12 +169,32 @@
     hudEls.snd = btn('sr-snd', '', 'Mute sound', function () { setSound(!soundOn); });
     hudEls.spd = btn('sr-spd', speed + '×', 'Change speed', cycleSpeed);
     hudEls.x = btn('sr-bx', '×', 'Skip the rebuild animation', onX); hudEls.x.title = 'Skip (Esc)';
-    [hudEls.av, hudEls.st, hudEls.bar, hudEls.tour, hudEls.snd, hudEls.spd, hudEls.x].forEach(function (e) { hudEl.appendChild(e); });
+    [hudEls.av, hudEls.st, hudEls.cb, hudEls.bar, hudEls.tour, hudEls.snd, hudEls.spd, hudEls.x].forEach(function (e) { hudEl.appendChild(e); });
     hudText = hudEls.sl;
     var h = document.documentElement;
-    h.appendChild(rootEl); h.appendChild(agentsEl); h.appendChild(hudEl);   // z-index decides the stacking: root < scan < agents < hud
+    h.appendChild(rootEl); h.appendChild(agentsEl); h.appendChild(hudEl); h.appendChild(liveEl);
+    dragify(hudEl); say('Rebuilding page');   // z-index decides the stacking: root < scan < agents < hud
     makeScan();
     sizeCanvas();
+  }
+  var sayT = 0;
+  function say(t) { clearTimeout(sayT); sayT = setTimeout(function () { if (liveEl) liveEl.textContent = t; }, 60); }
+  function dragify(h) {                                            // the toolbar can be dragged out of the way
+    var d = null;
+    h.addEventListener('pointerdown', function (e) {
+      if (e.button || (e.target.closest && e.target.closest('button'))) return;
+      var r = h.getBoundingClientRect(); d = { x: e.clientX - r.left, y: e.clientY - r.top, id: e.pointerId };
+      try { h.setPointerCapture(e.pointerId); } catch (x) { /* ignore */ }
+      h.classList.add('sr-drag');
+    });
+    h.addEventListener('pointermove', function (e) {
+      if (!d) return;
+      var w = h.offsetWidth, hh = h.offsetHeight;
+      h.style.transform = 'none'; h.style.bottom = 'auto'; h.style.right = 'auto';
+      h.style.left = clamp(e.clientX - d.x, 4, VW - w - 4) + 'px'; h.style.top = clamp(e.clientY - d.y, 4, VH - hh - 4) + 'px';
+    });
+    function end() { d = null; h.classList.remove('sr-drag'); }
+    h.addEventListener('pointerup', end); h.addEventListener('pointercancel', end);
   }
   function sizeCanvas() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -180,15 +218,16 @@
     var N = CFG.agents, i, a, e, c, k, cnt, side, base;
     hudEls.av.textContent = '';
     for (i = 0; i < N; i++) {
-      c = PAL[i % 16];
+      c = PAL[i % PAL.length];
       e = mkEl('div', null, 'sr-ag');
-      e.innerHTML = '<svg class="sr-ar" width="14" height="20" viewBox="0 0 14 20"><path d="M0 0V16.5L4.6 12.4L7.6 19L10.4 17.8L7.5 11.3H13.4Z" fill="' + c +
+      e.innerHTML = '<svg class="sr-ar" width="24" height="24" viewBox="0 0 24 24"><path d="M4.6 3.9C4.2 3.1 4.9 2.4 5.7 2.8L20.6 9.4C21.5 9.8 21.4 11.1 20.4 11.3L13.9 12.9C13.4 13 13 13.4 12.9 13.9L11.3 20.4C11.1 21.4 9.8 21.5 9.4 20.6Z" fill="' + c +
         '" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>' +
-        '<svg class="sr-ib" width="10" height="18" viewBox="0 0 10 18"><path d="M1.5 1.5h7M5 1.5v15M1.5 16.5h7" stroke="#fff" stroke-width="3.6" fill="none" stroke-linecap="round"/>' +
-        '<path d="M1.5 1.5h7M5 1.5v15M1.5 16.5h7" stroke="' + c + '" stroke-width="1.6" fill="none" stroke-linecap="round"/></svg>' +
-        '<span class="sr-nm" style="background:' + c + '">' + NAMES[i % 16] + '</span>';
+        '<svg class="sr-cx" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke-linecap="round"><path d="M12 3.5V20.5M3.5 12H20.5" stroke="#fff" stroke-width="3.6"/><path d="M12 3.5V20.5M3.5 12H20.5" stroke="' + c + '" stroke-width="1.5"/></g></svg>' +
+        '<svg class="sr-ib" width="24" height="24" viewBox="0 0 24 24"><g fill="none" stroke-linecap="round"><path d="M8.5 4.5H10.5Q12 4.5 12 6Q12 4.5 13.5 4.5H15.5M12 6V18M8.5 19.5H10.5Q12 19.5 12 18Q12 19.5 13.5 19.5H15.5" stroke="#fff" stroke-width="3.6"/>' +
+        '<path d="M8.5 4.5H10.5Q12 4.5 12 6Q12 4.5 13.5 4.5H15.5M12 6V18M8.5 19.5H10.5Q12 19.5 12 18Q12 19.5 13.5 19.5H15.5" stroke="' + c + '" stroke-width="1.5"/></g></svg>' +
+        '<span class="sr-nm" style="background:' + c + '">' + NAMES[i % NAMES.length] + '</span>';
       agentsEl.appendChild(e);
-      if (i < 5) { var av = mkEl('span', null, 'sr-av'); av.style.background = c; av.textContent = NAMES[i % 16].charAt(0); hudEls.av.appendChild(av); }
+      if (i < 5) { var av = mkEl('span', null, 'sr-av'); av.style.background = c; av.textContent = NAMES[i % NAMES.length].charAt(0); hudEls.av.appendChild(av); }
       k = Math.floor(i / 3); cnt = Math.ceil((N - (i % 3)) / 3);
       base = (i % 3) * 2.0944;                                     // three flocks, a third of the ellipse apart
       side = base + (Math.random() - 0.5) * 0.6;
@@ -248,7 +287,7 @@
     return (e.id && e.id.indexOf('sr-') === 0) || (c && /(^|\s)sr-/.test(c));
   }
   function mk(type, e, parent, fixed, cap) {
-    return { type: type, el: e, parent: parent, fixed: fixed, cap: cap, st: 0, tx: false, r: null, ag: null, y: 0, w: null, ty: null, rs: null, str: '', orig: null, k: 0 };
+    return { depth: parent ? parent.depth + 1 : 0, pin: false, type: type, el: e, parent: parent, fixed: fixed, cap: cap, st: 0, tx: false, r: null, ag: null, y: 0, w: null, ty: null, rs: null, str: '', orig: null, k: 0 };
   }
   var hadCls = new WeakMap();                                     // so a class attribute we created is removed again, not left empty
   function addCls(e, c) { if (!hadCls.has(e)) hadCls.set(e, e.hasAttribute('class')); e.classList.add(c); }
@@ -256,12 +295,20 @@
   function hasText(e) { return /\S/.test(e.textContent); }
 
   // Reads only. Pre-order, so parents always come before their children.
+  function isScroller(e, cs) {                                     // scroll containers and sliders are built as one unit
+    if (e.children.length < 1 || cs.textOverflow === 'ellipsis') return false;
+    var ox = cs.overflowX, oy = cs.overflowY, sx = ox === 'auto' || ox === 'scroll', sy = oy === 'auto' || oy === 'scroll';
+    if (e.clientWidth >= window.innerWidth * 0.9 && e.clientHeight >= window.innerHeight * 0.6) return false;   // app shell, not a widget
+    if (sx || sy) return (sx && e.scrollWidth > e.clientWidth + 2) || (sy && e.scrollHeight > e.clientHeight + 2);
+    return ox === 'hidden' && e.children.length >= 2 && e.scrollWidth > e.clientWidth + 24;
+  }
   function walk(e, parent, fixed, out) {
     var tag = e.tagName.toUpperCase();
     if (HARD[tag] || ours(e) || e.hasAttribute('data-sr-skip') || e.hasAttribute('data-sr-stat')) return;
     var cs = getComputedStyle(e);
     if (cs.display === 'none') return;
     var fx = fixed || cs.position === 'fixed' || cs.position === 'sticky', L = null;
+    if (!MEDIA[tag] && e.hasAttribute('data-sr-instant') || (!MEDIA[tag] && isScroller(e, cs))) { L = mk('media', e, parent, fx); layerOf.set(e, L); out.push(L); return; }   // one layer, built in one step
     if (MEDIA[tag]) { L = mk('media', e, parent, fx); layerOf.set(e, L); out.push(L); return; }
     var kids = e.children.length, box = isBox(cs);
     if (box) { L = mk('box', e, parent, fx, cs.textTransform === 'capitalize'); L.tx = !kids && hasText(e); }
@@ -320,14 +367,17 @@
     L.w = L.ty = L.rs = null;
   }
   // Show k characters. With text-transform:capitalize we only cut at word starts so widths never change.
+  function typeDur(n) {                                            // short labels are quick, long text is capped and fades in by words
+    return n > 200 ? clamp(n / 900, 0.3, 0.8) : n <= 24 ? clamp(n * 0.012, 0.16, 0.3) : clamp(n * 0.012, 0.3, 1.1);
+  }
   function typeTo(L, k) {
-    if (L.cap && k < L.str.length) { var m = L.str.slice(0, k).search(/\s\S*$/); k = m < 0 ? 0 : m + 1; }
+    if ((L.cap || L.str.length > 200) && k < L.str.length) { var m = L.str.slice(0, k).search(/\s\S*$/); k = m < 0 ? 0 : m + 1; }
     L.ty.textContent = L.str.slice(0, k); L.rs.textContent = L.str.slice(k); L.k = k;
   }
 
   function readRect(L) {                                          // layer rect in viewport coordinates (reads only)
     var e = L.type === 'text' && L.w && L.w.isConnected ? L.w : L.el, r = e.getBoundingClientRect();
-    L.rl = r.left; L.rt = r.top; L.rw = r.width; L.rh = r.height; L.rb = r.bottom;
+    L.rl = r.left; L.rt = r.top; L.rw = r.width; L.rh = r.height; L.rb = r.bottom; L.dt = r.top + SY; L.db = r.bottom + SY;
   }
   function later(ms, fn) { late.push({ at: performance.now() + ms, fn: fn }); }
 
@@ -350,22 +400,25 @@
 
   // 1. Triggering. Reads only: every unfinished layer's rect, then decide what is triggered or must finish instantly.
   function readAll() {
-    var i, L, bottom, line;
+    var i, L, line, now = performance.now(), full = now - lastFull >= 350;
     docH = document.documentElement.scrollHeight;
-    bottom = SY + VH >= docH - 4;
-    line = bottom ? 1e9 : VH * CFG.line;               // at the very bottom of the page every remaining layer counts as triggered
+    // within about one viewport of the bottom of the page, every remaining layer counts as triggered (short pages never stall)
+    line = docH - (SY + VH) < VH ? 1e9 : VH * CFG.line;
+    if (full) lastFull = now;
     trigPend = 0; toFinish = [];
     for (i = 0; i < pending.length; i++) {
       L = pending[i];
       if (L.st === 2) continue;
-      readRect(L);
+      // layers far from the screen reuse their last read; they are re-read every 350ms
+      if (!full && !L.fixed && L.st === 0 && L.dt !== undefined && (L.dt - SY > VH * 3 || L.db - SY < -VH * 2)) { L.rt = L.dt - SY; L.rb = L.db - SY; }
+      else readRect(L);
       if (L.st !== 0) continue;
-      L.trig = L.rt < line;                            // top above H * line
+      L.trig = L.rt < line || !!L.pin;                 // top above H * line (pinned layers always count)
       if (L.rb < -60 || (L.trig && (L.rw <= 0 || L.rh <= 0 || L.rl + L.rw < 0 || L.rl > VW))) toFinish.push(L);   // finish instantly
       else if (L.trig) trigPend++;
     }
     cloneNow = CLONE === 'on' || (CLONE === 'auto' && (trigPend > Math.max(6, agents.length * 1.2) || (cloneNow && trigPend > Math.max(3, agents.length * 0.5))));
-    needRead = false; lastRead = performance.now();
+    needRead = false; lastRead = now;
   }
 
   // 2. Picking: lowest score = rect.top + 0.3 * distance from the agent; a layer needs its parent to have started.
@@ -374,27 +427,34 @@
     a.el.classList.add('sr-on');                       // name tag only while working
   }
   function pick() {
-    var free = [], elig = [], i, j, a, L, best, bs, s;
-    for (i = 0; i < agents.length; i++) if (!agents[i].L) free.push(agents[i]);
-    if (!free.length || !trigPend) return;
+    var free = [], elig = [], ahead = [], i, j, a, L, best, bs, s, pinned = 0, line = VH * CFG.line;
+    for (i = 0; i < agents.length; i++) { if (!agents[i].L) free.push(agents[i]); else if (agents[i].L.pin) pinned++; }
+    if (!free.length || (!trigPend && !LOOK)) return;
     for (i = 0; i < pending.length; i++) {
       L = pending[i];
-      if (L.st === 0 && L.trig && (!L.parent || L.parent.st >= 1) && !(cloneNow && isCloneTarget(L))) elig.push(L);
+      if (L.st !== 0 || (L.parent && L.parent.st < 1) || (cloneNow && isCloneTarget(L))) continue;
+      if (L.trig) { if (!(L.pin && pinned >= 4)) elig.push(L); }          // at most 4 agents on pinned work
+      else if (LOOK && L.rt < line + VH * LOOK) ahead.push(L);            // just below the line: idle agents start early
     }
-    for (i = 0; i < free.length && elig.length; i++) {
-      a = free[i]; best = 0; bs = 1e18;
-      for (j = 0; j < elig.length; j++) {
-        L = elig[j]; s = L.rt + 0.3 * Math.hypot(a.x - L.rl, a.y - L.rt);
-        if (s < bs) { bs = s; best = j; }
+    function take(list) {
+      for (; free.length && list.length;) {
+        if (pinned >= 4) list = list.filter(function (x) { return !x.pin; });
+        if (!list.length) break;
+        a = free[0]; best = 0; bs = 1e18;
+        for (j = 0; j < list.length; j++) {
+          L = list[j]; s = L.rt + 0.3 * Math.hypot(a.x - L.rl, a.y - L.rt) - (L.pin ? 1e6 : 0);
+          if (s < bs) { bs = s; best = j; }
+        }
+        free.shift(); L = list.splice(best, 1)[0]; if (L.pin) pinned++; assign(a, L);
       }
-      assign(a, elig.splice(best, 1)[0]);
     }
+    take(elig); take(ahead);
   }
 
   // 3. Selection frame: 1px accent border, four 7px handles (not on text), size label pill under its centre.
   function showFrame(a) {
     var f = mkEl('div', null, 'sr-fr'), z = mkEl('b', null, 'sr-sz'), i;
-    if (a.L.type !== 'text') for (i = 0; i < 4; i++) f.appendChild(document.createElement('i'));
+    if (a.L.type !== 'text') { for (i = 0; i < 4; i++) f.appendChild(document.createElement('i')); f.classList.add('sr-gr'); }
     f.appendChild(z); rootEl.appendChild(f);
     a.fr = f; a.sz = z; a.szTxt = '';
   }
@@ -432,7 +492,7 @@
 
   function startType(a) {
     var L = a.L;
-    a.ph = 'type'; a.t = 0; a.dur = clamp(L.str.length * 0.018, 0.25, 1.3) / speed; L.k = 0; a.lk = 0;
+    a.ph = 'type'; a.t = 0; a.dur = typeDur(L.str.length) / speed; L.k = 0; a.lk = 0;
     a.cx = a.rl; a.cy = a.rt; a.ch = 16;
     a.el.classList.add('sr-ty');                       // arrow -> I-beam
     a.cr = mkEl('div', null, 'sr-cr'); a.cr.style.background = a.color; rootEl.appendChild(a.cr);
@@ -456,7 +516,7 @@
     if (a.cp) { a.cp.ghosts.forEach(function (g) { g.fr.remove(); }); a.cp = null; a.lbl = null; }
     if (a.L) { a.L.ag = null; a.L = null; }
     dropFrame(a, 0);
-    a.el.classList.remove('sr-on'); a.el.classList.remove('sr-ty'); a.ph = 'free'; a.t = 0;
+    a.el.classList.remove('sr-on'); a.el.classList.remove('sr-ty'); a.el.classList.remove('sr-dr'); a.ph = 'free'; a.t = 0;
   }
 
   function stepAgent(a, dt) {
@@ -473,14 +533,14 @@
       if (Math.hypot(tx - a.x, ty - a.y) < 3 || a.t >= 1.2 / S) {
         showFrame(a); a.t = 0; sfx('frame', a);
         if (L.type === 'text') { setFrame(a, a.rl, a.rt, a.rw, a.rh); startType(a); }
-        else { a.ph = 'draw'; a.dur = (0.22 + Math.min(0.34, Math.sqrt(a.rw * a.rh) / 1600)) / S; setFrame(a, a.rl, a.rt, 0, 0); }
+        else { a.ph = 'draw'; a.el.classList.add('sr-dr', 'sr-on'); a.dur = (0.22 + Math.min(0.34, Math.sqrt(a.rw * a.rh) / 1600)) / S; setFrame(a, a.rl, a.rt, 0, 0); }
       }
     } else if (a.ph === 'draw') {                      // grow top-left -> full size, cursor rides the bottom-right corner
       p = easeOut(clamp(a.t / a.dur, 0, 1)); w = a.rw * p; h = a.rh * p;
       setFrame(a, a.rl, a.rt, w, h);
       if (p < 1) sfx('draw', a, p);
       a.px = a.x; a.py = a.y; a.x = clamp(a.rl + w, 0, VW - 14); a.y = clamp(a.rt + h, 0, VH - 20); aim(a, dt, true);
-      if (a.t >= a.dur) { fill(L, true); a.ph = 'fill'; a.t = 0; sfx('fill', a); }
+      if (a.t >= a.dur) { fill(L, true); a.ph = 'fill'; a.el.classList.remove('sr-dr'); if (a.fr) a.fr.classList.remove('sr-gr'); a.t = 0; sfx('fill', a); }
     } else if (a.ph === 'fill') {                      // real element fades in while the cursor wiggles
       setFrame(a, a.rl, a.rt, a.rw, a.rh);
       p = a.t * S * 38;
@@ -504,7 +564,7 @@
 
   /* ───────────── sound FX (Web Audio, synthesised: no files) ───────────── */
   // The audio context is only created after the first click/key/touch (browsers block it before), and every sound is rate-limited.
-  var AC = null, master = null, noiseBuf = null, soundOn = !/^(off|false|0)$/.test(D.sound || ''), sActive = 0, sLast = {};
+  var AC = null, master = null, noiseBuf = null, soundOn = !/^(off|false|0)$/.test(D.sound || ''), QUIET = /^quiet$/i.test(D.sound || ''), sActive = 0, sLast = {};
   try { var sv = window.localStorage.getItem('sr-sound'); if (sv === '0') soundOn = false; else if (sv === '1') soundOn = true; } catch (e) { /* storage blocked */ }
   var SND_VOL = clamp(num(D.volume, 0.6), 0, 1);
 
@@ -550,15 +610,26 @@
     sActive++; s.onended = function () { sActive--; };
     s.start(t, Math.random() * 0.5); s.stop(t + d + 0.03);
   }
+  var PENTA = [330, 294, 262, 220, 196, 165];                       // deeper layers sound lower (pentatonic steps)
+  function swell(d) {                                              // quiet ambient pad under the scan: slow rise, slow fall
+    if (!snd()) return;
+    var t = AC.currentTime, g = AC.createGain(), o1 = AC.createOscillator(), o2 = AC.createOscillator();
+    o1.type = o2.type = 'sine'; o1.frequency.value = 164.8; o2.frequency.value = 246.9; o2.detune.value = 6;
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(0.05, t + d * 0.6); g.gain.linearRampToValueAtTime(0.0001, t + d);
+    o1.connect(g); o2.connect(g); g.connect(master); sActive += 2;
+    o1.onended = o2.onended = function () { sActive--; };
+    o1.start(t); o2.start(t); o1.stop(t + d + 0.05); o2.stop(t + d + 0.05);
+  }
   function sfx(name, a, p) {
     if (!snd()) return;
+    if (QUIET && /^(frame|draw|fill|key|done|tick)$/.test(name)) return;
     var pan = a ? (a.x / Math.max(VW, 1)) * 2 - 1 : 0, i = a ? a.i : 0;
     switch (name) {
-      case 'scan': noise(1.7 / speed, 0.12, 200, 2600); tone(110, 1.7 / speed, 'sine', 0.07, 360); break;
+      case 'scan': noise(1.7 / speed, 0.12, 200, 2600); tone(110, 1.7 / speed, 'sine', 0.07, 360); swell(2.1 / speed); break;
       case 'boot': tone(392, 0.28, 'triangle', 0.12); tone(587, 0.34, 'triangle', 0.1, undefined, 0, 0.07); noise(0.5, 0.08, 2600, 500); break;
       case 'frame': if (gate('frame', 25)) tone(640 + (i % 8) * 45, 0.07, 'triangle', 0.1, undefined, pan); break;
       case 'draw': if (gate('draw', 22)) tone(360 + p * 760, 0.035, 'square', 0.028, undefined, pan); break;
-      case 'fill': if (gate('fill', 40)) { tone(240, 0.16, 'sine', 0.15, 520, pan); tone(880, 0.1, 'triangle', 0.05, undefined, pan, 0.04); } break;
+      case 'fill': if (gate('fill', 40)) { var f0 = PENTA[(a && a.L ? a.L.depth : 0) % PENTA.length] * (a && a.L && a.L.depth >= PENTA.length ? 2 : 1); tone(f0, 0.16, 'sine', 0.15, f0 * 2.1, pan); tone(f0 * 3.7, 0.1, 'triangle', 0.05, undefined, pan, 0.04); } break;
       case 'key': if (gate('key', 28)) tone(1500 + ((i * 97) % 500), 0.022, 'square', 0.03, undefined, pan); break;
       case 'done': if (gate('done', 40)) tone(1100 + (i % 6) * 60, 0.07, 'sine', 0.07, undefined, pan); break;
       case 'chord': [523, 659, 784, 1047].forEach(function (f, k) { tone(f, 0.5, 'triangle', 0.11, undefined, 0, k * 0.09); }); break;
@@ -644,8 +715,9 @@
   /* ───────────── clone mode: copy a finished object instead of rebuilding every identical sibling ───────────── */
   // Siblings with the same structure (a grid of cards, say) form a group. Once the first one is fully built, an agent selects it,
   // "copies" it, and pastes it onto every other triggered member at once: ghost frames fly out and each member's whole subtree fills in.
+  var STATE_CLS = /^(is-|has-|js-|aos-)|^(active|current|selected|open|opened|show|shown|hidden|disabled|checked|first|last|odd|even|hover|focus|visible|in-view)$/i;
   function elSig(e, d) {                                           // structural signature: tag, classes, children (depth-limited)
-    var c = (e.getAttribute('class') || '').split(/\s+/).filter(function (x) { return x && x.indexOf('sr-') !== 0; }).sort().join('.');
+    var c = (e.getAttribute('class') || '').split(/\s+/).filter(function (x) { return x && x.indexOf('sr-') !== 0 && !STATE_CLS.test(x); }).sort().join('.');
     var s = e.tagName + (c ? '.' + c : ''), k, kids = e.children;
     if (d > 0) {
       s += '(';
@@ -689,7 +761,12 @@
     });
   }
   function isCloneTarget(L) { var r = L.cgRoot; return !!(r && r.cg && r.cg.tpl !== r); }
-  function tplReady(g) { return g.tpl.cgLayers.every(function (D) { return D.st === 2; }); }
+  function tplReady(g) {                                          // the card's own box plus a good part of its contents are done
+    var t = g.tpl, n = 0, len = t.cgLayers.length;
+    if (t.st !== 2) return false;
+    t.cgLayers.forEach(function (D) { if (D.st === 2) n++; });
+    return n >= Math.min(len, Math.max(2, Math.ceil(len * 0.4)));
+  }
 
   function dupPass() {                                             // a free agent copies a finished template onto its waiting siblings
     if (!cloneNow || !groups.length) return;
@@ -808,10 +885,11 @@
     }
     ctx.stroke(); ctx.setLineDash([]);
     if (R) {                                           // rulers in page coordinates
-      ctx.globalAlpha = guideA; ctx.fillStyle = 'rgba(17,18,22,.96)'; ctx.fillRect(0, 0, VW, R); ctx.fillRect(0, 0, R, VH);
-      ctx.globalAlpha = guideA * 0.3; ctx.fillStyle = CFG.accent;
+      ctx.globalAlpha = guideA; ctx.fillStyle = '#2c2c2c'; ctx.fillRect(0, 0, VW, R); ctx.fillRect(0, 0, R, VH);
+      ctx.fillStyle = '#3a3a3a'; ctx.fillRect(0, R - 1, VW, 1); ctx.fillRect(R - 1, 0, 1, VH);
+      ctx.globalAlpha = guideA * 0.4; ctx.fillStyle = '#0D99FF';
       for (i = 0; i < agents.length; i++) { a = agents[i]; if (a.fr) { ctx.fillRect(a.fl, 0, a.fw, R); ctx.fillRect(0, a.ft, R, a.fh); } }
-      ctx.globalAlpha = guideA; ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.beginPath();
+      ctx.globalAlpha = guideA; ctx.strokeStyle = '#6a6a6a'; ctx.beginPath();
       for (p = Math.ceil((SX + R) / 10) * 10; p <= SX + VW; p += 10) {
         x = p - SX; len = p % 100 === 0 ? R : p % 50 === 0 ? 7 : 4; ctx.moveTo(x + 0.5, R); ctx.lineTo(x + 0.5, R - len);
       }
@@ -819,7 +897,7 @@
         y = p - SY; len = p % 100 === 0 ? R : p % 50 === 0 ? 7 : 4; ctx.moveTo(R, y + 0.5); ctx.lineTo(R - len, y + 0.5);
       }
       ctx.stroke();
-      ctx.fillStyle = 'rgba(255,255,255,.65)'; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+      ctx.fillStyle = '#8c8c8c'; ctx.font = '500 9px Inter,system-ui,-apple-system,sans-serif'; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
       for (p = Math.ceil((SX + R) / 100) * 100; p <= SX + VW; p += 100) ctx.fillText(String(p), p - SX + 3, 2);
       for (p = Math.ceil((SY + R) / 100) * 100; p <= SY + VH; p += 100) {
         ctx.save(); ctx.translate(0, p - SY - 3); ctx.rotate(-Math.PI / 2); ctx.fillText(String(p), 0, 2); ctx.restore();   // rotated -90deg
@@ -854,6 +932,8 @@
       setTxt(hudEls.an, '');
       setTxt(hudEls.sl, tot ? 'Rebuilt ' + tot.toLocaleString() + ' layers in ' + ((doneT - buildT0) / 1000).toFixed(1) + 's' : 'Skipped');
     }
+    if (hudEls.cb) hudEl.classList.toggle('sr-cl', cloneNow && s === 'build');
+    if (s === 'build' && docH > 0) hudEl.style.setProperty('--p', (clamp((SY + VH) / docH, 0, 1) * 100).toFixed(1));
     setTxt(hudEls.tour, s === 'done' ? 'Replay' : touring ? 'Pause' : 'Tour');
     setTxt(hudEls.spd, speed + '×');
   }
@@ -880,6 +960,7 @@
   }
   function goDone(now, silent) {
     if (!silent) sfx('chord');
+    clearTimeout(failTimer); say(layers.length ? 'Rebuilt ' + layers.length + ' layers' : 'Page ready');
     phase = 'done'; doneT = now; touring = false; trigPend = 0;
     stats();
   }
@@ -888,7 +969,10 @@
     agentsEl.style.transition = 'none'; agentsEl.style.opacity = '1'; agentsEl.style.display = '';
   }
 
-  function tick(now) {
+  function tick(now) {                                             // any error: restore the page instead of leaving it half hidden
+    try { tickBody(now); } catch (e) { if (window.console) console.warn('[swarm-rebuild] stopped:', e); try { destroy(); } catch (e2) { /* nothing left to do */ } }
+  }
+  function tickBody(now) {
     raf = 0;
     if (phase === 'idle') return;
     var dt = clamp((now - lastT) / 1000, 0.001, 0.05), i, t = (now - startT) / 1000;   // dt capped at 50ms
@@ -980,6 +1064,20 @@
     needRead = true;
   }
   function onUser() { touring = false; }
+  function onPin(e) {                                              // Alt/Option + click: 3 or 4 agents build that element first
+    if (phase !== 'build' || !e.altKey || !e.target || (hudEl && hudEl.contains(e.target))) return;
+    var L = nearest(e.target), i, A, n = 0;
+    if (!L || L.st === 2) return;
+    e.preventDefault(); e.stopPropagation();
+    for (A = L; A; A = A.parent) if (A.st < 2) A.pin = true;
+    for (i = 0; i < pending.length; i++) {
+      for (A = pending[i].parent; A && A !== L; A = A.parent);
+      if (A === L && pending[i].st < 2) pending[i].pin = true;
+    }
+    var m = mkEl('div', null, 'sr-pin'); m.style.left = e.clientX + 'px'; m.style.top = e.clientY + 'px'; rootEl.appendChild(m);
+    later(1900, function () { m.remove(); });
+    sfx('tick'); needRead = true;
+  }
 
   function whenReady(g, fn) {                                      // after window load and fonts (fonts waited for at most 1.2s)
     var started = false;
@@ -1019,9 +1117,13 @@
     on(document, 'keydown', onKey); on(window, 'resize', onSize);
     on(window, 'scroll', function () { needRead = true; lastScroll = performance.now(); }, { passive: true });
     on(window, 'pointermove', onPtr, { passive: true }); on(document.documentElement, 'mouseleave', onLeave); on(window, 'blur', onLeave);
+    on(document, 'click', onPin, { capture: true });
     on(window, 'wheel', onUser, { passive: true }); on(window, 'touchstart', onUser, { passive: true });
     if (document.readyState === 'loading') on(document, 'DOMContentLoaded', swapLogo);
     startT = lastT = buildT0 = performance.now(); lastUi = lastHud = 0;
+    clearTimeout(failTimer);
+    if (FAILSAFE > 0) failTimer = setTimeout(function () { if (phase === 'scan' || phase === 'build') { if (window.console) console.warn('[swarm-rebuild] failsafe: finishing the page'); skip(); } }, FAILSAFE * 1000);
+    on(window, 'error', function (e) { if (SRC && e && e.filename && e.filename.indexOf(SRC) >= 0) { try { destroy(); } catch (e2) { /* ignore */ } } });
     ['pointerdown', 'keydown', 'touchend', 'click'].forEach(function (ev) { on(window, ev, unlock, { passive: true, capture: true }); });
     updSnd(); sfx('scan');
     raf = requestAnimationFrame(tick);
@@ -1068,6 +1170,7 @@
   }
 
   function destroy() {                                             // remove every trace, including the loose-text wrappers
+    clearTimeout(failTimer);
     if (phase !== 'idle' && layers.length) finishAllNow();
     phase = 'idle';
     if (raf) cancelAnimationFrame(raf); raf = 0;
@@ -1075,14 +1178,16 @@
     if (ro) ro.disconnect(); ro = null;
     listeners.forEach(function (l) { l[0].removeEventListener(l[1], l[2], l[3]); }); listeners = [];
     layers.forEach(function (L) { if (L.w) restoreText(L); });
-    [rootEl, scanEl, agentsEl, hudEl].forEach(function (e) { if (e) e.remove(); });
-    rootEl = scanEl = agentsEl = hudEl = canvas = ctx = hudText = sqEl = null; agents = []; hudEls = {};
+    [rootEl, scanEl, agentsEl, hudEl, liveEl].forEach(function (e) { if (e) e.remove(); });
+    clearTimeout(sayT);
+    rootEl = scanEl = agentsEl = hudEl = liveEl = canvas = ctx = hudText = sqEl = null; agents = []; hudEls = {};
     void document.documentElement.offsetHeight;
     var s = document.querySelectorAll('.sr-hide-paint,.sr-hide-media,.sr-reveal,.sr-now'), i;
     for (i = 0; i < s.length; i++) ['sr-hide-paint', 'sr-hide-media', 'sr-reveal', 'sr-now'].forEach(function (c) { rmCls(s[i], c); });
     wraps.forEach(function (w) { if (w.span.parentNode) w.span.parentNode.replaceChild(w.node, w.span); });
     if (styleEl) styleEl.remove(); styleEl = null;
     document.documentElement.classList.remove('sr-lock', 'sr-fin');
+    if (!document.documentElement.classList.length) document.documentElement.removeAttribute('class');
     layers = []; pending = []; late = []; wraps = []; addQ = [];
     if (AC) { try { AC.close(); } catch (e) { /* ignore */ } AC = null; }
     stats();

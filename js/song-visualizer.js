@@ -56,6 +56,8 @@
     var hint = section.querySelector('.viz-hint');
     var songEl = section.querySelector('.reflect-song');
     var listEl = section.querySelector('.reflect-lines');
+    var motionQuery = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    var reduceMotion = !!(motionQuery && motionQuery.matches);
 
     var mode = 'bars';
     var BARS = 48;
@@ -236,7 +238,7 @@
         else drawBars();
         // keep animating while playing or while the bars are still settling
         var settling = bass > 0.004 || bars[BARS >> 1] > 0.004;
-        if (!player.paused || settling) raf = requestAnimationFrame(frame);
+        if (!reduceMotion && (!player.paused || settling)) raf = requestAnimationFrame(frame);
     }
 
     function kick() {
@@ -328,6 +330,11 @@
         }, { threshold: 0.05 }).observe(section);
     }
     document.addEventListener('visibilitychange', kick);
+    if (motionQuery) {
+        var onMotionChange = function (e) { reduceMotion = e.matches; kick(); };
+        if (motionQuery.addEventListener) motionQuery.addEventListener('change', onMotionChange);
+        else if (motionQuery.addListener) motionQuery.addListener(onMotionChange);
+    }
 
     if ('ResizeObserver' in window) new ResizeObserver(function () { resize(); kick(); }).observe(canvas);
     else window.addEventListener('resize', function () { resize(); kick(); });

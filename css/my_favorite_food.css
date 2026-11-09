@@ -290,7 +290,9 @@
 }
 
 @keyframes cook-pulse {
-    50% { opacity: 0.6; }
+    50% {
+        opacity: 0.6;
+    }
 }
 
 .cook-alert {
@@ -325,6 +327,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+
     .cook-bar,
     .rt-btn,
     .check-text {
