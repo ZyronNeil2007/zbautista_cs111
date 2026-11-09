@@ -39,9 +39,7 @@
     <link rel="stylesheet" href="css/portfolio.css">
     <link rel="stylesheet" href="css/swarm-launch.css">
     <script>document.documentElement.classList.add("js")</script>
-    <!-- Folder → page morph: wait for the folder grid before first paint, and listen early -->
-    <link rel="expect" href="#no-results" blocking="render">
-    <script src="js/folder-morph.js"></script>
+    <script src="js/page-arrive.js"></script>
 </head>
 
 <body>
@@ -51,6 +49,7 @@
         aria-label="Page reading progress"></progress>
 
     <div class="stage">
+        <img class="hero-background" src="img/backgrounds/neil_bg.png" alt="" aria-hidden="true">
 
         <!-- Top bar -->
         <nav class="topbar rise" aria-label="Primary">
@@ -89,7 +88,7 @@
         <!-- Left column: profile + quick folders -->
         <aside class="left-col">
             <div class="profile-card glass rise d1">
-                <div class="avatar"><img src="img/backgrounds/neil_bg.jpg" alt="Zyron Neil A. Bautista">
+                <div class="avatar"><img src="img/backgrounds/neil_bg.png" alt="Zyron Neil A. Bautista">
                 </div>
                 <div class="profile-info">
                     <span class="color-label">Color Code</span>

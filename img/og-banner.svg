@@ -134,6 +134,6 @@
     <text x="155" y="185" text-anchor="end" class="font-display" font-size="16" fill="#c9343f">Crimson</text>
 
     <text x="25" y="230" class="font-body" font-size="12" fill="#f4c7a5">Version</text>
-    <text x="155" y="230" text-anchor="end" class="font-mono" font-size="14" fill="#f6e7c1">v2.14.0</text>
+    <text x="155" y="230" text-anchor="end" class="font-mono" font-size="14" fill="#f6e7c1">v2.15.0</text>
   </g>
 </svg>
