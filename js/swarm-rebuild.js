@@ -5,6 +5,7 @@
  *  Clone mode: data-clone="auto|on|off" (default auto). Identical siblings (card grids) are copied from the first finished one instead of rebuilt.
  *  data-sound="quiet" keeps only the soft cues (no per-layer clicks). data-lookahead="0.25" lets idle agents build just below the line (0 = off).
  *  data-failsafe="60" finishes the page after N seconds no matter what (0 = off).
+ *  data-once runs the intro only the first time per browser session (sessionStorage "sr-seen"); data-sr-replay buttons can still replay it.
  *  Hooks (all optional): data-sr-skip, data-sr-logo, data-sr-replay, data-sr-stat="layers|texts|frames|agents",
  *  data-sr-instant (build this element and everything inside it in one step: maps, embeds). Scroll containers are treated the same way.
  *  Visitors: Alt/Option + click on an element sends agents to build it first (a "pin").
@@ -1199,5 +1200,13 @@
     get layers() { return layers.map(function (L) { return { type: L.type, el: L.el, text: L.type === 'text' || L.tx, done: L.st === 2 }; }); }
   };
   document.addEventListener('click', function (e) { var t = e.target; if (t && t.closest && t.closest('[data-sr-replay]')) replay(); });
-  start();
+  // data-once: auto-run only the first time in a browser session. The replay hook / API still work afterwards.
+  var autoRun = true;
+  if (D.once !== undefined) {
+    try {
+      if (window.sessionStorage.getItem('sr-seen') === '1') autoRun = false;
+      else window.sessionStorage.setItem('sr-seen', '1');
+    } catch (e) { /* storage blocked: just run */ }
+  }
+  if (autoRun) start();
 })();
