@@ -59,3 +59,289 @@
     line-height: 1.75;
     margin-bottom: var(--sp-md);
 }
+
+/* ───────── Interactive recipes: scaler, checklists, cook mode ───────── */
+.recipe-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-md) var(--sp-xl);
+    margin: var(--sp-xl) 0 var(--sp-md);
+    padding: var(--sp-md) var(--sp-lg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.rt-servings {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-md);
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.rt-servings strong {
+    color: var(--yellow);
+}
+
+.rt-servings input[type="range"] {
+    width: clamp(120px, 30vw, 220px);
+    accent-color: var(--yellow);
+}
+
+.rt-actions {
+    display: flex;
+    gap: var(--sp-sm, 0.5rem);
+    margin-left: auto;
+}
+
+.rt-btn {
+    padding: 0.55rem 1.1rem;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: var(--red, #c9343f);
+    color: #fff;
+    font: 600 0.9rem var(--font-base);
+    cursor: pointer;
+    transition: transform var(--dur-base) var(--ease-smooth), background var(--dur-base);
+}
+
+.rt-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.rt-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.rt-ghost {
+    background: transparent;
+    color: var(--text-primary);
+}
+
+.rt-btn:focus-visible,
+.recipe-toolbar input:focus-visible,
+.check input:focus-visible,
+.cook-close:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 2px;
+}
+
+.rt-progress {
+    flex-basis: 100%;
+    margin: 0 !important;
+    font-size: 0.85rem;
+    color: var(--text-muted) !important;
+}
+
+.recipe-card ul.has-checks {
+    list-style: none;
+    padding-left: 0;
+}
+
+.recipe-card ol.has-checks {
+    padding-left: 1.4rem;
+}
+
+.recipe-card ol.has-checks li::marker {
+    color: var(--peach);
+    font-weight: 700;
+}
+
+.recipe-card li {
+    margin-bottom: 0.45rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+
+.check {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    cursor: pointer;
+}
+
+.check input {
+    flex: none;
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0.3rem;
+    accent-color: var(--yellow);
+    cursor: pointer;
+}
+
+.check-text {
+    transition: opacity var(--dur-base);
+}
+
+.recipe-card li.is-done .check-text {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+/* Cook mode dialog */
+.cook-dialog {
+    margin: auto;
+    inset: 0;
+    width: min(680px, calc(100vw - 2rem));
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    padding: var(--sp-xl);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-xl);
+    background: linear-gradient(160deg, #3a0912, #180308);
+    color: var(--text-primary);
+    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+.cook-dialog::backdrop {
+    background: rgba(13, 1, 6, 0.8);
+    backdrop-filter: blur(6px);
+}
+
+.cook-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--sp-md);
+}
+
+.cook-kicker {
+    margin: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--peach);
+}
+
+.cook-title {
+    margin: 0.2rem 0 0;
+    font: 400 clamp(1.3rem, 4vw, 1.8rem) var(--font-display);
+    color: var(--cream);
+}
+
+.cook-close {
+    flex: none;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.cook-progress {
+    height: 6px;
+    margin: var(--sp-lg) 0 var(--sp-sm, 0.5rem);
+    border-radius: 99px;
+    background: rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+}
+
+.cook-bar {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, var(--red), var(--yellow));
+    transition: width 0.3s var(--ease-smooth);
+}
+
+.cook-count {
+    margin: 0 0 var(--sp-md);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.cook-step {
+    margin: 0 0 var(--sp-lg);
+    font-size: clamp(1.15rem, 3.2vw, 1.5rem);
+    line-height: 1.6;
+    color: var(--text-primary);
+}
+
+.cook-timer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-md);
+    padding: var(--sp-md) var(--sp-lg);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.07);
+}
+
+.cook-timer[hidden] {
+    display: none;
+}
+
+.cook-time {
+    font: 700 2rem var(--font-mono);
+    color: var(--yellow);
+    min-width: 4.5ch;
+}
+
+.cook-timer.is-running .cook-time {
+    animation: cook-pulse 1s ease-in-out infinite;
+}
+
+@keyframes cook-pulse {
+    50% {
+        opacity: 0.6;
+    }
+}
+
+.cook-alert {
+    min-height: 1.5em;
+    margin: var(--sp-md) 0 0;
+    font-weight: 700;
+    color: var(--yellow);
+}
+
+.cook-ings {
+    margin-top: var(--sp-md);
+    color: var(--text-secondary);
+}
+
+.cook-ings summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--peach);
+}
+
+.cook-ings ul {
+    margin: var(--sp-sm, 0.5rem) 0 0;
+    padding-left: 1.2rem;
+    line-height: 1.6;
+}
+
+.cook-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--sp-md);
+    margin-top: var(--sp-xl);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .cook-bar,
+    .rt-btn,
+    .check-text {
+        transition: none;
+    }
+
+    .cook-timer.is-running .cook-time {
+        animation: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .rt-actions {
+        margin-left: 0;
+        width: 100%;
+    }
+}

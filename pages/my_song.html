@@ -5,14 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Songs — Zyron Neil A. Bautista | CS111</title>
-        <meta name="description" content="Personal soundtrack featuring favorite songs, lyrics, musical inspirations, and audio reflections.">
+    <meta name="description"
+        content="Personal soundtrack featuring favorite songs, lyrics, musical inspirations, and audio reflections.">
     <meta property="og:type" content="website">
     <meta property="og:title" content="My Songs — Zyron Neil A. Bautista | CS111">
-    <meta property="og:description" content="Personal soundtrack featuring favorite songs, lyrics, musical inspirations, and audio reflections.">
+    <meta property="og:description"
+        content="Personal soundtrack featuring favorite songs, lyrics, musical inspirations, and audio reflections.">
     <meta property="og:image" content="https://zyronneil2007.github.io/zbautista_cs111/img/og-banner.svg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="My Songs — Zyron Neil A. Bautista | CS111">
-    <meta name="twitter:description" content="Personal soundtrack featuring favorite songs, lyrics, musical inspirations, and audio reflections.">
+    <meta name="twitter:description"
+        content="Personal soundtrack featuring favorite songs, lyrics, musical inspirations, and audio reflections.">
     <meta name="twitter:image" content="https://zyronneil2007.github.io/zbautista_cs111/img/og-banner.svg">
     <link rel="icon" type="image/png" href="../img/icons/zn.logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,6 +26,7 @@
     <link rel="stylesheet" href="../css/tokens.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/my_song.css?v=8">
+    <link rel="stylesheet" href="../css/song-visualizer.css?v=1">
     <style>
         /* safety net: full-screen player stays hidden unless the stylesheet opens it */
         .nf {
@@ -162,7 +166,8 @@
                 </li>
 
                 <li class="sp-row track" tabindex="0" role="button" data-src="../img/my_song/Sailor Song.mp3"
-                    data-cover="../img/my_song/sailor song poster.jpg" data-title="Sailor Song" data-artist="Gigi Perez">
+                    data-cover="../img/my_song/sailor song poster.jpg" data-title="Sailor Song"
+                    data-artist="Gigi Perez">
                     <span class="c-num"><span class="num">4</span><span class="eq"
                             aria-hidden="true"><i></i><i></i><i></i></span></span>
                     <span class="c-title">
@@ -176,19 +181,36 @@
                 </li>
 
                 <li class="sp-row track" tabindex="0" role="button" data-src="../img/my_song/Earrings.mp3"
-                    data-cover="../img/my_song/earrings song poster.jpg" data-title="Earrings" data-artist="Malcolm Todd">
+                    data-cover="../img/my_song/earrings song poster.jpg" data-title="Earrings"
+                    data-artist="Malcolm Todd">
                     <span class="c-num"><span class="num">5</span><span class="eq"
                             aria-hidden="true"><i></i><i></i><i></i></span></span>
                     <span class="c-title">
                         <img src="../img/my_song/earrings song poster.jpg" alt="Earrings artwork" loading="lazy">
-                        <span class="t-text"><span class="t-name">Earrings</span><span
-                                class="t-artist">Malcolm Todd</span></span>
+                        <span class="t-text"><span class="t-name">Earrings</span><span class="t-artist">Malcolm
+                                Todd</span></span>
                     </span>
                     <span class="c-album">Earrings</span>
                     <span class="c-genre">Indie / Alternative</span>
                     <span class="c-time">--:--</span>
                 </li>
             </ol>
+        </section>
+
+        <!-- Live visualizer + reflections that follow the music -->
+        <section class="sp-viz glass-panel" id="vizSection" data-sr-skip aria-labelledby="vizHeading">
+            <div class="sp-viz-head">
+                <h2 class="sp-section-title" id="vizHeading">Live Visualizer</h2>
+                <div class="viz-modes" role="group" aria-label="Visualizer style">
+                    <button type="button" data-mode="bars" aria-pressed="true">Bars</button>
+                    <button type="button" data-mode="wave" aria-pressed="false">Wave</button>
+                    <button type="button" data-mode="ring" aria-pressed="false">Ring</button>
+                </div>
+            </div>
+            <canvas id="vizCanvas" aria-hidden="true"></canvas>
+            <p class="viz-hint">Press play on any song to start the show.</p>
+            <p class="reflect-song" id="reflectSong"></p>
+            <ol class="reflect-lines" id="reflectLines" aria-label="My reflections on this song"></ol>
         </section>
 
         <!-- Synced lyrics & Official Lyrics Provider -->
@@ -478,6 +500,7 @@
     <audio id="player" preload="metadata"></audio>
 
     <script src="../js/my_song.js?v=8"></script>
+    <script src="../js/song-visualizer.js?v=1"></script>
 </body>
 
 </html>

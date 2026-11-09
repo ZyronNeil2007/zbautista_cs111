@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111  Personal Memories Website
 
-**Version:** 2.12.0<br>
+**Version:** 2.13.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -66,6 +66,13 @@ The website serves as a digital memory vault featuring:
 - When repeated sibling elements create a heavy workload, agents can copy the completed animation of one sibling to similar elements.
 - The animation starts on all screen sizes; the homepage Swarm button can replay it.
 
+### 🎮 8. Interactive Memory Pages
+- **Joke Time (`js/joke-time.js`):** 3D flip cards that reveal each punchline, 😂 / 😐 reactions saved in the browser, a random-joke machine with bonus jokes, and a *Guess the Punchline* quiz with scoring.
+- **My Favorite Food (`js/recipe-tools.js`):** servings slider that rescales every ingredient (fractions, ranges, and plurals included), tick-off checklists that persist, and a full-screen **Cook Mode** with step-by-step navigation, per-step countdown timers (beep + vibration), and screen wake lock.
+- **Childhood / Family / Friends (`js/memory-game.js`):** a *Memory Match* card game built automatically from each page's own photos, with move counter, timer, and per-page best score.
+- **My Song (`js/song-visualizer.js`):** a live Web Audio visualizer (bars, wave, ring) that reacts to the music, plus reflection lines that highlight as each song plays (click a line to jump there). Falls back to a simulated animation when opened from `file://`.
+- All new widgets are keyboard accessible, respect `prefers-reduced-motion`, and opt out of the Swarm Rebuild animation with `data-sr-skip`.
+
 ---
 
 ## 📁 Repository Structure
@@ -90,6 +97,8 @@ zbautista_cs111/
 │   └── joke_time.html           # 5 clean, witty school & programming jokes
 │
 ├── css/                         # Clean vanilla styling and design system
+│   ├── memory-game.css          # Memory Match game styling
+│   ├── song-visualizer.css      # Visualizer and reflections styling
 │   ├── landing.css              # Hero stage, topbar, 3D folder fan-out, and responsive grid
 │   ├── portfolio.css            # Portfolio section, DNA helix layout, and design gallery
 │   ├── style.css                # Shared glassmorphic design system for content pages
@@ -106,9 +115,13 @@ zbautista_cs111/
 │   ├── dna.js                   # Interactive HTML5 Canvas double-helix scroll visualizer
 │   ├── folders.js               # Interactive 3D folder card fan-out & page flipper
 │   ├── lightbox.js              # Fullscreen image viewer modal with keyboard & touch support
+│   ├── joke-time.js             # Joke flip cards, reactions, random joke, and quiz
+│   ├── memory-game.js           # Photo memory-matching game for gallery pages
 │   ├── my_favorite_movie.js     # Movie billboard, poster rows, and details dialog
 │   ├── my_song.js               # Song playlist playback and now-playing controls
 │   ├── reading-progress.js      # Homepage reading progress indicator
+│   ├── recipe-tools.js          # Servings scaler, checklists, and cook mode with timers
+│   ├── song-visualizer.js       # Web Audio visualizer and synced reflections
 │   └── swarm-rebuild.js         # Dependency-free animated page rebuild and mouse-follow swarm
 │
 ├── img/                         # Optimized image, audio, and video assets
@@ -181,6 +194,34 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.13.0] — 2026-11-09
+#### Added
+- Added interactive Joke Time cards with saved reactions, a random-joke machine, and a punchline quiz.
+- Added photo-based Memory Match games to the Childhood, Family, and Friends pages, with move and time tracking and per-page best scores.
+- Added recipe serving scaling, persistent ingredient and step checklists, and Cook Mode with step timers to My Favorite Food.
+- Added a music visualizer with selectable bars, wave, and ring views, plus reflections synchronized to playback on My Song.
+
+#### Improved
+- Expanded Swarm Rebuild with manual element pinning, lookahead building, instant handling for marked widgets and scroll containers, a draggable toolbar, clone-mode refinements, and reduced-frequency layout reads.
+- Added Swarm Rebuild accessibility announcements, a timeout failsafe, and automatic cleanup if the script encounters a runtime error.
+- The song visualizer now honors `prefers-reduced-motion` while keeping playback reflections available.
+
+#### Bug Fixes
+- Added recovery paths to prevent an interrupted or failed Swarm Rebuild from leaving page content hidden.
+
+#### Technical Changes
+- Added `js/joke-time.js`, `js/memory-game.js`, `js/recipe-tools.js`, and `js/song-visualizer.js` with their supporting stylesheets. No runtime dependencies were added.
+- Persisted joke reactions, recipe checklist state, and Memory Match best scores in browser storage.
+
+#### Documentation
+- Updated the project version, feature overview, source tree, and release changelog.
+
+#### Breaking Changes
+- None.
+
+#### Credits / Contributors
+- Zyron Neil A. Bautista — project author and maintainer.
 
 ### [v2.12.0] — 2026-11-08
 #### Added
