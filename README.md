@@ -1,6 +1,6 @@
 # ZBAUTISTA CS111  Personal Memories Website
 
-**Version:** 2.13.0<br>
+**Version:** 2.14.0<br>
 **Author:** Zyron Neil A. Bautista  
 **Subject:** CS111 - Introduction to Computing  
 **Live Site / Portfolio:** [Personal Portfolio](https://personal-portfolio-ten-sage-56.vercel.app/)  
@@ -60,11 +60,11 @@ The website serves as a digital memory vault featuring:
 - Responsive About pages present personal details separately from activities, interests, and technical skills.
 
 ### 🐝 7. Swarm Rebuild (`js/swarm-rebuild.js`)
-- Starts a self-contained, dependency-free page rebuild animation across the homepage, all memory pages, and the responsive wireframe, revealing page layers as visitors scroll.
+- Starts a self-contained, dependency-free page rebuild animation on the homepage and the responsive wireframe, revealing page layers as visitors scroll.
 - Animated cursor agents draw selection frames and type text; after the build, they follow mouse movement or gather in a resting ring.
 - Includes a progress toolbar, scroll tour, speed and sound controls, skip, replay, responsive agent counts, and reduced-motion support.
 - When repeated sibling elements create a heavy workload, agents can copy the completed animation of one sibling to similar elements.
-- The animation starts on all screen sizes; the homepage Swarm button can replay it.
+- The intro runs once per browser session (`data-once`) on all screen sizes; the homepage Swarm button can replay it at any time.
 
 ### 🎮 8. Interactive Memory Pages
 - **Joke Time (`js/joke-time.js`):** 3D flip cards that reveal each punchline, 😂 / 😐 reactions saved in the browser, a random-joke machine with bonus jokes, and a *Guess the Punchline* quiz with scoring.
@@ -85,6 +85,9 @@ zbautista_cs111/
 ├── features.csv                 # Swarm Rebuild feature comparison
 ├── Swarm Rebuild Deep-Dive Reverse Engineering.md # Swarm Rebuild research notes
 ├── .gitignore                   # Git ignore patterns
+│
+├── scripts/                     # Optional image tooling (requires Pillow)
+│   └── optimize-images.py       # Dry-run-first WebP copy generator; preserves originals
 │
 ├── pages/                       # Dedicated secondary memory pages
 │   ├── childhood_memories.html  # 5 photo memories from childhood
@@ -125,6 +128,8 @@ zbautista_cs111/
 │   └── swarm-rebuild.js         # Dependency-free animated page rebuild and mouse-follow swarm
 │
 ├── img/                         # Optimized image, audio, and video assets
+│   ├── og-banner.png            # 1200×630 social preview image
+│   ├── og-banner.svg            # Editable social preview source
 │   ├── backgrounds/             # Portfolio backgrounds (neil_bg.jpg, ME_LANSCAPE_AT_RICEFIELD.png, bnhschool.png)
 │   ├── repo screenshots/        # High-resolution screenshots for Selected Work showcase cards
 │   ├── childhood_memories/      # Early memories photograph assets
@@ -166,10 +171,11 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
   - **3D Folder Fan-out (`js/folders.js`):** Interactive page flipping, mouse hover, wheel scrolling, touch interaction, and keyboard navigation.
   - **DNA Timeline Visualizer (`js/dna.js`):** Canvas-based animated double helix responsive to scrolling and inertia.
   - **Lightbox Modal (`js/lightbox.js`):** Accessible fullscreen modal with ESC key dismiss and click-away close.
-  - **Swarm Rebuild (`js/swarm-rebuild.js`):** Dependency-free layer-by-layer page reveal on every HTML page, animated agents, mouse-follow mode, and replay controls.
+  - **Swarm Rebuild (`js/swarm-rebuild.js`):** Dependency-free layer-by-layer page reveal on the homepage and wireframe (once per session), animated agents, mouse-follow mode, and replay controls.
   - **Reading Progress (`js/reading-progress.js`):** Scroll-position feedback on the homepage.
 - **Song Playlist (`js/my_song.js`):** Multi-track playback, shuffle/repeat, seek and volume controls, responsive now-playing view, and Media Session integration where supported.
 - **Media Support:** Native browser `<video controls>` for MP4 trailers; MP3 playback is managed by the custom song playlist.
+- **Optional image optimization:** `scripts/optimize-images.py` can create resized WebP copies; it requires Pillow, runs in report-only mode by default, and does not modify originals.
 - **Zero Heavy Frameworks:** Pure, high-performance vanilla web standards.
 
 ---
@@ -194,6 +200,33 @@ Every individual page includes a `← Back to Homepage` navigation link at both 
 ---
 
 ## 📝 Changelog
+
+### [v2.14.0] — 2026-11-09
+#### Improved
+- Refined the mobile About slides with aligned page gutters, clearer detail rows, and more readable panel spacing.
+- Gallery images now load lazily, and movie billboard previews request metadata rather than eagerly preloading video.
+- Social cards now use the 1200×630 PNG banner, with page-specific URLs and complete Twitter card metadata.
+- Limited the Swarm Rebuild intro to the homepage and wireframe, where it runs once per browser session; the homepage control can still replay it.
+- Folder previews now use a distinct accessible group role, with the title link as the clear page-opening control.
+- Clarified the homepage folder-search prompt and refreshed the social preview artwork.
+- Continued the About and landing-page polish tracked in [#1](https://github.com/ZyronNeil2007/zbautista_cs111/issues/1).
+
+#### Bug Fixes
+- Removed obsolete Swarm Rebuild configuration and corrected page-specific social preview URLs.
+
+#### Technical Changes
+- Added `scripts/optimize-images.py`, an optional Pillow-based tool that reports WebP conversion candidates by default and preserves source images.
+- Added image dimensions and page-specific `og:url` metadata to social cards.
+- Reduced the movie billboard video's preload from `auto` to `metadata`.
+
+#### Documentation
+- Updated the feature descriptions, source tree, optional image-tool instructions, and changelog.
+
+#### Breaking Changes
+- The Swarm Rebuild intro no longer runs on individual memory pages; it is available on the homepage and wireframe only.
+
+#### Credits / Contributors
+- Zyron Neil A. Bautista — project author and maintainer.
 
 ### [v2.13.0] — 2026-11-09
 #### Added

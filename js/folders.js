@@ -238,7 +238,6 @@
         scene.addEventListener('keydown', function (e) {
             if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { if (go(idx + 1)) e.preventDefault(); }
             else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { if (go(idx - 1)) e.preventDefault(); }
-            else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); window.location.href = href; }
         });
 
         // ▲ ▼ buttons
