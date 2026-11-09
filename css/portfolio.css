@@ -1133,6 +1133,87 @@ body {
     }
 }
 
+/* ── Phone polish for the About slides (<=768px) ──────────────────────
+   One shared 16px gutter so the photo, title card and panels all line up. */
+@media (max-width: 768px) {
+    .pf-about-page--1 {
+        padding: calc(min(56.25vw, 320px) + 28px) 16px 32px;
+    }
+
+    .pf-about-page--1::before {
+        left: 16px;
+        right: 16px;
+    }
+
+    .pf-about-page--1 .pf-about-inner,
+    .pf-about-page--2 .pf-about-inner {
+        max-width: none;
+    }
+
+    .pf-about-page--1 .pf-about-header {
+        margin: -44px 0 14px;
+        padding: 16px 18px 14px;
+    }
+
+    .pf-about-page--1 .pf-about-header .pf-title {
+        text-shadow: 2px 2px 0 var(--cream-dark);
+        line-height: 1.1;
+    }
+
+    .pf-about-page--1 .pf-about-header .pf-quote {
+        font-size: .8rem;
+    }
+
+    /* slide 2 has no photo, so drop the banner-sized top padding */
+    .pf-about-page--2 {
+        padding: 8px 16px 40px;
+    }
+
+    .pf-about-panel {
+        padding: 20px 18px;
+    }
+
+    .pf-about-bio p {
+        font-size: .95rem;
+        line-height: 1.7;
+    }
+
+    .pf-about-details {
+        margin-top: 18px;
+        padding-top: 18px;
+    }
+
+    /* label column of fixed width so every value starts at the same x */
+    .pf-details-list {
+        gap: 8px;
+    }
+
+    .pf-details-list li {
+        display: grid;
+        grid-template-columns: 6.8rem 1fr;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+    }
+
+    .pf-detail-label {
+        min-width: 0;
+        font-size: .72rem;
+    }
+
+    .pf-detail-value {
+        font-size: .92rem;
+    }
+
+    .pf-about-row {
+        gap: 22px;
+    }
+
+    .pf-skills {
+        gap: 14px;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .js .pf-reveal {
         opacity: 1;
