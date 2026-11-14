@@ -20,13 +20,20 @@
     --f-mono: 'Space Mono', monospace;
 
     /* 4px/8px standardized spacing scale */
-    --sp-xs: 0.25rem;  /* 4px */
-    --sp-sm: 0.5rem;   /* 8px */
-    --sp-md: 0.75rem;  /* 12px */
-    --sp-lg: 1rem;     /* 16px */
-    --sp-xl: 1.5rem;   /* 24px */
-    --sp-2xl: 2rem;    /* 32px */
-    --sp-3xl: 2.5rem;  /* 40px */
+    --sp-xs: 0.25rem;
+    /* 4px */
+    --sp-sm: 0.5rem;
+    /* 8px */
+    --sp-md: 0.75rem;
+    /* 12px */
+    --sp-lg: 1rem;
+    /* 16px */
+    --sp-xl: 1.5rem;
+    /* 24px */
+    --sp-2xl: 2rem;
+    /* 32px */
+    --sp-3xl: 2.5rem;
+    /* 40px */
 }
 
 *,
@@ -1288,10 +1295,10 @@ main:focus {
     *,
     *::before,
     *::after {
-        animation-duration:        0.01ms !important;
-        animation-iteration-count: 1      !important;
-        transition-duration:       0.01ms !important;
-        scroll-behavior:           auto   !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
 
@@ -1517,5 +1524,74 @@ main:focus {
 
     .fx-hint {
         line-height: 1.6;
+    }
+}
+
+/* ── Phones (≤560px): 2 columns × 4 rows of folders ──
+   Each folder keeps its desktop drawing (250×212) and is shrunk with `zoom`.
+   --fxz is picked per width so two folders always fit one row. */
+@media (max-width: 560px) {
+    .fx-grid {
+        --fxz: .9;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px 12px;
+    }
+
+    .fx-card {
+        padding-top: calc(96px * var(--fxz));
+    }
+
+    .fx-scene {
+        width: 250px;
+        zoom: var(--fxz);
+    }
+
+    .fx-label {
+        margin-top: 18px;
+    }
+
+    .fx-label h3 {
+        font-size: .92rem;
+    }
+
+    .fx-label p {
+        font-size: .74rem;
+        line-height: 1.4;
+    }
+}
+
+@media (max-width: 520px) {
+    .fx-grid {
+        --fxz: .8;
+    }
+}
+
+@media (max-width: 470px) {
+    .fx-grid {
+        --fxz: .74;
+    }
+}
+
+@media (max-width: 430px) {
+    .fx-grid {
+        --fxz: .68;
+    }
+}
+
+@media (max-width: 390px) {
+    .fx-grid {
+        --fxz: .62;
+    }
+}
+
+@media (max-width: 360px) {
+    .fx-grid {
+        --fxz: .56;
+    }
+}
+
+@media (max-width: 335px) {
+    .fx-grid {
+        --fxz: .5;
     }
 }
